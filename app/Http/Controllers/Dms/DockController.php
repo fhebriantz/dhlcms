@@ -1,0 +1,440 @@
+<?php
+
+namespace App\Http\Controllers\Dms;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Model\Form;
+use App\Http\Controllers\Model\Transaction;
+use App\Http\Controllers\Model\Transaction_history;
+use App\Http\Controllers\Model\Master_vehicle;
+use App\Http\Controllers\Model\Master_plat;
+use App\Http\Controllers\Model\Master_phone;
+use App\Http\Controllers\Model\Master_project;
+use App\Http\Controllers\Model\Master_tc;
+use App\Http\Controllers\Model\Purpose;
+use Illuminate\Routing\Middleware\LoginCheck;
+use Illuminate\Support\Facades\Redirect;
+use DateTime;
+use Auth;
+use Session;
+
+class DockController extends Controller
+{
+
+    public function __construct()
+    {
+        $this->middleware('logincheck');
+    }
+
+    public function show(){
+        if (session()->get('session_id_group') == 3){
+        $dms_form = Form::all();
+        $dms_inbound = Transaction::getTableTransaction()->where('id_purpose','=',1);
+        $dms_outbound = Transaction::getTableTransaction()->where('id_purpose','=',2);
+        $no_inbound = 1;
+        $no_outbound = 1;
+        return view('pages/dms/dashboard', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));
+        }
+        elseif (session()->get('session_id_group') == 1) {
+        $dms_form = Form::all();
+        $dms_inbound = Transaction::getTableTransaction()->where('id_purpose','=',1);
+        $dms_outbound = Transaction::getTableTransaction()->where('id_purpose','=',2);
+        $no_inbound = 1;
+        $no_outbound = 1;
+        return view('pages/dms/dashboard', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));
+        }
+        else{
+        $dms_form = Form::all();
+        $dms_inbound = Transaction::getTableTransaction()->where('id_purpose','=',1)
+                                                        ->where('cust_proj_name','=',session()->get('session_project'));
+        $dms_outbound = Transaction::getTableTransaction()->where('id_purpose','=',2)
+                                                        ->where('cust_proj_name','=',session()->get('session_project'));
+        $no_inbound = 1;
+        $no_outbound = 1;
+        return view('pages/dms/dashboard', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));   
+        }
+    } 
+     public function testjson(){
+        $dms_form = Form::all();
+        $dms_inbound = Form::all()->where('id_purpose','=',1);
+        $dms_outbound = Form::all()->where('id_purpose','=',2);
+        $no_inbound = 1;
+        $no_outbound = 1;
+        
+        return response($dms_form, 200)
+                  ->header('Content-Type', 'text/plain');
+    } 
+
+
+      public function plat_no(Request $request){
+         $term = $request->term;
+         $item = Master_plat::where('plat_no','LIKE','%'.$term.'%')->get();
+         foreach ($item as $key => $value) {
+             $searchResult[] = $value->plat_no;
+         }
+         return $searchResult;
+     } 
+
+     public function driver_phone(Request $request){
+        $term = $request->term;
+        $item = Master_phone::where('driver_phone','LIKE','%'.$term.'%')->get();
+        foreach ($item as $key => $value) {
+            $searchResult[] = $value->driver_phone;
+        }
+        return $searchResult;
+    } 
+
+    public function input_id(Request $request){
+        $id = $request->dms_id; 
+        $outside = 'Waiting Outside';  
+        $check_dms = Transaction::getTableTransaction()->where('id_dms_form','=',$id);
+        if (sizeof($check_dms) > 0){
+
+            $dms_transaction = Transaction::where('id_dms_form','=',$id)->first();
+
+            if ($dms_transaction->status == 'Waiting Outside') {
+                echo "*Print Struk* status masih 'waiting outside'";
+                return redirect('/dms/dashboard');
+            }
+            elseif ($dms_transaction->status == 'Waiting Gate') {
+                $dms_transaction->status = 'Truck Enter WH';
+                $dms_transaction->save();
+                return redirect('/dms/dashboard');
+            }
+            elseif ($dms_transaction->status == 'Truck Enter WH') {
+                $dms_transaction->status = 'Loading';
+                $dms_transaction->save();
+                return redirect('/dms/dashboard');
+            }
+            elseif ($dms_transaction->status == 'Loading') {
+                $dms_transaction->status = 'Complete Loading';
+                $dms_transaction->save();
+                return redirect('/dms/dashboard');
+            }
+            elseif ($dms_transaction->status == 'Complete Loading') {
+                $dms_transaction->status = 'Leave Warehouse';
+                $dms_transaction->save();
+                return redirect('/dms/dashboard');
+            }
+            elseif ($dms_transaction->status == 'Leave Warehouse') {
+                return redirect('/dms/dashboard');
+            }
+            else{
+                echo "Status kosong atau tidak cocok dengan function input_id";
+            }
+        }
+
+        else{
+            Session::flash('id_dms', "ID tidak ada");
+            return Redirect::back();
+        }
+    }
+
+    public function all_list(){
+        if (session()->get('session_id_group') == 3){
+        $dms_form = Form::all();
+        $dms_inbound = Transaction::getTableTransaction()->where('id_purpose','=',1);
+        $dms_outbound = Transaction::getTableTransaction()->where('id_purpose','=',2);
+        $no_inbound = 1;
+        $no_outbound = 1;
+        return view('pages/dms/all_list', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));
+        }
+        elseif (session()->get('session_id_group') == 1) {
+        $dms_form = Form::all();
+        $dms_inbound = Transaction::getTableTransaction()->where('id_purpose','=',1);
+        $dms_outbound = Transaction::getTableTransaction()->where('id_purpose','=',2);
+        $no_inbound = 1;
+        $no_outbound = 1;
+        return view('pages/dms/all_list', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));
+        }
+        else{
+        $dms_form = Form::all();
+        $dms_inbound = Transaction::getTableTransaction()->where('id_purpose','=',1)
+                                                        ->where('cust_proj_name','=',session()->get('session_project'));
+        $dms_outbound = Transaction::getTableTransaction()->where('id_purpose','=',2)
+                                                        ->where('cust_proj_name','=',session()->get('session_project'));
+        $no_inbound = 1;
+        $no_outbound = 1;
+        return view('pages/dms/all_list', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));   
+        }
+    }
+
+    public function input(){
+        if (session()->get('session_id_group') == 3){
+            $dms_master_vehicle=Master_vehicle::all();
+            $dms_master_tc=Master_tc::all();
+            $dms_master_project = Master_project::all();
+            $dms_form = Form::all();
+            return view('pages/dms/form', compact('dms_master_vehicle','dms_master_tc','dms_form','dms_master_project'));
+        }
+        elseif (session()->get('session_id_group') == 1){
+            $dms_master_vehicle=Master_vehicle::all();
+            $dms_master_tc=Master_tc::all();
+            $dms_master_project = Master_project::all();
+            $dms_form = Form::all();
+            return view('pages/dms/form', compact('dms_master_vehicle','dms_master_tc','dms_form','dms_master_project'));
+        }
+        else{
+            return redirect('/dms/dashboard');
+        }
+    } 
+
+
+    function edit($id)
+    {   
+        if (session()->get('session_id_group') == 2)
+        {
+            $dms_form=Transaction::getTableTransaction()->where('id_dms_form','=',$id)->first();
+            $dms_purpose=Purpose::all();
+            $dms_master_vehicle=Master_vehicle::all();
+            $dms_master_project = Master_project::all();
+            $dms_master_tc=Master_tc::all();
+            return view('pages/dms/edit', compact('dms_form','dms_purpose','dms_master_vehicle','dms_master_tc','dms_master_project'));
+        }
+        elseif (session()->get('session_id_group') == 1)
+        {
+            $dms_form=Transaction::getTableTransaction()->where('id_dms_form','=',$id)->first();
+            $dms_purpose=Purpose::all();
+            $dms_master_vehicle=Master_vehicle::all();
+            $dms_master_project = Master_project::all();
+            $dms_master_tc=Master_tc::all();
+            return view('pages/dms/edit', compact('dms_form','dms_purpose','dms_master_vehicle','dms_master_tc','dms_master_project'));
+        }
+        else{
+            return redirect('/dms/dashboard');
+        }
+    }
+
+    function view($id)
+    {
+        $dms_form=Form::where('id','=',$id)->first();
+
+        return  view('pages/dms/form/form_view')
+        ->with('dms_form_data',$dms_form);
+    }
+
+    public function showdms(){ 
+        $dms_form = Form::all();
+        $no = 1;
+
+        return view('pages/dms/form/form', compact('dms_form','no'));
+    }
+
+    function insert (Request $request)  
+    {
+
+        $validatedData = $request->validate([
+                'driver_name' => 'required',
+                'driver_phone' => 'required',
+                'type_of_vehicle' => 'required',
+                'plat_no' => 'required',
+                'transporter_company' => 'required',
+                'cust_proj_name' => 'required',
+                'id_purpose' => 'required',
+            ]);
+
+                $id_purpose = $request->input('id_purpose');
+                $date_str=strtotime(date('D-m-y H:i:s'));
+                $id_dms_form = 'dms'.$id_purpose.$date_str;
+                $now = new DateTime();
+
+                $result = Master_plat::where('plat_no','=',$request->plat_no)->first();  
+                  
+                // if (sizeof($result) > 0){
+
+                //      $dms_form = new Form;
+                //     // nama = nama field di database, var_nama = var_nama di dalam form input_blade
+                //         $dms_form->driver_name = $request->driver_name;
+                //         $dms_form->driver_phone = $request->driver_phone;
+                //         $dms_form->type_of_vehicle = $request->type_of_vehicle; 
+                //         $dms_form->plat_no = $request->plat_no; 
+                //         $dms_form->transporter_company = $request->transporter_company; 
+                //         $dms_form->shipment = $request->shipment; 
+                //         $dms_form->cust_proj_name = $request->cust_proj_name; 
+                //         $dms_form->id_purpose = $request->id_purpose; 
+                //         $dms_form->created_by = session()->get('session_name'); 
+                //         $dms_form->id_dms_form = $id_dms_form;
+                //     $dms_form->save();
+
+                //     $dms_transaction = new Transaction;
+                //         $dms_transaction->id_dms_form = $id_dms_form;
+                //         $dms_transaction->status = 'Waiting Gate';
+                //         $dms_transaction->arrival_time = $now;
+                //         $dms_transaction->duration = '00:00';
+                //         $dms_transaction->created_by = session()->get('session_name'); 
+                //     $dms_transaction->save();
+
+                //     $dms_transaction_history = new Transaction_history;
+                //         $dms_transaction_history->id_dms_form = $id_dms_form;
+                //         $dms_transaction_history->status = 'Waiting Gate';
+                //         $dms_transaction_history->arrival_time = $now;
+                //         $dms_transaction_history->duration = '00:00';
+                //         $dms_transaction_history->created_by = session()->get('session_name'); 
+                //     $dms_transaction_history->save();
+                //     return  redirect('/dms/dashboard');
+                // }
+                // else
+                // {
+                    $dms_form = new Form;
+                    // nama = nama field di database, var_nama = var_nama di dalam form input_blade
+                        $dms_form->driver_name = $request->driver_name;
+                        $dms_form->driver_phone = $request->driver_phone;
+                        $dms_form->type_of_vehicle = $request->type_of_vehicle; 
+                        $dms_form->plat_no = $request->plat_no; 
+                        $dms_form->transporter_company = $request->transporter_company; 
+                        $dms_form->shipment = $request->shipment; 
+                        $dms_form->cust_proj_name = $request->cust_proj_name; 
+                        $dms_form->id_purpose = $request->id_purpose; 
+                        $dms_form->created_by = session()->get('session_name'); 
+                        $dms_form->id_dms_form = $id_dms_form;
+                    $dms_form->save();
+
+                    $dms_master_plat = new Master_plat;
+                        $dms_master_plat->id_dms_form = $id_dms_form;
+                        $dms_master_plat->plat_no = $request->plat_no;
+                        $dms_master_plat->created_by = session()->get('session_name'); 
+                    $dms_master_plat->save();
+
+                    $dms_transaction = new Transaction;
+                        $dms_transaction->id_dms_form = $id_dms_form;
+                        $dms_transaction->status = 'Waiting Outside';
+                        $dms_transaction->arrival_time = $now;
+                        $dms_transaction->duration = '00:00';
+                        $dms_transaction->created_by = session()->get('session_name'); 
+                    $dms_transaction->save();
+
+                    $dms_transaction_history = new Transaction_history;
+                        $dms_transaction_history->id_dms_form = $id_dms_form;
+                        $dms_transaction_history->status = 'Waiting Outside';
+                        $dms_transaction_history->arrival_time = $now;
+                        $dms_transaction_history->duration = '00:00';
+                        $dms_transaction_history->created_by = session()->get('session_name'); 
+                    $dms_transaction_history->save();
+                    return  redirect('/dms/dashboard');
+                // } 
+    }
+
+    // menampilkan fungsi edit
+    function update (Request $request, $id)  
+    {
+        $validatedData = $request->validate([
+                'driver_name' => 'required',
+                'driver_phone' => 'required',
+                'plat_no' => 'required',
+                'type_of_vehicle' => 'required',
+                'transporter_company' => 'required',
+                'cust_proj_name' => 'required',
+                'id_purpose' => 'required',
+            ]);
+
+            $now = new DateTime();
+
+                 $result = Master_plat::where('plat_no','=',$request->plat_no)->first();        
+                 // if (sizeof($result) > 0){
+                 //     $dms_form = Form::where('id_dms_form','=',$id)->first();
+                 //        $dms_form->driver_name = $request->driver_name;
+                 //        $dms_form->type_of_vehicle = $request->type_of_vehicle; 
+                 //        $dms_form->plat_no = $request->plat_no; 
+                 //        $dms_form->driver_phone = $request->driver_phone;
+                 //        $dms_form->shipment = $request->shipment;
+                 //        $dms_form->transporter_company = $request->transporter_company; 
+                 //        $dms_form->shipment = $request->shipment; 
+                 //        $dms_form->cust_proj_name = $request->cust_proj_name; 
+                 //        $dms_form->id_purpose = $request->id_purpose; 
+                 //        $dms_form->created_by = session()->get('session_name'); 
+                 //        $dms_form->id_dms_form = $request->id_dms_form;
+                 //    // untuk mengsave
+                 //    $dms_form->save();
+
+                 //    $dms_transaction = Transaction::where('id_dms_form','=',$id)->first();
+                 //        $dms_transaction->id_dms_form = $request->id_dms_form;
+                 //        $dms_transaction->gate_number = $request->gate_number;
+                 //        $dms_transaction->status = 'Waiting Outside';
+                 //        $dms_transaction->waiting_time = $request->waiting_time;
+                 //        $dms_transaction->exit_time = $now;
+                 //        $dms_transaction->duration = '2:30';
+                 //        $dms_transaction->updated_by = session()->get('session_name'); 
+                 //    $dms_transaction->save();
+
+                 //    $dms_transaction_history = new Transaction_history;
+                 //        $dms_transaction_history->id_dms_form = $request->id_dms_form;
+                 //        $dms_transaction_history->gate_number = $request->gate_number;
+                 //        $dms_transaction_history->status = 'Waiting Outside';
+                 //        $dms_transaction_history->waiting_time = $request->waiting_time;
+                 //        $dms_transaction_history->exit_time = $now;
+                 //        $dms_transaction_history->duration = '02:30';
+                 //        $dms_transaction_history->created_by = session()->get('session_name');
+                 //    $dms_transaction_history->save();
+
+                 //    // sama aja kaya href setelak klik submit
+                 //    // mau pindah ke link mana setelah tombol submit di klik
+                 //    return  redirect('dms/dashboard');
+                 // }
+                 // else
+                 // {
+                    $dms_form = Form::where('id_dms_form','=',$id)->first();
+                        $dms_form->driver_name = $request->driver_name;
+                        $dms_form->type_of_vehicle = $request->type_of_vehicle; 
+                        $dms_form->plat_no = $request->plat_no; 
+                        $dms_form->driver_phone = $request->driver_phone;
+                        $dms_form->shipment = $request->shipment;
+                        $dms_form->transporter_company = $request->transporter_company; 
+                        $dms_form->shipment = $request->shipment; 
+                        $dms_form->cust_proj_name = $request->cust_proj_name; 
+                        $dms_form->id_purpose = $request->id_purpose; 
+                        $dms_form->created_by = session()->get('session_name'); 
+                        $dms_form->id_dms_form = $request->id_dms_form;
+                    // untuk mengsave
+                    $dms_form->save();
+
+                    $dms_master_plat = Master_plat::where('id_dms_form','=',$id)->first();;
+                        $dms_master_plat->id_dms_form = $request->id_dms_form;
+                        $dms_master_plat->plat_no = $request->plat_no;
+                        $dms_master_plat->updated_by = session()->get('session_name'); 
+                    $dms_master_plat->save();
+
+                    $dms_transaction = Transaction::where('id_dms_form','=',$id)->first();
+                        $dms_transaction->id_dms_form = $request->id_dms_form;
+                        $dms_transaction->gate_number = $request->gate_number;
+                        if ($dms_transaction->status == 'Waiting Outside') {
+                            $dms_transaction->status = 'Waiting Gate';
+                        }else{
+                            $dms_transaction->status = $dms_transaction->status;
+                        }
+                        $dms_transaction->waiting_time = $request->waiting_time;
+                        $dms_transaction->exit_time = $now;
+                        $dms_transaction->duration = '2:30';
+                        $dms_transaction->updated_by = session()->get('session_name'); 
+                    $dms_transaction->save();
+
+                    $dms_transaction_history = new Transaction_history;
+                        $dms_transaction_history->id_dms_form = $request->id_dms_form;
+                        $dms_transaction_history->gate_number = $request->gate_number;
+                        if ($dms_transaction_history->status == 'Waiting Outside') {
+                            $dms_transaction_history->status = 'Waiting Gate';
+                        }else{
+                            $dms_transaction->status = $dms_transaction->status;
+                        }
+                        $dms_transaction_history->waiting_time = $request->waiting_time;
+                        $dms_transaction_history->exit_time = $now;
+                        $dms_transaction_history->duration = '02:30';
+                        $dms_transaction_history->created_by = session()->get('session_name');
+                    $dms_transaction_history->save();
+
+                    // sama aja kaya href setelak klik submit
+                    // mau pindah ke link mana setelah tombol submit di klik
+                    return  redirect('dms/dashboard');
+                 // }
+    }
+
+    public function delete($id){
+        // find khusus untuk primary key di database
+        $dms_form = Form::where('id_dms_form','=',$id)->delete();
+        $dms_transaction = Transaction::where('id_dms_form','=',$id)->delete();
+
+        // sama aja kaya href setelak klik delete
+        // mau pindah ke link mana setelah tombol submit di klik
+        return  redirect('dms/dashboard');
+    } 
+}
