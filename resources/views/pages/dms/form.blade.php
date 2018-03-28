@@ -67,7 +67,7 @@
 
                   <tr>
                     <td>Drivers Phone</td>
-                    <td><input class="form-control" type="text" name="driver_phone" id="driver_phone " placeholder="Driver Phone" style="width: 100%"></td>
+                    <td><input class="form-control" type="text" name="driver_phone" id="driver_phone" placeholder="Driver Phone" style="width: 100%"></td>
                   </tr>
                   
               

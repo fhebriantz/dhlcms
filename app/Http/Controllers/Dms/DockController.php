@@ -93,36 +93,45 @@ class DockController extends Controller
 
             $dms_transaction = Transaction::where('id_dms_form','=',$id)->first();
 
-            if ($dms_transaction->status == 'Waiting Outside') {
+            /* if(session == 1)
+                 validation_scurity($dms_transaction);
+             elseif (session == 2) {
+                validation_admin($dms_transaction);
+            }*/
+
+          
+            if ($dms_transaction->status == 1) {
                 echo "*Print Struk* status masih 'waiting outside'";
                 return redirect('/dms/dashboard');
             }
-            elseif ($dms_transaction->status == 'Waiting Gate') {
-                $dms_transaction->status = 'Truck Enter WH';
+            elseif ($dms_transaction->status == 2) {
+                $dms_transaction->status = 3;
                 $dms_transaction->save();
                 return redirect('/dms/dashboard');
             }
-            elseif ($dms_transaction->status == 'Truck Enter WH') {
-                $dms_transaction->status = 'Loading';
+
+            elseif ($dms_transaction->status == 3) {
+                $dms_transaction->status = 4;
                 $dms_transaction->save();
                 return redirect('/dms/dashboard');
             }
-            elseif ($dms_transaction->status == 'Loading') {
-                $dms_transaction->status = 'Complete Loading';
+            elseif ($dms_transaction->status == 4) {
+                $dms_transaction->status = 5;
                 $dms_transaction->save();
                 return redirect('/dms/dashboard');
             }
-            elseif ($dms_transaction->status == 'Complete Loading') {
-                $dms_transaction->status = 'Leave Warehouse';
+            elseif ($dms_transaction->status == 5) {
+                $dms_transaction->status = 6;
                 $dms_transaction->save();
                 return redirect('/dms/dashboard');
             }
-            elseif ($dms_transaction->status == 'Leave Warehouse') {
+            elseif ($dms_transaction->status == 6) {
                 return redirect('/dms/dashboard');
             }
             else{
                 echo "Status kosong atau tidak cocok dengan function input_id";
             }
+           
         }
 
         else{
@@ -130,6 +139,32 @@ class DockController extends Controller
             return Redirect::back();
         }
     }
+
+    /*public function validation_scurity($dms_transaction)
+    {
+        if ($dms_transaction->status == 1) {
+                echo "*Print Struk* status masih 'waiting outside'";
+                return redirect('/dms/dashboard');
+            }
+            elseif ($dms_transaction->status == 2) {
+                $dms_transaction->status = 3;
+                $dms_transaction->save();
+                return redirect('/dms/dashboard');
+            }
+    }
+
+    public function validation_admin()
+    {
+        if ($dms_transaction->status == 1) {
+                echo "*Print Struk* status masih 'waiting outside'";
+                return redirect('/dms/dashboard');
+            }
+            elseif ($dms_transaction->status == 2) {
+                $dms_transaction->status = 3;
+                $dms_transaction->save();
+                return redirect('/dms/dashboard');
+            }
+    }*/
 
     public function all_list(){
         if (session()->get('session_id_group') == 3){
@@ -239,44 +274,9 @@ class DockController extends Controller
                 $id_dms_form = 'dms'.$id_purpose.$date_str;
                 $now = new DateTime();
 
-                $result = Master_plat::where('plat_no','=',$request->plat_no)->first();  
-                  
-                // if (sizeof($result) > 0){
+                
 
-                //      $dms_form = new Form;
-                //     // nama = nama field di database, var_nama = var_nama di dalam form input_blade
-                //         $dms_form->driver_name = $request->driver_name;
-                //         $dms_form->driver_phone = $request->driver_phone;
-                //         $dms_form->type_of_vehicle = $request->type_of_vehicle; 
-                //         $dms_form->plat_no = $request->plat_no; 
-                //         $dms_form->transporter_company = $request->transporter_company; 
-                //         $dms_form->shipment = $request->shipment; 
-                //         $dms_form->cust_proj_name = $request->cust_proj_name; 
-                //         $dms_form->id_purpose = $request->id_purpose; 
-                //         $dms_form->created_by = session()->get('session_name'); 
-                //         $dms_form->id_dms_form = $id_dms_form;
-                //     $dms_form->save();
-
-                //     $dms_transaction = new Transaction;
-                //         $dms_transaction->id_dms_form = $id_dms_form;
-                //         $dms_transaction->status = 'Waiting Gate';
-                //         $dms_transaction->arrival_time = $now;
-                //         $dms_transaction->duration = '00:00';
-                //         $dms_transaction->created_by = session()->get('session_name'); 
-                //     $dms_transaction->save();
-
-                //     $dms_transaction_history = new Transaction_history;
-                //         $dms_transaction_history->id_dms_form = $id_dms_form;
-                //         $dms_transaction_history->status = 'Waiting Gate';
-                //         $dms_transaction_history->arrival_time = $now;
-                //         $dms_transaction_history->duration = '00:00';
-                //         $dms_transaction_history->created_by = session()->get('session_name'); 
-                //     $dms_transaction_history->save();
-                //     return  redirect('/dms/dashboard');
-                // }
-                // else
-                // {
-                    $dms_form = new Form;
+                $dms_form = new Form;
                     // nama = nama field di database, var_nama = var_nama di dalam form input_blade
                         $dms_form->driver_name = $request->driver_name;
                         $dms_form->driver_phone = $request->driver_phone;
@@ -290,15 +290,9 @@ class DockController extends Controller
                         $dms_form->id_dms_form = $id_dms_form;
                     $dms_form->save();
 
-                    $dms_master_plat = new Master_plat;
-                        $dms_master_plat->id_dms_form = $id_dms_form;
-                        $dms_master_plat->plat_no = $request->plat_no;
-                        $dms_master_plat->created_by = session()->get('session_name'); 
-                    $dms_master_plat->save();
-
                     $dms_transaction = new Transaction;
                         $dms_transaction->id_dms_form = $id_dms_form;
-                        $dms_transaction->status = 'Waiting Outside';
+                        $dms_transaction->status = 1;
                         $dms_transaction->arrival_time = $now;
                         $dms_transaction->duration = '00:00';
                         $dms_transaction->created_by = session()->get('session_name'); 
@@ -306,13 +300,37 @@ class DockController extends Controller
 
                     $dms_transaction_history = new Transaction_history;
                         $dms_transaction_history->id_dms_form = $id_dms_form;
-                        $dms_transaction_history->status = 'Waiting Outside';
+                        $dms_transaction_history->status = 1;
                         $dms_transaction_history->arrival_time = $now;
                         $dms_transaction_history->duration = '00:00';
                         $dms_transaction_history->created_by = session()->get('session_name'); 
                     $dms_transaction_history->save();
-                    return  redirect('/dms/dashboard');
-                // } 
+
+                    $result = Master_plat::where('plat_no','=',$request->plat_no)->first();
+                    $phone = Master_phone::where('driver_phone','=',$request->driver_phone)->first();
+                  
+                 if (sizeof($result) > 0){
+                 }
+                 else
+                 {
+                    $dms_master_plat = new Master_plat;
+                        $dms_master_plat->id_dms_form = $id_dms_form;
+                        $dms_master_plat->plat_no = $request->plat_no;
+                        $dms_master_plat->created_by = session()->get('session_name'); 
+                    $dms_master_plat->save();
+                 } 
+
+                 if (sizeof($phone) > 0){
+                 }
+                 else
+                 {
+                    $dms_master_phone = new Master_phone;
+                        $dms_master_phone->driver_phone = $request->driver_phone;
+                        $dms_master_phone->created_by = session()->get('session_name'); 
+                    $dms_master_phone->save();
+                 } 
+                return  redirect('/dms/dashboard');
+
     }
 
     // menampilkan fungsi edit
@@ -330,49 +348,6 @@ class DockController extends Controller
 
             $now = new DateTime();
 
-                 $result = Master_plat::where('plat_no','=',$request->plat_no)->first();        
-                 // if (sizeof($result) > 0){
-                 //     $dms_form = Form::where('id_dms_form','=',$id)->first();
-                 //        $dms_form->driver_name = $request->driver_name;
-                 //        $dms_form->type_of_vehicle = $request->type_of_vehicle; 
-                 //        $dms_form->plat_no = $request->plat_no; 
-                 //        $dms_form->driver_phone = $request->driver_phone;
-                 //        $dms_form->shipment = $request->shipment;
-                 //        $dms_form->transporter_company = $request->transporter_company; 
-                 //        $dms_form->shipment = $request->shipment; 
-                 //        $dms_form->cust_proj_name = $request->cust_proj_name; 
-                 //        $dms_form->id_purpose = $request->id_purpose; 
-                 //        $dms_form->created_by = session()->get('session_name'); 
-                 //        $dms_form->id_dms_form = $request->id_dms_form;
-                 //    // untuk mengsave
-                 //    $dms_form->save();
-
-                 //    $dms_transaction = Transaction::where('id_dms_form','=',$id)->first();
-                 //        $dms_transaction->id_dms_form = $request->id_dms_form;
-                 //        $dms_transaction->gate_number = $request->gate_number;
-                 //        $dms_transaction->status = 'Waiting Outside';
-                 //        $dms_transaction->waiting_time = $request->waiting_time;
-                 //        $dms_transaction->exit_time = $now;
-                 //        $dms_transaction->duration = '2:30';
-                 //        $dms_transaction->updated_by = session()->get('session_name'); 
-                 //    $dms_transaction->save();
-
-                 //    $dms_transaction_history = new Transaction_history;
-                 //        $dms_transaction_history->id_dms_form = $request->id_dms_form;
-                 //        $dms_transaction_history->gate_number = $request->gate_number;
-                 //        $dms_transaction_history->status = 'Waiting Outside';
-                 //        $dms_transaction_history->waiting_time = $request->waiting_time;
-                 //        $dms_transaction_history->exit_time = $now;
-                 //        $dms_transaction_history->duration = '02:30';
-                 //        $dms_transaction_history->created_by = session()->get('session_name');
-                 //    $dms_transaction_history->save();
-
-                 //    // sama aja kaya href setelak klik submit
-                 //    // mau pindah ke link mana setelah tombol submit di klik
-                 //    return  redirect('dms/dashboard');
-                 // }
-                 // else
-                 // {
                     $dms_form = Form::where('id_dms_form','=',$id)->first();
                         $dms_form->driver_name = $request->driver_name;
                         $dms_form->type_of_vehicle = $request->type_of_vehicle; 
@@ -388,17 +363,11 @@ class DockController extends Controller
                     // untuk mengsave
                     $dms_form->save();
 
-                    $dms_master_plat = Master_plat::where('id_dms_form','=',$id)->first();;
-                        $dms_master_plat->id_dms_form = $request->id_dms_form;
-                        $dms_master_plat->plat_no = $request->plat_no;
-                        $dms_master_plat->updated_by = session()->get('session_name'); 
-                    $dms_master_plat->save();
-
                     $dms_transaction = Transaction::where('id_dms_form','=',$id)->first();
                         $dms_transaction->id_dms_form = $request->id_dms_form;
                         $dms_transaction->gate_number = $request->gate_number;
-                        if ($dms_transaction->status == 'Waiting Outside') {
-                            $dms_transaction->status = 'Waiting Gate';
+                        if ($dms_transaction->status == 1) {
+                            $dms_transaction->status = 2;
                         }else{
                             $dms_transaction->status = $dms_transaction->status;
                         }
@@ -411,8 +380,8 @@ class DockController extends Controller
                     $dms_transaction_history = new Transaction_history;
                         $dms_transaction_history->id_dms_form = $request->id_dms_form;
                         $dms_transaction_history->gate_number = $request->gate_number;
-                        if ($dms_transaction_history->status == 'Waiting Outside') {
-                            $dms_transaction_history->status = 'Waiting Gate';
+                        if ($dms_transaction_history->status == 1) {
+                            $dms_transaction_history->status = 2;
                         }else{
                             $dms_transaction->status = $dms_transaction->status;
                         }
@@ -422,10 +391,30 @@ class DockController extends Controller
                         $dms_transaction_history->created_by = session()->get('session_name');
                     $dms_transaction_history->save();
 
-                    // sama aja kaya href setelak klik submit
-                    // mau pindah ke link mana setelah tombol submit di klik
-                    return  redirect('dms/dashboard');
-                 // }
+                $result = Master_plat::where('plat_no','=',$request->plat_no)->first(); 
+                $phone = Master_phone::where('driver_phone','=',$request->driver_phone)->first();    
+
+                if (sizeof($result) > 0){
+                }
+                else
+                {
+                    $dms_master_plat = Master_plat::where('id_dms_form','=',$id)->first();;
+                        $dms_master_plat->id_dms_form = $request->id_dms_form;
+                        $dms_master_plat->plat_no = $request->plat_no;
+                        $dms_master_plat->updated_by = session()->get('session_name'); 
+                    $dms_master_plat->save();
+                }
+
+                if (sizeof($phone) > 0){
+                }
+                else
+                {
+                    $dms_master_phone = new Master_phone;
+                        $dms_master_phone->driver_phone = $request->driver_phone;
+                        $dms_master_phone->created_by = session()->get('session_name'); 
+                    $dms_master_phone->save();
+                }
+            return  redirect('dms/dashboard');
     }
 
     public function delete($id){

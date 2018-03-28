@@ -91,7 +91,7 @@ class User_managementController extends Controller
         $validatedData = $request->validate([
 
               
-                'username' => 'required|unique:dms_user_management',
+                'username' => 'required',
                 'name' => 'required',
                 'password' => 'required',
                 'id_usergroup' => 'required',

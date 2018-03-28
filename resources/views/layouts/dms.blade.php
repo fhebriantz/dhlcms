@@ -3,7 +3,7 @@
 <head>
   @include('include_dms/head')
 </head>
-<body>
+<body onload="startTime()">
   <!-- a ====================== -->
   <nav class="navbar menu  mobilehide">
     @include('include_dms/navatas')

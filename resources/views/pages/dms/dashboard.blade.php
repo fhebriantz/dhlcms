@@ -35,10 +35,11 @@
         </li>
       @elseif (session()->get('session_id_group') == 2)
         
-      @else
+      @elseif (session()->get('session_id_group') == 3)
         <li>
         <a href="/dhlcms/public/dms/input" style=""><button type="button" class="btn btnadd" style="background-color: #999; color: white;">Tambah Data</button></a>
         </li>
+      @else
       @endif 
       <li class="nav-item navbar-right" style="float: right; cursor: pointer;">
         <a>{{session()->get('session_name')}} / {{session()->get('session_name_project')}}</a>
@@ -126,8 +127,9 @@
             @if (session()->get('session_id_group') == 1)
             <th class="cus width_print">PRINT</th>
             @elseif (session()->get('session_id_group') == 2)
-            @else
+            @elseif (session()->get('session_id_group') == 3)
             <th class="cus width_print">PRINT</th>
+            @else
             @endif
           </tr>
         </thead>
@@ -140,7 +142,7 @@
             <td class="phone">{{$inbound->driver_name}}</td>
             <td class="cus ">{{$inbound->transporter_company}}</td>
             <td class="cus">{{$inbound->duration}}</td>
-            <td class="cus">{{$inbound->status}}</td>
+            <td class="cus">{{$inbound->status_name}}</td>
             <td class="phone ">
               <?php if ($inbound->waiting_time == ''): ?>
               <?php echo "-" ?>
@@ -160,7 +162,7 @@
               <a href="/dhlcms/public/dms/{{ $inbound->id_dms_form }}/edit"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
                 <form method="POST" action="/dhlcms/public/dms/{{ $inbound->id_dms_form}}/delete" class="text-center" style="float: right; margin-left: 2px;">
                   {{ csrf_field() }}
-                  <input class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$inbound->driver_name}}?');" style="width: 20px; height: auto;"> 
+                  <button class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$inbound->driver_name}}?');" style="width: 20px; height: auto;"><img src="{{ asset('image/trash.png')}}" alt="" style="width: 15px; height: auto;"></button>
                   <input type="hidden" name="_method" value="DELETE">
                 </form>
             </td>
@@ -169,7 +171,7 @@
               <a href="/dhlcms/public/dms/{{ $inbound->id_dms_form }}/edit"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
                 <form method="POST" action="/dhlcms/public/dms/{{ $inbound->id_dms_form}}/delete" class="text-center" style="float: right; margin-left: 2px;">
                   {{ csrf_field() }}
-                  <input class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$inbound->driver_name}}?');" style="width: 20px; height: auto;"> 
+                  <button class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$inbound->driver_name}}?');" style="width: 20px; height: auto;"><img src="{{ asset('image/trash.png')}}" alt="" style="width: 15px; height: auto;"></button>
                   <input type="hidden" name="_method" value="DELETE">
                 </form>
             </td>
@@ -178,8 +180,9 @@
             @if (session()->get('session_id_group') == 1)
             <td  class="cus "><button class="btn btn-primary" style="padding: 0px 5px">Print</button></td>
             @elseif (session()->get('session_id_group') == 2)
-            @else
+            @elseif (session()->get('session_id_group') == 3)
             <td  class="cus "><button class="btn btn-primary" style="padding: 0px 5px">Print</button></td>
+            @else
             @endif
             
           </tr>
@@ -223,8 +226,9 @@
             @if (session()->get('session_id_group') == 1)
             <th class="cus width_print">PRINT</th>
             @elseif (session()->get('session_id_group') == 2)
-            @else
+            @elseif (session()->get('session_id_group') == 3)
             <th class="cus width_print">PRINT</th>
+            @else
             @endif
           </tr>
         </thead>
@@ -237,7 +241,7 @@
             <td class="">{{$outbound->driver_name}}</td>
             <td class="cus ">{{$outbound->transporter_company}}</td>
             <td class="">{{$outbound->duration}}</td>
-            <td class="">{{$outbound->status}}</td>
+            <td class="">{{$outbound->status_name}}</td>
             <td class="phone ">
               <?php if ($outbound->waiting_time == ''): ?>
               <?php echo "-" ?>
@@ -258,7 +262,7 @@
               <a href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/edit"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
                 <form method="POST" action="/dhlcms/public/dms/{{ $outbound->id_dms_form}}/delete" class="text-center" style="float: right; margin-left: 2px;">
                   {{ csrf_field() }}
-                  <input class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$outbound->driver_name}}?');" style="width: 20px; height: auto;"> 
+                  <button class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$outbound->driver_name}}?');" style="width: 20px; height: auto;"><img src="{{ asset('image/trash.png')}}" alt="" style="width: 15px; height: auto;"></button></button> 
                   <input type="hidden" name="_method" value="DELETE">
                 </form>
             </td>
@@ -267,7 +271,7 @@
               <a href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/edit"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
                 <form method="POST" action="/dhlcms/public/dms/{{ $outbound->id_dms_form}}/delete" class="text-center" style="float: right; margin-left: 2px;">
                   {{ csrf_field() }}
-                  <input class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$outbound->driver_name}}?');" style="width: 20px; height: auto;"> 
+                  <button class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$outbound->driver_name}}?');" style="width: 20px; height: auto;"><img src="{{ asset('image/trash.png')}}" alt="" style="width: 15px; height: auto;"></button></button> 
                   <input type="hidden" name="_method" value="DELETE">
                 </form>
             </td>
@@ -276,8 +280,9 @@
             @if (session()->get('session_id_group') == 1)            
             <td><button class="btn btn-primary"  style="padding: 0px 5px">Print</button></td>
             @elseif (session()->get('session_id_group') == 2)
-            @else
+            @elseif (session()->get('session_id_group') == 3)
             <td><button class="btn btn-primary"  style="padding: 0px 5px">Print</button></td>
+            @else
             @endif
           </tr>
            @endforeach

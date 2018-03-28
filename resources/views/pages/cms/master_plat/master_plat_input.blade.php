@@ -28,7 +28,7 @@
                 <input style="width: 100%" type="submit" class="btn btn-success submit" value="SUBMIT" name="submit" />
               </div>
               <div class="col-sm-3 text-center">
-                <a href="../menu"><input style="width: 100%" type="submit" class="btn btn-danger delete" value="CANCEL"/></a>
+                <a href="/dhlcms/public/cms/master_plat"><input style="width: 100%" type="button" class="btn btn-danger delete" value="CANCEL"/></a>
               </div>
             </div>
         </form>

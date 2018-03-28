@@ -60,6 +60,15 @@ Route::post('/cms/master_phone/input','Cms\Master_phoneController@insert');
 Route::put('/cms/master_phone/{id}/edit','Cms\Master_phoneController@update'); 
 Route::delete('cms/master_phone/{id}/delete','Cms\Master_phoneController@delete');
 
+// Status ==============================================================
+Route::get('/cms/master_status', 'Cms\Master_statusController@showcms');
+Route::get('/cms/master_status/input', 'Cms\Master_statusController@input');
+Route::get('cms/master_status/{id}/edit','Cms\Master_statusController@edit');
+// call
+Route::post('/cms/master_status/input','Cms\Master_statusController@insert'); 
+Route::put('/cms/master_status/{id}/edit','Cms\Master_statusController@update'); 
+Route::delete('cms/master_status/{id}/delete','Cms\Master_statusController@delete');
+
 // project ==============================================================
 Route::get('/cms/master_project', 'Cms\Master_projectController@showcms');
 Route::get('/cms/master_project/input', 'Cms\Master_projectController@input');

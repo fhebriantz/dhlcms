@@ -25,7 +25,6 @@
         <thead class="thead paddingtable text-center" >
           <tr >
             <th class="">No</th>
-            <th class="">ID DMS FORM</th>
             <th class="phone " style="width: 12%">PLATE NO</th>
             <th class="" style="width: 13%">DRIVER NAME</th>
             <th class="cus " style="width: 12%">TRANSPORTER COMPANY</th>
@@ -42,7 +41,6 @@
            @foreach($dms_inbound as $inbound)
           <tr>    
             <td class="">{{ $no_inbound++ }}</td>
-            <td class="">{{$inbound->id_dms_form}}</td>
             <td class="phone ">{{$inbound->plat_no}}</td>
             <td class="">{{$inbound->driver_name}}</td>
             <td class="cus ">{{$inbound->transporter_company}}</td>
@@ -73,7 +71,6 @@
         <thead class="thead paddingtable text-center" >
           <tr >
             <th class="">No</th>
-            <th class="">ID DMS FORM</th>
             <th class="phone " style="width: 12%">PLATE NO</th>
             <th class="" style="width: 13%">DRIVER NAME</th>
             <th class="cus " style="width: 12%">TRANSPORTER COMPANY</th>
@@ -90,7 +87,6 @@
           @foreach($dms_outbound as $outbound)
           <tr>    
             <td class="">{{ $no_outbound++ }}</td>
-            <td class="">{{$outbound->id_dms_form}}</td>
             <td class="phone ">{{$outbound->plat_no}}</td>
             <td class="">{{$outbound->driver_name}}</td>
             <td class="cus ">{{$outbound->transporter_company}}</td>
