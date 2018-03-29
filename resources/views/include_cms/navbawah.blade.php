@@ -6,6 +6,7 @@
         <ul class="dropdown-menu">
           <li><a href="/dhlcms/public/cms/master_plat">Master Plate</a></li>
            <li><a href="/dhlcms/public/cms/master_phone">Master Phone</a></li> 
+           <li><a href="/dhlcms/public/cms/master_location">Master Location</a></li> 
            <li><a href="/dhlcms/public/cms/master_status">Master Status</a></li> 
           <li><a href="/dhlcms/public/cms/master_tc">Master Transporter Company</a></li>
           <li><a href="/dhlcms/public/cms/master_project">Master Project</a></li>

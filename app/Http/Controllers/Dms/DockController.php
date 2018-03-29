@@ -92,46 +92,22 @@ class DockController extends Controller
         if (sizeof($check_dms) > 0){
 
             $dms_transaction = Transaction::where('id_dms_form','=',$id)->first();
-
-            /* if(session == 1)
-                 validation_scurity($dms_transaction);
-             elseif (session == 2) {
-                validation_admin($dms_transaction);
-            }*/
-
-          
-            if ($dms_transaction->status == 1) {
-                echo "*Print Struk* status masih 'waiting outside'";
-                return redirect('/dms/dashboard');
+            if (session()->get('session_id_group') == 1){
+                return $this->validation_superadmin($dms_transaction);
             }
-            elseif ($dms_transaction->status == 2) {
-                $dms_transaction->status = 3;
-                $dms_transaction->save();
-                return redirect('/dms/dashboard');
+            elseif (session()->get('session_id_group') == 3){
+                return $this->validation_scurity($dms_transaction);
             }
-
-            elseif ($dms_transaction->status == 3) {
-                $dms_transaction->status = 4;
-                $dms_transaction->save();
-                return redirect('/dms/dashboard');
+            elseif (session()->get('session_id_group') == 4) {
+                return $this->validation_checker($dms_transaction);
             }
-            elseif ($dms_transaction->status == 4) {
-                $dms_transaction->status = 5;
-                $dms_transaction->save();
-                return redirect('/dms/dashboard');
-            }
-            elseif ($dms_transaction->status == 5) {
-                $dms_transaction->status = 6;
-                $dms_transaction->save();
-                return redirect('/dms/dashboard');
-            }
-            elseif ($dms_transaction->status == 6) {
-                return redirect('/dms/dashboard');
+            elseif (session()->get('session_id_group') == 2) {
+                return $this->validation_checker($dms_transaction);
             }
             else{
-                echo "Status kosong atau tidak cocok dengan function input_id";
+                Session::flash('id_dms', "Tidak memiliki akses scan");
+                return Redirect::back();
             }
-           
         }
 
         else{
@@ -140,31 +116,75 @@ class DockController extends Controller
         }
     }
 
-    /*public function validation_scurity($dms_transaction)
+    public function validation_superadmin($dms_transaction)
     {
         if ($dms_transaction->status == 1) {
-                echo "*Print Struk* status masih 'waiting outside'";
-                return redirect('/dms/dashboard');
-            }
-            elseif ($dms_transaction->status == 2) {
-                $dms_transaction->status = 3;
-                $dms_transaction->save();
-                return redirect('/dms/dashboard');
-            }
+            echo "*Print Struk* status masih 'waiting outside'";
+            return redirect('/dms/dashboard');
+        }
+        elseif ($dms_transaction->status == 2) {
+            $dms_transaction->status = 3;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+
+        elseif ($dms_transaction->status == 3) {
+            $dms_transaction->status = 4;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+        elseif ($dms_transaction->status == 4) {
+            $dms_transaction->status = 5;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+        elseif ($dms_transaction->status == 5) {
+            $dms_transaction->status = 6;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+        else{
+            return redirect('/dms/dashboard');
+        }
     }
 
-    public function validation_admin()
+    public function validation_scurity($dms_transaction)
     {
         if ($dms_transaction->status == 1) {
-                echo "*Print Struk* status masih 'waiting outside'";
-                return redirect('/dms/dashboard');
-            }
-            elseif ($dms_transaction->status == 2) {
-                $dms_transaction->status = 3;
-                $dms_transaction->save();
-                return redirect('/dms/dashboard');
-            }
-    }*/
+            echo "*Print Struk* status masih 'waiting outside'";
+            return redirect('/dms/dashboard');
+        }
+        elseif ($dms_transaction->status == 2) {
+            $dms_transaction->status = 3;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+        elseif ($dms_transaction->status == 5) {
+            $dms_transaction->status = 6;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+        else{
+            return redirect('/dms/dashboard');
+        }
+    }
+
+    public function validation_checker($dms_transaction)
+    {
+        if ($dms_transaction->status == 3) {
+            $dms_transaction->status = 4;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+        elseif ($dms_transaction->status == 4) {
+            $dms_transaction->status = 5;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+        else{
+            return redirect('/dms/dashboard');
+        }
+    }
 
     public function all_list(){
         if (session()->get('session_id_group') == 3){

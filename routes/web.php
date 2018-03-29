@@ -51,6 +51,16 @@ Route::post('/cms/master_plat/input','Cms\Master_platController@insert');
 Route::put('/cms/master_plat/{id}/edit','Cms\Master_platController@update'); 
 Route::delete('cms/master_plat/{id}/delete','Cms\Master_platController@delete');
 
+// location ==============================================================
+Route::get('/cms/master_location', 'Cms\Master_locationController@showcms');
+Route::get('/cms/master_location/input', 'Cms\Master_locationController@input');
+Route::get('cms/master_location/{id}/edit','Cms\Master_locationController@edit');
+// call
+Route::post('/cms/master_location/input','Cms\Master_locationController@insert'); 
+Route::put('/cms/master_location/{id}/edit','Cms\Master_locationController@update'); 
+Route::delete('cms/master_location/{id}/delete','Cms\Master_locationController@delete');
+
+
 // phone ==============================================================
 Route::get('/cms/master_phone', 'Cms\Master_phoneController@showcms');
 Route::get('/cms/master_phone/input', 'Cms\Master_phoneController@input');
