@@ -31,6 +31,8 @@
             <th class=" " style="width: 5%">DURATION</th>
             <th class=" " style="width: 5%">PROGRES</th>
             <th class="phone "  style="width: 8%">PUT</th>
+            <th class="cus " style="width: 14%" >ASAL</th>
+            <th class="cus " style="width: 14%" >TUJUAN</th>
             <th class="phone " style="width: 1%">GATE</th>
             <th class="" style="width: 10%">VEHICLE</th>
             <th class="cus " style="width: 14%" >PROJECT NAME</th>
@@ -50,8 +52,10 @@
               <?php if ($inbound->waiting_time == ''): ?>
               <?php echo "-" ?>
               <?php else: ?>
-              <?php echo "$inbound->waiting_time Min" ?>
+              <?php echo "$inbound->waiting_time" ?>
               <?php endif ?></td>
+            <td class="cus ">{{$inbound->asal}}</td>
+            <td class="cus ">{{$inbound->tujuan}}</td>
             <td class="cus ">{{$inbound->gate_number}}</td>
             <td class="">{{$inbound->type_of_vehicle}}</td>
             <td class="cus ">{{$inbound->master_project_name}}</td>
@@ -77,6 +81,8 @@
             <th class=" " style="width: 5%">DURATION</th>
             <th class=" " style="width: 8%">PROGRES</th>
             <th class="phone "  style="width: 8%">PUT</th>
+            <th class="cus " style="width: 14%" >ASAL</th>
+            <th class="cus " style="width: 14%" >TUJUAN</th>
             <th class="phone " style="width: 1%">GATE</th>
             <th class="" style="width: 10%">VEHICLE</th>
             <th class="cus " style="width: 14%" >PROJECT NAME</th>
@@ -96,9 +102,11 @@
               <?php if ($outbound->waiting_time == ''): ?>
               <?php echo "-" ?>
               <?php else: ?>
-              <?php echo "$outbound->waiting_time Min" ?>
+              <?php echo "$outbound->waiting_time" ?>
               <?php endif ?>
             </td>
+            <td class="">{{$outbound->asal}}</td>
+            <td class="cus ">{{$outbound->tujuan}}</td>
             <td class="cus ">{{$outbound->gate_number}}</td>
             <td class="">{{$outbound->type_of_vehicle}}</td>
             <td class="cus ">{{$outbound->master_project_name}}</td>

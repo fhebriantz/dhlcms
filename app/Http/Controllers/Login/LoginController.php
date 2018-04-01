@@ -34,7 +34,8 @@ class LoginController extends Controller
         $checkLogin = User_management::where(['username'=>$username,'password'=>$password])
         ->join('dms_user_group', 'dms_user_group.id', '=', 'dms_user_management.id_usergroup')
         ->join('dms_master_project', 'dms_master_project.id', '=', 'dms_user_management.id_project')
-        ->select('dms_user_management.*', 'dms_user_group.usergroup_name', 'dms_user_group.id as id_group', 'dms_master_project.master_project_name')
+        ->join('dms_master_location', 'dms_master_location.id', '=', 'dms_user_management.id_location')
+        ->select('dms_user_management.*', 'dms_user_group.usergroup_name', 'dms_user_group.id as id_group', 'dms_master_project.master_project_name', 'dms_master_location.id as id_loc', 'dms_master_location.location')
         ->get();
         if (sizeof($checkLogin) > 0){
             foreach ($checkLogin as $key => $val) {
@@ -45,6 +46,8 @@ class LoginController extends Controller
                 $username = $val->username;
                 $nama_group = $val->usergroup_name;
                 $id_project = $val->id_project;
+                $location = $val->location;
+                $id_location = $val->id_loc;
                 $project_name = $val->master_project_name;
 
                 $request->session()->put('session_login', true);
@@ -54,6 +57,8 @@ class LoginController extends Controller
                 $request->session()->put('session_id_group', $id_group_akun);
                 $request->session()->put('session_group', $nama_group);
                 $request->session()->put('session_project', $id_project);
+                $request->session()->put('session_id_loc', $id_location);
+                $request->session()->put('session_location', $location);
                 $request->session()->put('session_name_project', $project_name);
 
                 return  redirect('/dms/dashboard');
@@ -73,6 +78,8 @@ class LoginController extends Controller
                 $request->session()->forget('session_id_group');
                 $request->session()->forget('session_group');
                 $request->session()->forget('session_project');
+                $request->session()->forget('session_id_loc');
+                $request->session()->forget('session_location');
                 $request->session()->forget('session_name_project');
                 $request->session()->forget('message');
 

@@ -38,7 +38,7 @@
           </div>  
         </div>
         <h2 style="color: #d71635; float: left;" class="titledashboard">Add DMS Data</h3>
-        <h2 style="color: #2d9e20; float: right;" class="titledashboard">{{ $dms_form->status }}</h2>
+        <h2 style="color: #2d9e20; float: right;" class="titledashboard">{{ $dms_form->status_name }}</h2>
       </div>
 
       <div class="col-md-12 col-sm-12">
@@ -107,6 +107,15 @@
                   <tr>
                     <td>Shipment</td>
                     <td><input class="form-control" type="text" name="shipment" value="{{ $dms_form->shipment }}" placeholder="Shipment" style="width: 100%"></td>
+                  </tr>
+
+                  <tr>
+                    <td>Asal</td>
+                    <td><input class="form-control" type="text" name="asal" id="asal " placeholder="Asal" value="{{ $dms_form->asal }}" style="width: 100%"></td>
+                  </tr>
+                  <tr>
+                    <td>Tujuan</td>
+                    <td><input class="form-control" type="text" name="tujuan" id="tujuan " placeholder="Tujuan" value="{{ $dms_form->tujuan }}" style="width: 100%"></td>
                   </tr>
 
                   <tr>

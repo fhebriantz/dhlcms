@@ -102,6 +102,14 @@
                     <td><input class="form-control" type="text" name="shipment" id="shipment " placeholder="Shipment/PO/SO/DO" style="width: 100%"></td>
                   </tr>
                   <tr>
+                    <td>Asal</td>
+                    <td><input class="form-control" type="text" name="asal" id="asal " placeholder="Asal" style="width: 100%"></td>
+                  </tr>
+                  <tr>
+                    <td>Tujuan</td>
+                    <td><input class="form-control" type="text" name="tujuan" id="tujuan " placeholder="Tujuan" style="width: 100%"></td>
+                  </tr>
+                  <tr>
                     <td>Customer/Project Name</td>                  
                     <td> <!-- select class form control untuk membuat combo box -->
                         <select class="form-control" name="cust_proj_name" style="width: 100%">

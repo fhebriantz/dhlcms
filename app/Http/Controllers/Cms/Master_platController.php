@@ -60,7 +60,6 @@ class Master_platController extends Controller
         $dms_master_plat = new Master_plat;
     		// nama = nama field di database, var_nama = var_nama di dalam form input_blade
             $dms_master_plat->plat_no = $request->plat_no; 
-            $dms_master_plat->id_dms_form = 'Input by CMS';
             $dms_master_plat->created_by = session()->get('session_name_cms'); 
 
     	// untuk mengsave
