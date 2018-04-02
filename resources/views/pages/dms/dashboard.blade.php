@@ -178,10 +178,10 @@
             @else
             @endif
             @if (session()->get('session_id_group') == 1)
-            <td  class="cus "><button class="btn btn-primary" style="padding: 0px 5px">Print</button></td>
+            <td class="cus "><a target="_blank" href="/dhlcms/public/dms/{{ $inbound->id_dms_form }}/barcode" class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
             @elseif (session()->get('session_id_group') == 2)
             @elseif (session()->get('session_id_group') == 3)
-            <td  class="cus "><button class="btn btn-primary" style="padding: 0px 5px">Print</button></td>
+            <td class="cus "><a target="_blank" href="/dhlcms/public/dms/{{ $inbound->id_dms_form }}/barcode"  class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
             @else
             @endif
             
@@ -278,10 +278,10 @@
             @else
             @endif
             @if (session()->get('session_id_group') == 1)            
-            <td><button class="btn btn-primary"  style="padding: 0px 5px">Print</button></td>
+            <td class="cus"><a target="_blank" href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/barcode" class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
             @elseif (session()->get('session_id_group') == 2)
             @elseif (session()->get('session_id_group') == 3)
-            <td><button class="btn btn-primary"  style="padding: 0px 5px">Print</button></td>
+            <td class="cus"><a target="_blank" href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/barcode" class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
             @else
             @endif
           </tr>

@@ -111,11 +111,11 @@
 
                   <tr>
                     <td>Asal</td>
-                    <td><input class="form-control" type="text" name="asal" id="asal " placeholder="Asal" value="{{ $dms_form->asal }}" style="width: 100%"></td>
+                    <td><input class="form-control" type="text" name="asal" id="asal " placeholder="Asal (Inbound)" value="{{ $dms_form->asal }}" style="width: 100%"></td>
                   </tr>
                   <tr>
                     <td>Tujuan</td>
-                    <td><input class="form-control" type="text" name="tujuan" id="tujuan " placeholder="Tujuan" value="{{ $dms_form->tujuan }}" style="width: 100%"></td>
+                    <td><input class="form-control" type="text" name="tujuan" id="tujuan " placeholder="Tujuan (Outbound)" value="{{ $dms_form->tujuan }}" style="width: 100%"></td>
                   </tr>
 
                   <tr>

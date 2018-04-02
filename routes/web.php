@@ -1,5 +1,5 @@
 <?php
-
+Route::get('/dms/{id}/barcode', 'Dms\DockController@barcode');
  
 Route::get('/dms/login', 'Login\LoginController@show');
 Route::post('/dms/login', 'Login\LoginController@login');

@@ -103,11 +103,11 @@
                   </tr>
                   <tr>
                     <td>Asal</td>
-                    <td><input class="form-control" type="text" name="asal" id="asal " placeholder="Asal" style="width: 100%"></td>
+                    <td><input class="form-control" type="text" name="asal" id="asal " placeholder="Asal (Inbound)" style="width: 100%"></td>
                   </tr>
                   <tr>
                     <td>Tujuan</td>
-                    <td><input class="form-control" type="text" name="tujuan" id="tujuan " placeholder="Tujuan" style="width: 100%"></td>
+                    <td><input class="form-control" type="text" name="tujuan" id="tujuan " placeholder="Tujuan (Outbound)" style="width: 100%"></td>
                   </tr>
                   <tr>
                     <td>Customer/Project Name</td>                  
