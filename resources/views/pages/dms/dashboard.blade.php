@@ -96,7 +96,7 @@
              
           </div>  
         </div>
-        <h2 class="titledashboard" style="color: #d71635">INBOUND <span id="demo"></h2>
+        <h2 class="titledashboard" style="color: #d71635">INBOUND</h2>
         @if (Session::has('id_dms'))
           <div class="alert alert-danger">{{ Session::get('id_dms') }}</div>
         @endif
@@ -157,7 +157,7 @@
             <td class=" ">{{$inbound->plat_no}}</td>
             <td class="phone">{{$inbound->driver_name}}</td>
             <td class="cus ">{{$inbound->transporter_company}}</td>
-            <td class="cus"></span></td>
+            <td class="cus"><span id="{{$inbound->id_dms_form}}"></span></td>
             <td class="cus">{{$inbound->status_name}}</td>
             <td class="phone ">
               <?php if ($inbound->waiting_time == ''): ?>
@@ -207,7 +207,7 @@
           <script>
             // Set the date we're counting down to
             //var countDownDate = new Date("Apr 3, 2018 16:0:0").getTime();
-            var countUPDate = new Date("Apr 03, 18 17:00:03").getTime();
+            var countUPDate = new Date("{{$inbound->duration}}").getTime();
 
             // Update the count down every 1 second
             var x = setInterval(function() {
@@ -225,13 +225,13 @@
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
                 
                 // Output the result in an element with id="demo"
-                document.getElementById("demo").innerHTML = hours + "h "
+                document.getElementById("{{$inbound->id_dms_form}}").innerHTML = hours + "h "
                 + minutes + "m " + seconds + "s ";
                 
                 // If the count down is over, write some text 
                 if (distance < 0) {
                     clearInterval(x);
-                    document.getElementById("demo").innerHTML = "EXPIRED";
+                    document.getElementById("{{$inbound->id_dms_form}}").innerHTML = "EXPIRED";
                 }
             }, 1000);
             </script>
