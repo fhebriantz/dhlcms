@@ -53,7 +53,7 @@
                     <table class="table table-striped fontinput">
                         <tr>
                           <td>DMS ID</td>
-                          <td><input class="form-control" type="text" name="dms_id" id="dms_id" placeholder="DMS ID" style="width: 100%"></td>
+                          <td><input class="form-control" type="text" name="dms_id" id="dms_id" placeholder="DMS ID" style="width: 100%" autofocus=""></td>
                         </tr>
                       
                         <tr>
@@ -69,6 +69,7 @@
       </li>
 @endsection
 @section('content')
+
 
 <div class="tab-content">
 	<div class="tab-pane" id="dashboards" role="tabpanel">
@@ -95,11 +96,26 @@
              
           </div>  
         </div>
-        <h2 class="titledashboard" style="color: #d71635">INBOUND</h2>
+        <h2 class="titledashboard" style="color: #d71635">INBOUND <span id="demo"></h2>
         @if (Session::has('id_dms'))
           <div class="alert alert-danger">{{ Session::get('id_dms') }}</div>
         @endif
+
       </div>
+
+      <form method="POST" action="/dhlcms/public/dms/input_id">
+                {{ csrf_field() }}
+                    
+                    <table class="table table-striped fontinput">
+                      
+                        <tr>
+                          <td>DMS ID</td>
+                          <td><input class="form-control" type="text" name="dms_id" id="dms_id" placeholder="DMS ID" style="width: 100%" autofocus=""></td>
+                          <td><input class="btn btn-info" name="submit" value="Submit" type="submit" style="width: 100%"></td>
+                        </tr>
+                        
+                    </table>
+              </form>
       <table class="table-striped fontsizetable text-center" id="inbound_id"  width="100%" cellspacing="0">
         <thead class="thead paddingtable text-center" >
           <tr >
@@ -141,7 +157,7 @@
             <td class=" ">{{$inbound->plat_no}}</td>
             <td class="phone">{{$inbound->driver_name}}</td>
             <td class="cus ">{{$inbound->transporter_company}}</td>
-            <td class="cus">{{$inbound->duration}}</td>
+            <td class="cus"></span></td>
             <td class="cus">{{$inbound->status_name}}</td>
             <td class="phone ">
               <?php if ($inbound->waiting_time == ''): ?>
@@ -186,6 +202,40 @@
             @endif
             
           </tr>
+
+           <!-- DURATION ======================================================== DURATION -->
+          <script>
+            // Set the date we're counting down to
+            //var countDownDate = new Date("Apr 3, 2018 16:0:0").getTime();
+            var countUPDate = new Date("Apr 03, 18 17:00:03").getTime();
+
+            // Update the count down every 1 second
+            var x = setInterval(function() {
+
+                // Get todays date and time
+                var now = new Date().getTime();
+                
+                // Find the distance between now an the count down date
+                var distance = now - countUPDate;
+                
+                // Time calculations for days, hours, minutes and seconds
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                // Output the result in an element with id="demo"
+                document.getElementById("demo").innerHTML = hours + "h "
+                + minutes + "m " + seconds + "s ";
+                
+                // If the count down is over, write some text 
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("demo").innerHTML = "EXPIRED";
+                }
+            }, 1000);
+            </script>
+            <!-- DURATION ======================================================== DURATION -->
            @endforeach
         </tbody>
       </table>
@@ -199,6 +249,7 @@
         </div>
         <h2 class="titledashboard" style="color: #d71635">OUTBOUND</h2>
       </div>
+
       <table class="table-striped fontsizetable text-center"  width="100%" cellspacing="0" id="outbound_id">     
         <thead class="thead paddingtable text-center" >
           <tr >
@@ -292,6 +343,7 @@
       <div class="tab-pane" id="profile" role="tabpanel"><h1>user profile</h1></div>
       <div class="tab-pane" id="scan" role="tabpanel"><h1>scan</h1></div>
     </div>
+
 @endsection
 @section('script')
 <script type="text/javascript">

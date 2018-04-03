@@ -46,7 +46,7 @@
             <td class="">{{$inbound->driver_name}}</td>
             <td class="cus ">{{$inbound->transporter_company}}</td>
             <td class="">{{$inbound->duration}}</td>
-            <td class="">{{$inbound->status}}</td>
+            <td class="">{{$inbound->status_name}}</td>
             <td class="phone ">
               <?php if ($inbound->waiting_time == ''): ?>
               <?php echo "-" ?>
@@ -94,7 +94,7 @@
             <td class="">{{$outbound->driver_name}}</td>
             <td class="cus ">{{$outbound->transporter_company}}</td>
             <td class="">{{$outbound->duration}}</td>
-            <td class="">{{$outbound->status}}</td>
+            <td class="">{{$outbound->status_name}}</td>
             <td class="phone ">
               <?php if ($outbound->waiting_time == ''): ?>
               <?php echo "-" ?>

@@ -16,8 +16,10 @@ use App\Http\Controllers\Model\Purpose;
 use Illuminate\Routing\Middleware\LoginCheck;
 use Illuminate\Support\Facades\Redirect;
 use DateTime;
+use Date;
 use Auth;
 use Session;
+use Carbon;
 
 class DockController extends Controller
 {
@@ -29,8 +31,10 @@ class DockController extends Controller
 
     public function barcode($id){
         $tgl_cetak=date("Y-m-d");
+        $mytime = Carbon\Carbon::now();
+        $waktu = $mytime->toDateTimeString();
         $dms_form=Transaction::getTableTransaction()->where('id_dms_form','=',$id)->first();
-        return view('pages/dms/barcode', compact('dms_form','tgl_cetak'));
+        return view('pages/dms/barcode', compact('dms_form','tgl_cetak','waktu'));
     }
 
     public function show(){
@@ -208,8 +212,8 @@ class DockController extends Controller
         }
         elseif (session()->get('session_id_group') == 1) {
         $dms_form = Form::all();
-        $dms_inbound = Transaction::getTableInbound();
-        $dms_outbound = Transaction::getTableOutbound();
+        $dms_inbound = Transaction::getTableSuperInbound();
+        $dms_outbound = Transaction::getTableSuperOutbound();
         $no_inbound = 1;
         $no_outbound = 1;
         return view('pages/dms/all_list', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));
@@ -302,6 +306,8 @@ class DockController extends Controller
                 $date_str=strtotime(date('D-m-y H:i:s'));
                 $id_dms_form = 'DMS'.$id_purpose.$date_str;
                 $now = new DateTime();
+                $waktu = $now->format('M d, y H:i:s');
+                // Date("April 3, 2018 16:0:0")
 
                 
 
@@ -326,7 +332,7 @@ class DockController extends Controller
                         $dms_transaction->id_dms_form = $id_dms_form;
                         $dms_transaction->status = 1;
                         $dms_transaction->arrival_time = $now;
-                        $dms_transaction->duration = '00:00';
+                        $dms_transaction->duration = $waktu;
                         $dms_transaction->created_by = session()->get('session_name'); 
                     $dms_transaction->save();
 
@@ -334,7 +340,7 @@ class DockController extends Controller
                         $dms_transaction_history->id_dms_form = $id_dms_form;
                         $dms_transaction_history->status = 1;
                         $dms_transaction_history->arrival_time = $now;
-                        $dms_transaction_history->duration = '00:00';
+                        $dms_transaction_history->duration = $waktu;
                         $dms_transaction_history->created_by = session()->get('session_name'); 
                     $dms_transaction_history->save();
 

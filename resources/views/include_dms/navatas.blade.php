@@ -6,7 +6,7 @@
       <h5 class="dms_nav" >Dock Management System</h5>
     </ul>
     <ul class="nav navbar-nav navbar-right rightbar">
-      <li><h5 class="right-time mobilehide dates"><span id="date-large"></span> / <span id="clock-large"></span> | {{session()->get('session_location')}}</h5></li>
+      <li><h5 class="right-time mobilehide dates"><span id="date-large"></span> / <span id="clock-large"></span> | {{session()->get('session_location')}} </h5></li>
       @yield('navatas_dashboard')
     </ul>
   </div>
