@@ -115,4 +115,9 @@
       <div class="tab-pane" id="scan" role="tabpanel"><h1>scan</h1></div>
     </div>
 @endsection
+@section('script')
+<script>
+  
+</script>
+@endsection
 

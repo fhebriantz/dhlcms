@@ -16,6 +16,7 @@ use App\Http\Controllers\Model\Purpose;
 use Illuminate\Routing\Middleware\LoginCheck;
 use Illuminate\Support\Facades\Redirect;
 use DateTime;
+use Response;
 use Date;
 use Auth;
 use Session;
@@ -70,16 +71,14 @@ class DockController extends Controller
         return view('pages/dms/dashboard', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));   
         }
     } 
-     public function testjson(){
-        $dms_form = Form::all();
-        $dms_inbound = Form::all()->where('id_purpose','=',1);
-        $dms_outbound = Form::all()->where('id_purpose','=',2);
-        $no_inbound = 1;
-        $no_outbound = 1;
+
+
+    
+
         
-        return response($dms_form, 200)
-                  ->header('Content-Type', 'text/plain');
-    } 
+        //return response($dms_form, 200)
+         //         ->header('Content-Type', 'text/plain');
+
 
 
       public function plat_no(Request $request){
@@ -133,28 +132,38 @@ class DockController extends Controller
 
     public function validation_superadmin($dms_transaction)
     {
+        $now = new DateTime();
+        $waktu = $now->format('M d, y H:i:s');
+        $last_scan = $now->format('H:i');
+
         if ($dms_transaction->status == 1) {
             echo "*Print Struk* status masih 'waiting outside'";
             return redirect('/dms/dashboard');
         }
         elseif ($dms_transaction->status == 2) {
             $dms_transaction->status = 3;
+            $dms_transaction->duration = $waktu;
+            $dms_transaction->last_scan = $last_scan;
             $dms_transaction->save();
             return redirect('/dms/dashboard');
         }
 
         elseif ($dms_transaction->status == 3) {
             $dms_transaction->status = 4;
+            $dms_transaction->last_scan = $last_scan;
             $dms_transaction->save();
             return redirect('/dms/dashboard');
         }
         elseif ($dms_transaction->status == 4) {
             $dms_transaction->status = 5;
+            $dms_transaction->last_scan = $last_scan;
             $dms_transaction->save();
             return redirect('/dms/dashboard');
         }
         elseif ($dms_transaction->status == 5) {
             $dms_transaction->status = 6;
+            $dms_transaction->exit_time = $waktu;
+            $dms_transaction->last_scan = $last_scan;
             $dms_transaction->save();
             return redirect('/dms/dashboard');
         }
@@ -165,17 +174,25 @@ class DockController extends Controller
 
     public function validation_scurity($dms_transaction)
     {
+        $now = new DateTime();
+        $waktu = $now->format('M d, y H:i:s');
+        $last_scan = $now->format('H:i');
+
         if ($dms_transaction->status == 1) {
             echo "*Print Struk* status masih 'waiting outside'";
             return redirect('/dms/dashboard');
         }
         elseif ($dms_transaction->status == 2) {
             $dms_transaction->status = 3;
+            $dms_transaction->duration = $waktu;
+            $dms_transaction->last_scan = $last_scan;
             $dms_transaction->save();
             return redirect('/dms/dashboard');
         }
         elseif ($dms_transaction->status == 5) {
             $dms_transaction->status = 6;
+            $dms_transaction->exit_time = $waktu;
+            $dms_transaction->last_scan = $last_scan;
             $dms_transaction->save();
             return redirect('/dms/dashboard');
         }
@@ -188,11 +205,13 @@ class DockController extends Controller
     {
         if ($dms_transaction->status == 3) {
             $dms_transaction->status = 4;
+            $dms_transaction->last_scan = $last_scan;
             $dms_transaction->save();
             return redirect('/dms/dashboard');
         }
         elseif ($dms_transaction->status == 4) {
             $dms_transaction->status = 5;
+            $dms_transaction->last_scan = $last_scan;
             $dms_transaction->save();
             return redirect('/dms/dashboard');
         }
@@ -227,6 +246,40 @@ class DockController extends Controller
         return view('pages/dms/all_list', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));   
         }
     }
+
+    public function all_list_json(){
+        if (session()->get('session_id_group') == 3){
+        $dms_form = Form::all();
+        $dms_inbound = Transaction::getTableInbound();
+        $dms_outbound = Transaction::getTableOutbound();
+        return response()->json([
+            'dms_form' => $dms_form,
+            'dms_inbound' => $dms_inbound,
+            'dms_outbound' => $dms_outbound,
+        ]);
+        }
+        elseif (session()->get('session_id_group') == 1){
+        $dms_form = Form::all();
+        $dms_inbound = Transaction::getTableSuperInbound();
+        $dms_outbound = Transaction::getTableSuperOutbound();
+        return response()->json([
+            'dms_form' => $dms_form,
+            'dms_inbound' => $dms_inbound,
+            'dms_outbound' => $dms_outbound,
+        ]);
+        }
+        else{
+        $dms_form = Form::all();
+        $dms_inbound = Transaction::getTableInboundAdmin();
+        $dms_outbound = Transaction::getTableOutboundAdmin();
+        return response()->json([
+            'dms_form' => $dms_form,
+            'dms_inbound' => $dms_inbound,
+            'dms_outbound' => $dms_outbound,
+        ]);  
+        }
+    }
+
 
     public function input(){
         if (session()->get('session_id_group') == 3){
@@ -331,16 +384,14 @@ class DockController extends Controller
                     $dms_transaction = new Transaction;
                         $dms_transaction->id_dms_form = $id_dms_form;
                         $dms_transaction->status = 1;
-                        $dms_transaction->arrival_time = $now;
-                        $dms_transaction->duration = $waktu;
+                        $dms_transaction->arrival_time = $waktu;
                         $dms_transaction->created_by = session()->get('session_name'); 
                     $dms_transaction->save();
 
                     $dms_transaction_history = new Transaction_history;
                         $dms_transaction_history->id_dms_form = $id_dms_form;
                         $dms_transaction_history->status = 1;
-                        $dms_transaction_history->arrival_time = $now;
-                        $dms_transaction_history->duration = $waktu;
+                        $dms_transaction_history->arrival_time = $waktu;
                         $dms_transaction_history->created_by = session()->get('session_name'); 
                     $dms_transaction_history->save();
 
@@ -417,8 +468,6 @@ class DockController extends Controller
                             $dms_transaction->status = $dms_transaction->status;
                         }
                         $dms_transaction->waiting_time = $request->waiting_time;
-                        $dms_transaction->exit_time = $now;
-                        $dms_transaction->duration = '2:30';
                         $dms_transaction->updated_by = session()->get('session_name'); 
                     $dms_transaction->save();
 
@@ -436,8 +485,6 @@ class DockController extends Controller
                             $dms_transaction_history->status = $dms_transaction_history->status;
                         }
                         $dms_transaction_history->waiting_time = $request->waiting_time;
-                        $dms_transaction_history->exit_time = $now;
-                        $dms_transaction_history->duration = '02:30';
                         $dms_transaction_history->created_by = session()->get('session_name');
                     $dms_transaction_history->save();
 

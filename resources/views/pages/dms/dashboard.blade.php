@@ -80,7 +80,7 @@
           </div>  
         </div>
        
-        <h2 style="color: #d71635; margin-bottom: 100px;">DASHBOARD</h2>
+        <h2 style="color: #d71635; margin-bottom: 100px;">DASHBOARD</h2> 
       </div>
       <div class="text-center" style="">
         <p><strong>WEDNESDAY</strong>, 15 OCTOBER 2018 / 21:15</p>
@@ -97,6 +97,7 @@
           </div>  
         </div>
         <h2 class="titledashboard" style="color: #d71635">INBOUND</h2>
+        
         @if (Session::has('id_dms'))
           <div class="alert alert-danger">{{ Session::get('id_dms') }}</div>
         @endif
@@ -125,6 +126,7 @@
             <th class="cus width_tc">PERUSAHAAN TRANSPORTASI</th>
             <th class="width_duration phone">DURASI</th>
             <th class="width_status phone">PROGRES</th>
+            <th class="width_status phone">SCAN TERAKHIR</th>
             <th class="width_plt phone ">PLT</th>
             <th class="width_gate phone ">GERBANG</th>
             <th class="width_vehicle ">KENDARAAN</th>
@@ -159,6 +161,7 @@
             <td class="cus ">{{$inbound->transporter_company}}</td>
             <td class="cus"><span id="{{$inbound->id_dms_form}}"></span></td>
             <td class="cus">{{$inbound->status_name}}</td>
+            <td class="cus">{{$inbound->last_scan}}</span></td>
             <td class="phone ">
               <?php if ($inbound->waiting_time == ''): ?>
               <?php echo "-" ?>
@@ -207,33 +210,47 @@
           <script>
             // Set the date we're counting down to
             //var countDownDate = new Date("Apr 3, 2018 16:0:0").getTime();
-            var countUPDate = new Date("{{$inbound->duration}}").getTime();
+             //if ({{$inbound->duration}}==0||{{$inbound->duration}}==null) {}
+               //else{
+            var countupDate{{$inbound->id_dms_form}} = new Date("{{$inbound->duration}}").getTime();
+            var exit{{$inbound->id_dms_form}} = new Date("{{$inbound->exit_time}}").getTime();
 
+            if('{{$inbound->duration}}' == ''){}
+            else
+            {
             // Update the count down every 1 second
-            var x = setInterval(function() {
-
+              var x = setInterval(function() 
+              {
                 // Get todays date and time
                 var now = new Date().getTime();
-                
-                // Find the distance between now an the count down date
-                var distance = now - countUPDate;
-                
-                // Time calculations for days, hours, minutes and seconds
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                
-                // Output the result in an element with id="demo"
-                document.getElementById("{{$inbound->id_dms_form}}").innerHTML = hours + "h "
-                + minutes + "m " + seconds + "s ";
-                
-                // If the count down is over, write some text 
-                if (distance < 0) {
-                    clearInterval(x);
-                    document.getElementById("{{$inbound->id_dms_form}}").innerHTML = "EXPIRED";
+                  // Find the distance between now an the count down date
+                if('{{$inbound->status}}' == 6){
+                  var distance = exit{{$inbound->id_dms_form}} - countupDate{{$inbound->id_dms_form}};
                 }
-            }, 1000);
+                else
+                {
+                  var distance = now - countupDate{{$inbound->id_dms_form}}; 
+                }
+                  // Time calculations for days, hours, minutes and seconds
+                  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                  
+                  // Output the result in an element with id="demo"
+                  document.getElementById("{{$inbound->id_dms_form}}").innerHTML = hours + "h "
+                  + minutes + "m " + seconds + "s ";
+
+                  // If the count down is over, write some text 
+                  if (distance < 0) {
+                      clearInterval(x);
+                      document.getElementById("{{$inbound->id_dms_form}}").innerHTML = "EXPIRED";
+                  }
+
+              }, 1000);
+            }   
+            // }
+
             </script>
             <!-- DURATION ======================================================== DURATION -->
            @endforeach
