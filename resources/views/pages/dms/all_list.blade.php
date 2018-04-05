@@ -38,7 +38,7 @@
           </tr>
         </thead>
 
-        <tbody class="paddingtable text-center">
+        <tbody class="paddingtable text-center"  id="tbody_inbound">
            @foreach($dms_inbound as $inbound)
           <tr>    
             <td class="">{{ $no_inbound++ }}</td>
@@ -57,6 +57,7 @@
             <td class="cus ">{{$inbound->gate_number}}</td>
             <td class="">{{$inbound->type_of_vehicle}}</td>
             <td class="cus ">{{$inbound->master_project_name}}</td>
+            <td class="cus ">{{$inbound->id_location}}</td>
           </tr>
            @endforeach
         </tbody>
@@ -86,7 +87,7 @@
           </tr>
         </thead>
 
-        <tbody class="paddingtable">
+        <tbody class="paddingtable" id="tbody_outbound">
           @foreach($dms_outbound as $outbound)
           <tr>    
             <td class="">{{ $no_outbound++ }}</td>
@@ -106,6 +107,7 @@
             <td class="cus ">{{$outbound->gate_number}}</td>
             <td class="">{{$outbound->type_of_vehicle}}</td>
             <td class="cus ">{{$outbound->master_project_name}}</td>
+            <td class="cus ">{{$outbound->id_location}}</td>
           </tr>
            @endforeach
         </tbody>
@@ -117,7 +119,51 @@
 @endsection
 @section('script')
 <script>
-  
+  $(document).ready(function(){   
+    startRefresh(); 
+    }); 
+     
+    function startRefresh() { 
+        setTimeout(startRefresh,10000); 
+       
+         $.ajax({
+            type : "GET",
+            url : "{{url("test")}}",
+            dataType : "json",                  
+            success:function(msg){
+                var inbound = msg[0].inbound;
+                var outbound = msg[0].outbound;
+                var count_inbound = inbound.length;
+                var count_outbound = outbound.length;
+
+                  var table = $('#inbound-id');
+
+                apendhtml("<table>")
+                for(i=0;i<=count_inbound;i++)
+                {
+                  //console.log(msg[0].inbound[i].master_project_name);
+                  table.apendhtml("<tr>")
+                  table.apendhtml("<td>"+msg[0].inbound[i].master_project_name+"</td>");
+                  table.apendhtml("</tr>")
+                }
+
+                //table outbound
+
+                for(i=0;i<=count_outbound;i++)
+                {
+                  //console.log(msg[0].inbound[i].master_project_name);
+                  apendhtml("<tr>")
+                  apendhtml("<td>"+msg[0].outbound[i].master_project_name+"</td>");
+                  apendhtml("</tr>")
+                }
+                apendhtml("</table>")
+
+            },
+            error:function(msg){
+                console.log("failed");
+            }
+        }); 
+    }
 </script>
 @endsection
 

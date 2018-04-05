@@ -81,145 +81,6 @@ class DockController extends Controller
 
 
 
-      public function plat_no(Request $request){
-         $term = $request->term;
-         $item = Master_plat::where('plat_no','LIKE','%'.$term.'%')->get();
-         foreach ($item as $key => $value) {
-             $searchResult[] = $value->plat_no;
-         }
-         return $searchResult;
-     } 
-
-     public function driver_phone(Request $request){
-        $term = $request->term;
-        $item = Master_phone::where('driver_phone','LIKE','%'.$term.'%')->get();
-        foreach ($item as $key => $value) {
-            $searchResult[] = $value->driver_phone;
-        }
-        return $searchResult;
-    } 
-
-    public function input_id(Request $request){
-        $id = $request->dms_id; 
-        $outside = 'Waiting Outside';  
-        $check_dms = Transaction::getTableTransaction()->where('id_dms_form','=',$id);
-        if (sizeof($check_dms) > 0){
-
-            $dms_transaction = Transaction::where('id_dms_form','=',$id)->first();
-            if (session()->get('session_id_group') == 1){
-                return $this->validation_superadmin($dms_transaction);
-            }
-            elseif (session()->get('session_id_group') == 3){
-                return $this->validation_scurity($dms_transaction);
-            }
-            elseif (session()->get('session_id_group') == 4) {
-                return $this->validation_checker($dms_transaction);
-            }
-            elseif (session()->get('session_id_group') == 2) {
-                return $this->validation_checker($dms_transaction);
-            }
-            else{
-                Session::flash('id_dms', "Tidak memiliki akses scan");
-                return Redirect::back();
-            }
-        }
-
-        else{
-            Session::flash('id_dms', "ID tidak ada");
-            return Redirect::back();
-        }
-    }
-
-    public function validation_superadmin($dms_transaction)
-    {
-        $now = new DateTime();
-        $waktu = $now->format('M d, y H:i:s');
-        $last_scan = $now->format('H:i');
-
-        if ($dms_transaction->status == 1) {
-            echo "*Print Struk* status masih 'waiting outside'";
-            return redirect('/dms/dashboard');
-        }
-        elseif ($dms_transaction->status == 2) {
-            $dms_transaction->status = 3;
-            $dms_transaction->duration = $waktu;
-            $dms_transaction->last_scan = $last_scan;
-            $dms_transaction->save();
-            return redirect('/dms/dashboard');
-        }
-
-        elseif ($dms_transaction->status == 3) {
-            $dms_transaction->status = 4;
-            $dms_transaction->last_scan = $last_scan;
-            $dms_transaction->save();
-            return redirect('/dms/dashboard');
-        }
-        elseif ($dms_transaction->status == 4) {
-            $dms_transaction->status = 5;
-            $dms_transaction->last_scan = $last_scan;
-            $dms_transaction->save();
-            return redirect('/dms/dashboard');
-        }
-        elseif ($dms_transaction->status == 5) {
-            $dms_transaction->status = 6;
-            $dms_transaction->exit_time = $waktu;
-            $dms_transaction->last_scan = $last_scan;
-            $dms_transaction->save();
-            return redirect('/dms/dashboard');
-        }
-        else{
-            return redirect('/dms/dashboard');
-        }
-    }
-
-    public function validation_scurity($dms_transaction)
-    {
-        $now = new DateTime();
-        $waktu = $now->format('M d, y H:i:s');
-        $last_scan = $now->format('H:i');
-
-        if ($dms_transaction->status == 1) {
-            echo "*Print Struk* status masih 'waiting outside'";
-            return redirect('/dms/dashboard');
-        }
-        elseif ($dms_transaction->status == 2) {
-            $dms_transaction->status = 3;
-            $dms_transaction->duration = $waktu;
-            $dms_transaction->last_scan = $last_scan;
-            $dms_transaction->save();
-            return redirect('/dms/dashboard');
-        }
-        elseif ($dms_transaction->status == 5) {
-            $dms_transaction->status = 6;
-            $dms_transaction->exit_time = $waktu;
-            $dms_transaction->last_scan = $last_scan;
-            $dms_transaction->save();
-            return redirect('/dms/dashboard');
-        }
-        else{
-            return redirect('/dms/dashboard');
-        }
-    }
-
-    public function validation_checker($dms_transaction)
-    {
-        if ($dms_transaction->status == 3) {
-            $dms_transaction->status = 4;
-            $dms_transaction->last_scan = $last_scan;
-            $dms_transaction->save();
-            return redirect('/dms/dashboard');
-        }
-        elseif ($dms_transaction->status == 4) {
-            $dms_transaction->status = 5;
-            $dms_transaction->last_scan = $last_scan;
-            $dms_transaction->save();
-            return redirect('/dms/dashboard');
-        }
-        else{
-            return redirect('/dms/dashboard');
-        }
-    }
-
     public function all_list(){
         if (session()->get('session_id_group') == 3){
         $dms_form = Form::all();
@@ -247,39 +108,6 @@ class DockController extends Controller
         }
     }
 
-    public function all_list_json(){
-        if (session()->get('session_id_group') == 3){
-        $dms_form = Form::all();
-        $dms_inbound = Transaction::getTableInbound();
-        $dms_outbound = Transaction::getTableOutbound();
-        return response()->json([
-            'dms_form' => $dms_form,
-            'dms_inbound' => $dms_inbound,
-            'dms_outbound' => $dms_outbound,
-        ]);
-        }
-        elseif (session()->get('session_id_group') == 1){
-        $dms_form = Form::all();
-        $dms_inbound = Transaction::getTableSuperInbound();
-        $dms_outbound = Transaction::getTableSuperOutbound();
-        return response()->json([
-            'dms_form' => $dms_form,
-            'dms_inbound' => $dms_inbound,
-            'dms_outbound' => $dms_outbound,
-        ]);
-        }
-        else{
-        $dms_form = Form::all();
-        $dms_inbound = Transaction::getTableInboundAdmin();
-        $dms_outbound = Transaction::getTableOutboundAdmin();
-        return response()->json([
-            'dms_form' => $dms_form,
-            'dms_inbound' => $dms_inbound,
-            'dms_outbound' => $dms_outbound,
-        ]);  
-        }
-    }
-
 
     public function input(){
         if (session()->get('session_id_group') == 3){
@@ -300,7 +128,6 @@ class DockController extends Controller
             return redirect('/dms/dashboard');
         }
     } 
-
 
     function edit($id)
     {   
@@ -325,21 +152,6 @@ class DockController extends Controller
         else{
             return redirect('/dms/dashboard');
         }
-    }
-
-    function view($id)
-    {
-        $dms_form=Form::where('id','=',$id)->first();
-
-        return  view('pages/dms/form/form_view')
-        ->with('dms_form_data',$dms_form);
-    }
-
-    public function showdms(){ 
-        $dms_form = Form::all();
-        $no = 1;
-
-        return view('pages/dms/form/form', compact('dms_form','no'));
     }
 
     function insert (Request $request)  
@@ -522,4 +334,248 @@ class DockController extends Controller
         // mau pindah ke link mana setelah tombol submit di klik
         return  redirect('dms/dashboard');
     } 
+
+    //========================================================
+    public function plat_no(Request $request){
+         $term = $request->term;
+         $item = Master_plat::where('plat_no','LIKE','%'.$term.'%')->get();
+         foreach ($item as $key => $value) {
+             $searchResult[] = $value->plat_no;
+         }
+         return $searchResult;
+     } 
+
+     public function driver_phone(Request $request){
+        $term = $request->term;
+        $item = Master_phone::where('driver_phone','LIKE','%'.$term.'%')->get();
+        foreach ($item as $key => $value) {
+            $searchResult[] = $value->driver_phone;
+        }
+        return $searchResult;
+    } 
+
+    public function input_id(Request $request){
+        $id = $request->dms_id; 
+        $outside = 'Waiting Outside';  
+        $check_dms = Transaction::getTableTransaction()->where('id_dms_form','=',$id);
+        if (sizeof($check_dms) > 0){
+
+            $dms_transaction = Transaction::where('id_dms_form','=',$id)->first();
+            if (session()->get('session_id_group') == 1){
+                return $this->validation_superadmin($dms_transaction);
+            }
+            elseif (session()->get('session_id_group') == 3){
+                return $this->validation_scurity($dms_transaction);
+            }
+            elseif (session()->get('session_id_group') == 4) {
+                return $this->validation_checker($dms_transaction);
+            }
+            elseif (session()->get('session_id_group') == 2) {
+                return $this->validation_checker($dms_transaction);
+            }
+            else{
+                Session::flash('id_dms', "Tidak memiliki akses scan");
+                return Redirect::back();
+            }
+        }
+
+        else{
+            Session::flash('id_dms', "ID tidak ada");
+            return Redirect::back();
+        }
+    }
+
+    public function validation_superadmin($dms_transaction)
+    {
+        $now = new DateTime();
+        $waktu = $now->format('M d, y H:i:s');
+        $last_scan = $now->format('H:i');
+
+        if ($dms_transaction->status == 1) {
+            echo "*Print Struk* status masih 'waiting outside'";
+            return redirect('/dms/dashboard');
+        }
+        elseif ($dms_transaction->status == 2) {
+            $dms_transaction->status = 3;
+            $dms_transaction->duration = $waktu;
+            $dms_transaction->last_scan = $last_scan;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+
+        elseif ($dms_transaction->status == 3) {
+            $dms_transaction->status = 4;
+            $dms_transaction->last_scan = $last_scan;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+        elseif ($dms_transaction->status == 4) {
+            $dms_transaction->status = 5;
+            $dms_transaction->last_scan = $last_scan;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+        elseif ($dms_transaction->status == 5) {
+            $dms_transaction->status = 6;
+            $dms_transaction->exit_time = $waktu;
+            $dms_transaction->last_scan = $last_scan;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+        else{
+            return redirect('/dms/dashboard');
+        }
+    }
+
+    public function validation_scurity($dms_transaction)
+    {
+        $now = new DateTime();
+        $waktu = $now->format('M d, y H:i:s');
+        $last_scan = $now->format('H:i');
+
+        if ($dms_transaction->status == 1) {
+            echo "*Print Struk* status masih 'waiting outside'";
+            return redirect('/dms/dashboard');
+        }
+        elseif ($dms_transaction->status == 2) {
+            $dms_transaction->status = 3;
+            $dms_transaction->duration = $waktu;
+            $dms_transaction->last_scan = $last_scan;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+        elseif ($dms_transaction->status == 5) {
+            $dms_transaction->status = 6;
+            $dms_transaction->exit_time = $waktu;
+            $dms_transaction->last_scan = $last_scan;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+        else{
+            return redirect('/dms/dashboard');
+        }
+    }
+
+    public function validation_checker($dms_transaction)
+    {
+        if ($dms_transaction->status == 3) {
+            $dms_transaction->status = 4;
+            $dms_transaction->last_scan = $last_scan;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+        elseif ($dms_transaction->status == 4) {
+            $dms_transaction->status = 5;
+            $dms_transaction->last_scan = $last_scan;
+            $dms_transaction->save();
+            return redirect('/dms/dashboard');
+        }
+        else{
+            return redirect('/dms/dashboard');
+        }
+    }
+
+    public function all_list_json(){
+        if (session()->get('session_id_group') == 3){
+        $dms_form = Form::all();
+        $dms_inbound = Transaction::getTableInbound();
+        $dms_outbound = Transaction::getTableOutbound();
+        
+
+        //======================================================================
+        foreach($dms_inbound as $inbounds => $inbound){
+
+                    $tampungInbound[] = array(
+                        'plat_no' => $inbound->plat_no,
+                        'driver_name' => $inbound->driver_name,
+                        'transporter_company' => $inbound->transporter_company,
+                        'duration' => $inbound->duration,
+                        'status_name' => $inbound->status_name,
+                        'asal' => $inbound->asal,
+                        'gate_number' => $inbound->gate_number,
+                        'type_of_vehicle' => $inbound->type_of_vehicle,
+                        'master_project_name' => $inbound->master_project_name
+                        );
+
+                    }
+        foreach($dms_outbound as $outbounds => $outbound){
+
+                    $tampungOutbound[] = array(
+                        'plat_no' => $outbound->plat_no,
+                        'driver_name' => $outbound->driver_name,
+                        'transporter_company' => $outbound->transporter_company,
+                        'duration' => $outbound->duration,
+                        'status_name' => $outbound->status_name,
+                        'asal' => $outbound->asal,
+                        'gate_number' => $outbound->gate_number,
+                        'type_of_vehicle' => $outbound->type_of_vehicle,
+                        'master_project_name' => $outbound->master_project_name,
+                        );
+
+                    }
+        //===========================================================================
+        $tampung[] = array('inbound' => $tampungInbound, 'outbound' => $tampungOutbound);
+        return response()->json($tampung);
+        }
+        /*elseif (session()->get('session_id_group') == 1){
+        $dms_form = Form::all();
+        $dms_inbound = Transaction::getTableSuperInbound();
+        $dms_outbound = Transaction::getTableSuperOutbound();
+        $tampung[] = array();
+        return response()->json([
+            foreach($dms_inbound as $inbounds => $inbound){
+            'plat_no' => $inbound->plat_no,
+            'driver_name' => $inbound->driver_name,
+            'transporter_company' => $inbound->transporter_company,
+            'duration' => $inbound->duration,
+            'status_name' => $inbound->status_name,
+            'asal' => $inbound->asal,
+            'gate_number' => $inbound->gate_number,
+            'type_of_vehicle' => $inbound->type_of_vehicle,
+            'master_project_name' => $inbound->master_project_name,
+            }
+            foreach($dms_outbound['outbounds'] as $outbounds => $outbound){
+            'plat_no' => $outbound->plat_no,
+            'driver_name' => $outbound->driver_name,
+            'transporter_company' => $outbound->transporter_company,
+            'duration' => $outbound->duration,
+            'status_name' => $outbound->status_name,
+            'asal' => $outbound->asal,
+            'gate_number' => $outbound->gate_number,
+            'type_of_vehicle' => $outbound->type_of_vehicle,
+            'master_project_name' => $outbound->master_project_name,
+            }
+        ]);
+        }
+        else{
+        $dms_form = Form::all();
+        $dms_inbound = Transaction::getTableInboundAdmin();
+        $dms_outbound = Transaction::getTableOutboundAdmin();
+        $tampung[] = array();
+        return response()->json([
+            foreach($dms_inbound as $inbounds => $inbound){
+            'plat_no' => $inbound->plat_no,
+            'driver_name' => $inbound->driver_name,
+            'transporter_company' => $inbound->transporter_company,
+            'duration' => $inbound->duration,
+            'status_name' => $inbound->status_name,
+            'asal' => $inbound->asal,
+            'gate_number' => $inbound->gate_number,
+            'type_of_vehicle' => $inbound->type_of_vehicle,
+            'master_project_name' => $inbound->master_project_name,
+            }
+            foreach($dms_outbound['outbounds'] as $outbounds => $outbound){
+            'plat_no' => $outbound->plat_no,
+            'driver_name' => $outbound->driver_name,
+            'transporter_company' => $outbound->transporter_company,
+            'duration' => $outbound->duration,
+            'status_name' => $outbound->status_name,
+            'asal' => $outbound->asal,
+            'gate_number' => $outbound->gate_number,
+            'type_of_vehicle' => $outbound->type_of_vehicle,
+            'master_project_name' => $outbound->master_project_name,
+            }
+        ]);
+        }*/
+    }
 }

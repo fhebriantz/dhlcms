@@ -57,9 +57,9 @@ class Transaction extends Model
             ->join('dms_master_project', 'dms_master_project.id', '=', 'dms_form.cust_proj_name')
             ->join('dms_master_status', 'dms_master_status.id', '=', 'dms_transaction.status')
             ->select('dms_transaction.*', 'dms_form.driver_name', 'dms_form.type_of_vehicle', 'dms_form.plat_no', 'dms_form.transporter_company', 'dms_form.shipment', 'dms_form.cust_proj_name', 'dms_form.id_purpose','dms_form.asal','dms_form.tujuan', 'dms_form.driver_phone', 'dms_form.id_location', 'dms_master_project.master_project_name','dms_master_status.status_name')
-            ->where('id_purpose','=',1)
-            ->where('id_location','=',session()->get('session_id_loc'))
-            ->paginate(5);
+            ->where('dms_form.id_purpose','=',1)
+            ->where('dms_form.id_location','=',session()->get('session_id_loc'))
+            ->paginate(10);
 
      return $dms_transaction;
     }
@@ -72,7 +72,7 @@ class Transaction extends Model
             ->join('dms_master_status', 'dms_master_status.id', '=', 'dms_transaction.status')
             ->select('dms_transaction.*', 'dms_form.driver_name', 'dms_form.type_of_vehicle', 'dms_form.plat_no', 'dms_form.transporter_company', 'dms_form.shipment', 'dms_form.cust_proj_name', 'dms_form.id_purpose','dms_form.asal','dms_form.tujuan', 'dms_form.driver_phone', 'dms_form.id_location', 'dms_master_project.master_project_name','dms_master_status.status_name')
             ->where('id_purpose','=',2)
-            ->where('id_location','=',session()->get('session_id_loc'))
+            ->where('dms_form.id_location','=',session()->get('session_id_loc'))
             ->paginate(5);
 
      return $dms_transaction;
@@ -88,7 +88,7 @@ class Transaction extends Model
             ->select('dms_transaction.*', 'dms_form.driver_name', 'dms_form.type_of_vehicle', 'dms_form.plat_no', 'dms_form.transporter_company', 'dms_form.shipment', 'dms_form.cust_proj_name', 'dms_form.id_purpose','dms_form.asal','dms_form.tujuan', 'dms_form.driver_phone', 'dms_form.id_location', 'dms_master_project.master_project_name','dms_master_status.status_name')
             ->where('id_purpose','=',1)
             ->where('cust_proj_name','=',session()->get('session_project'))
-            ->where('id_location','=',session()->get('session_id_loc'))
+            ->where('dms_form.id_location','=',session()->get('session_id_loc'))
             ->paginate(5);
 
      return $dms_transaction;
@@ -103,7 +103,7 @@ class Transaction extends Model
             ->select('dms_transaction.*', 'dms_form.driver_name', 'dms_form.type_of_vehicle', 'dms_form.plat_no', 'dms_form.transporter_company', 'dms_form.shipment', 'dms_form.cust_proj_name', 'dms_form.id_purpose','dms_form.asal','dms_form.tujuan', 'dms_form.driver_phone', 'dms_form.id_location', 'dms_master_project.master_project_name','dms_master_status.status_name')
             ->where('id_purpose','=',2)
             ->where('cust_proj_name','=',session()->get('session_project'))
-            ->where('id_location','=',session()->get('session_id_loc'))
+            ->where('dms_form.id_location','=',session()->get('session_id_loc'))
             ->paginate(5);
 
      return $dms_transaction;

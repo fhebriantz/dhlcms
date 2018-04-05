@@ -204,6 +204,7 @@
             @else
             @endif
             
+              <td>{{$inbound->id_location}}</td>
           </tr>
 
            <!-- DURATION ======================================================== DURATION -->
@@ -352,6 +353,8 @@
             <td class="cus"><a target="_blank" href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/barcode" class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
             @else
             @endif
+
+              <td>{{$outbound->id_location}}</td>
           </tr>
            @endforeach
         </tbody>
