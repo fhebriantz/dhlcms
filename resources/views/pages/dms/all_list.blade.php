@@ -38,9 +38,9 @@
           </tr>
         </thead>
 
-        <tbody class="paddingtable text-center"  id="tbody_inbound">
+        <tbody class="paddingtable text-center" id="tbody_inbound">
            @foreach($dms_inbound as $inbound)
-          <tr>    
+          <tr >    
             <td class="">{{ $no_inbound++ }}</td>
             <td class="phone ">{{$inbound->plat_no}}</td>
             <td class="">{{$inbound->driver_name}}</td>
@@ -57,7 +57,6 @@
             <td class="cus ">{{$inbound->gate_number}}</td>
             <td class="">{{$inbound->type_of_vehicle}}</td>
             <td class="cus ">{{$inbound->master_project_name}}</td>
-            <td class="cus ">{{$inbound->id_location}}</td>
           </tr>
            @endforeach
         </tbody>
@@ -71,7 +70,7 @@
         <h2 class="titledashboard" style="color: #d71635">OUTBOUND / {{session()->get('session_name_project')}}</h2>
       </div>
       <table class="table-striped fontsizetable text-center"  width="100%" cellspacing="0" id="outbound_id">     
-        <thead class="thead paddingtable text-center" >
+        <thead class="thead paddingtable text-center">
           <tr >
             <th class="">No</th>
             <th class="phone " style="width: 12%">PLATE NO</th>
@@ -107,7 +106,6 @@
             <td class="cus ">{{$outbound->gate_number}}</td>
             <td class="">{{$outbound->type_of_vehicle}}</td>
             <td class="cus ">{{$outbound->master_project_name}}</td>
-            <td class="cus ">{{$outbound->id_location}}</td>
           </tr>
            @endforeach
         </tbody>
@@ -136,27 +134,41 @@
                 var count_inbound = inbound.length;
                 var count_outbound = outbound.length;
 
-                  var table = $('#inbound-id');
-
-                apendhtml("<table>")
-                for(i=0;i<=count_inbound;i++)
+                for(i=0;i<count_inbound;i++)
                 {
                   //console.log(msg[0].inbound[i].master_project_name);
-                  table.apendhtml("<tr>")
-                  table.apendhtml("<td>"+msg[0].inbound[i].master_project_name+"</td>");
-                  table.apendhtml("</tr>")
+                  $("#tbody_inbound").append("<tr>");
+                  $("#tbody_inbound").append("<td>"+[i]+"</td>");
+                  $("#tbody_inbound").append("<td>"+msg[0].inbound[i].plat_no+"</td>");
+                  $("#tbody_inbound").append("<td>"+msg[0].inbound[i].driver_name+"</td>");
+                  $("#tbody_inbound").append("<td>"+msg[0].inbound[i].transporter_company+"</td>");
+                  $("#tbody_inbound").append("<td>"+msg[0].inbound[i].duration+"</td>");
+                  $("#tbody_inbound").append("<td>"+msg[0].inbound[i].status_name+"</td>");
+                  $("#tbody_inbound").append("<td>"+msg[0].inbound[i].waiting_time+"</td>");
+                  $("#tbody_inbound").append("<td>"+msg[0].inbound[i].asal+"</td>");
+                  $("#tbody_inbound").append("<td>"+msg[0].inbound[i].gate_number+"</td>");
+                  $("#tbody_inbound").append("<td>"+msg[0].inbound[i].type_of_vehicle+"</td>");
+                  $("#tbody_inbound").append("<td>"+msg[0].inbound[i].master_project_name+"</td>");
+                  $("#tbody_inbound").append("</tr>");
                 }
-
                 //table outbound
 
                 for(i=0;i<=count_outbound;i++)
                 {
                   //console.log(msg[0].inbound[i].master_project_name);
-                  apendhtml("<tr>")
-                  apendhtml("<td>"+msg[0].outbound[i].master_project_name+"</td>");
-                  apendhtml("</tr>")
+                  $("#tbody_outbound").append("<tr>");
+                  $("#tbody_outbound").append("<td>"+msg[0].outbound[i].plat_no+"</td>");
+                  $("#tbody_outbound").append("<td>"+msg[0].outbound[i].driver_name+"</td>");
+                  $("#tbody_outbound").append("<td>"+msg[0].outbound[i].driver_name+"</td>");
+                  $("#tbody_outbound").append("<td>"+msg[0].outbound[i].transporter_company+"</td>");
+                  $("#tbody_outbound").append("<td>"+msg[0].outbound[i].status_name+"</td>");
+                  $("#tbody_outbound").append("<td>"+msg[0].outbound[i].waiting_time+"</td>");
+                  $("#tbody_outbound").append("<td>"+msg[0].outbound[i].asal+"</td>");
+                  $("#tbody_outbound").append("<td>"+msg[0].outbound[i].gate_number+"</td>");
+                  $("#tbody_outbound").append("<td>"+msg[0].outbound[i].type_of_vehicle+"</td>");
+                  $("#tbody_outbound").append("<td>"+msg[0].outbound[i].master_project_name+"</td>");
+                  $("#tbody_outbound").append("</tr>");
                 }
-                apendhtml("</table>")
 
             },
             error:function(msg){
@@ -166,22 +178,3 @@
     }
 </script>
 @endsection
-<tr>    
-            <td class="">{{ $no_inbound++ }}</td>
-            <td class="phone ">{{$inbound->plat_no}}</td>
-            <td class="">{{$inbound->driver_name}}</td>
-            <td class="cus ">{{$inbound->transporter_company}}</td>
-            <td class="">{{$inbound->duration}}</td>
-            <td class="">{{$inbound->status_name}}</td>
-            <td class="phone ">
-              <?php if ($inbound->waiting_time == ''): ?>
-              <?php echo "-" ?>
-              <?php else: ?>
-              <?php echo "$inbound->waiting_time" ?>
-              <?php endif ?></td>
-            <td class="cus ">{{$inbound->asal}}</td>
-            <td class="cus ">{{$inbound->gate_number}}</td>
-            <td class="">{{$inbound->type_of_vehicle}}</td>
-            <td class="cus ">{{$inbound->master_project_name}}</td>
-            <td class="cus ">{{$inbound->id_location}}</td>
-          </tr>
