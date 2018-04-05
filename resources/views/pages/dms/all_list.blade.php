@@ -166,4 +166,22 @@
     }
 </script>
 @endsection
-
+<tr>    
+            <td class="">{{ $no_inbound++ }}</td>
+            <td class="phone ">{{$inbound->plat_no}}</td>
+            <td class="">{{$inbound->driver_name}}</td>
+            <td class="cus ">{{$inbound->transporter_company}}</td>
+            <td class="">{{$inbound->duration}}</td>
+            <td class="">{{$inbound->status_name}}</td>
+            <td class="phone ">
+              <?php if ($inbound->waiting_time == ''): ?>
+              <?php echo "-" ?>
+              <?php else: ?>
+              <?php echo "$inbound->waiting_time" ?>
+              <?php endif ?></td>
+            <td class="cus ">{{$inbound->asal}}</td>
+            <td class="cus ">{{$inbound->gate_number}}</td>
+            <td class="">{{$inbound->type_of_vehicle}}</td>
+            <td class="cus ">{{$inbound->master_project_name}}</td>
+            <td class="cus ">{{$inbound->id_location}}</td>
+          </tr>
