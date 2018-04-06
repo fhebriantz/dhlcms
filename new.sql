@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 05, 2018 at 01:31 PM
+-- Generation Time: Apr 06, 2018 at 12:29 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -78,23 +78,24 @@ CREATE TABLE `dms_form` (
 --
 
 INSERT INTO `dms_form` (`id`, `id_dms_form`, `plat_no`, `driver_name`, `id_location`, `id_purpose`, `asal`, `tujuan`, `driver_phone`, `type_of_vehicle`, `transporter_company`, `shipment`, `cust_proj_name`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(115, 'dms11522614907', 'B 1234 CIB', 'C.S.I Andw', 1, 1, 'Bogor', NULL, '089634848272', 'Container', 'DHL', 'A1234', '7', '2018-04-01 09:35:07', 'Superadmin DMS', '2018-04-04 07:36:39', NULL),
-(116, 'dms11522614998', 'F 3322 CIB', 'C.M.I Iman', 1, 1, 'Malaysia', NULL, '09898711111111', 'Container', 'SiCepat', 'A1444', '8', '2018-04-01 09:36:38', 'Superadmin DMS', '2018-04-02 03:28:21', NULL),
-(117, 'dms21522615084', 'F 1123 CIB', 'C.S.O Rina', 1, 2, NULL, 'Bandung', '098098777', 'Container', 'TIKI', 'A1455', '7', '2018-04-01 09:38:04', 'S.Cib', '2018-04-02 03:29:07', NULL),
-(118, 'dms21522615194', 'F 1123 CIB', 'C.M.O Kiki', 1, 2, NULL, 'Bandung', '8899889898', 'Tronton Box', 'TIKI', 'A1234', '8', '2018-04-01 09:39:54', 'S.Cib', '2018-04-02 03:29:10', NULL),
-(119, 'dms11522615539', 'F 1123 RE', 'S.S.I Riyan', 2, 1, 'Aceh', NULL, '098666767', 'Container', 'JNE', 'A0987', '7', '2018-04-01 09:45:39', 'Superadmin DMS', '2018-04-02 06:03:29', NULL),
-(120, 'dms11522615629', 'F 1123 DB', 'S.M.I Fakih', 2, 1, 'Medan', NULL, '0987778878', 'Container', 'DHL', 'A0988', '8', '2018-04-01 09:47:09', 'Superadmin DMS', '2018-04-05 07:26:28', NULL),
+(115, 'dms11522614907', 'B 1234 CIB', 'C.S.I Andw', 1, 1, 'Bogor', NULL, '089634848272', 'Container 20\'', 'DHL', 'A1234', '7', '2018-04-01 09:35:07', 'Superadmin DMS', '2018-04-06 08:03:54', NULL),
+(116, 'dms11522614998', 'F 3322 CIB', 'C.M.I Iman', 1, 1, 'Malaysia', NULL, '09898711111111', 'Van / L300', 'SiCepat', 'A1444', '8', '2018-04-01 09:36:38', 'Superadmin DMS', '2018-04-06 08:04:03', NULL),
+(117, 'dms21522615084', 'F 1123 CIB', 'C.S.O Rina', 1, 2, NULL, 'Bandung', '098098777', 'Fuso', 'TIKI', 'A1455', '7', '2018-04-01 09:38:04', 'Superadmin DMS', '2018-04-06 08:05:18', NULL),
+(118, 'dms21522615194', 'F 1123 CIB', 'C.M.O Kiki', 1, 2, NULL, 'Bandung', '8899889898', 'Container 20\'', 'TIKI', 'A1234', '8', '2018-04-01 09:39:54', 'Superadmin DMS', '2018-04-06 08:05:31', NULL),
+(119, 'dms11522615539', 'F 1123 RE', 'S.S.I Riyan', 1, 1, 'Aceh', NULL, '098666767', 'Tronton', 'JNE', 'A0987', '7', '2018-04-01 09:45:39', 'Superadmin DMS', '2018-04-06 08:04:08', NULL),
+(120, 'dms11522615629', 'F 1123 DB', 'S.M.I Fakih', 1, 1, 'Medan', NULL, '0987778878', 'Container 20\'', 'DHL', 'A0988', '8', '2018-04-01 09:47:09', 'Superadmin DMS', '2018-04-06 08:04:15', NULL),
 (121, 'dms21522615703', 'F 6543 TR', 'S.S.O Darevis', 2, 2, NULL, 'Manado', '077789877', 'Tronton Box', 'J&T', 'A1234', '7', '2018-04-01 09:48:23', 'Sec.Sby', '2018-04-02 03:29:13', NULL),
 (122, 'dms21522615772', 'F 1123 RE', 'S.M.O Rika', 2, 2, NULL, 'Depok', '02772828', 'Tronton Box', 'JNE', 'A1444', '8', '2018-04-01 09:49:32', 'Sec.Sby', '2018-04-02 03:29:16', NULL),
-(123, 'dms11522659432', 'F 6543 TR', 'Anditio', 1, 1, 'Jakarta', NULL, '0897678678', 'Container', 'TIKI', 'A98KK', '7', '2018-04-01 21:57:12', 'Superadmin DMS', '2018-04-01 21:57:12', NULL),
+(123, 'dms11522659432', 'F 6543 TR', 'Anditio', 1, 1, 'Jakarta', NULL, '0897678678', 'Big Mama / Yellow', 'TIKI', 'A98KK', '7', '2018-04-01 21:57:12', 'Superadmin DMS', '2018-04-06 08:04:22', NULL),
 (124, 'DMS11522667446', 'F 4444 AA', 'test', 1, 1, 'A', NULL, '089634848272', 'Tronton Box', 'TIKI', 'A134EE', '1', '2018-04-02 00:10:46', 'Superadmin DMS', '2018-04-03 04:36:09', NULL),
 (125, 'DMS11522763320', 'tes', 'tes', 1, 1, 'tes', NULL, 'tes', 'Colt Diesel Double', 'DHL', 'tes', '7', '2018-04-03 02:48:40', 'Superadmin DMS', '2018-04-03 02:48:40', NULL),
 (126, 'DMS11522763336', 'tes', 'tes', 1, 1, 'tes', NULL, 'tes', 'Colt Diesel Double', 'DHL', 'tes', '7', '2018-04-03 02:48:56', 'Superadmin DMS', '2018-04-03 02:48:56', NULL),
 (129, 'DMS11522764107', 'q', 'q', 1, 1, 'q', 'q', 'q', 'Colt Diesel Double', 'DHL', 'q', '7', '2018-04-03 03:01:47', 'Superadmin DMS', '2018-04-03 03:01:47', NULL),
-(137, 'DMS11522827294', 'F 9923 DB', 'BARU bgt', 1, 1, '1', '1', '1', 'Container', 'DHL', '123', '7', '2018-04-03 20:34:54', 'Superadmin DMS', '2018-04-03 20:34:54', NULL),
-(138, 'DMS11522827966', 'test', 'test', 1, 1, 'e', 'e', 'e', 'Container', 'TIKI', 'e', '7', '2018-04-03 20:46:06', 'Superadmin DMS', '2018-04-03 20:46:06', NULL),
-(141, 'DMS11522862406', 'baru', 'Ntaps', 1, 1, 's', 's', 'tes', 'Container', 'JNE', 'Success', '7', '2018-04-04 06:20:06', 'Superadmin DMS', '2018-04-04 06:20:06', NULL),
-(143, 'DMS11522863516', 'tests', 's', 1, 1, 's', 's', 's', 'Colt Diesel Double', 'SiCepat', 'sampais', '7', '2018-04-04 06:38:36', 'Superadmin DMS', '2018-04-04 06:38:36', NULL);
+(137, 'DMS11522827294', 'F 9923 DB', 'BARU bgt', 1, 1, '1', '1', '1', 'Van / L300', 'DHL', '123', '7', '2018-04-03 20:34:54', 'Superadmin DMS', '2018-04-06 08:04:28', NULL),
+(138, 'DMS11522827966', 'test', 'test', 1, 1, 'e', 'e', 'e', 'Fuso', 'TIKI', 'e', '7', '2018-04-03 20:46:06', 'Superadmin DMS', '2018-04-06 08:04:42', NULL),
+(141, 'DMS11522862406', 'baru', 'Ntaps', 1, 1, 's', 's', 'tes', 'Tronton', 'JNE', 'Success', '7', '2018-04-04 06:20:06', 'Superadmin DMS', '2018-04-06 08:04:55', NULL),
+(143, 'DMS11522863516', 'tests', 's', 1, 1, 's', 's', 's', 'Wing-Box', 'SiCepat', 'sampais', '7', '2018-04-04 06:38:36', 'Superadmin DMS', '2018-04-06 08:05:03', NULL),
+(144, 'DMS21523027088', 'F 1333 DDd', 'w', 1, 2, 'w', 'w', 'w', 'Fuso', 'TIKI', 'w', '7', '2018-04-06 04:04:48', 'Superadmin DMS', '2018-04-06 08:09:59', NULL);
 
 -- --------------------------------------------------------
 
@@ -155,7 +156,10 @@ INSERT INTO `dms_master_phone` (`id`, `driver_phone`, `created_by`, `updated_by`
 (32, 'q', 'Superadmin DMS', NULL, '2018-04-03 03:02:33', '2018-04-03 03:02:33'),
 (33, 'e', 'Superadmin DMS', NULL, '2018-04-03 03:05:13', '2018-04-03 03:05:13'),
 (34, 'r', 'Superadmin DMS', NULL, '2018-04-03 20:02:42', '2018-04-03 20:02:42'),
-(35, '1', 'Superadmin DMS', NULL, '2018-04-03 20:34:55', '2018-04-03 20:34:55');
+(35, '1', 'Superadmin DMS', NULL, '2018-04-03 20:34:55', '2018-04-03 20:34:55'),
+(36, 'w', 'Superadmin DMS', NULL, '2018-04-06 04:04:49', '2018-04-06 04:04:49'),
+(37, '098098777', 'Superadmin DMS', NULL, '2018-04-06 08:05:18', '2018-04-06 08:05:18'),
+(38, '8899889898', 'Superadmin DMS', NULL, '2018-04-06 08:05:31', '2018-04-06 08:05:31');
 
 -- --------------------------------------------------------
 
@@ -194,7 +198,9 @@ INSERT INTO `dms_master_plat` (`id`, `plat_no`, `created_by`, `updated_by`, `cre
 (71, 'test', 'Superadmin DMS', NULL, '2018-04-03 20:46:06', '2018-04-03 20:46:06'),
 (72, 'e', 'Superadmin DMS', NULL, '2018-04-04 03:50:25', '2018-04-04 03:50:25'),
 (73, 'baru', 'Superadmin DMS', NULL, '2018-04-04 06:20:06', '2018-04-04 06:20:06'),
-(74, 'tests', 'Superadmin DMS', NULL, '2018-04-04 06:38:36', '2018-04-04 06:38:36');
+(74, 'tests', 'Superadmin DMS', NULL, '2018-04-04 06:38:36', '2018-04-04 06:38:36'),
+(75, 'F 1333 DDd', 'Superadmin DMS', NULL, '2018-04-06 04:04:49', '2018-04-06 04:04:49'),
+(76, 'F 1123 CIB', 'Superadmin DMS', NULL, '2018-04-06 08:05:18', '2018-04-06 08:05:18');
 
 -- --------------------------------------------------------
 
@@ -294,9 +300,15 @@ CREATE TABLE `dms_master_vehicle` (
 --
 
 INSERT INTO `dms_master_vehicle` (`id`, `master_vehicle_name`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(3, 'Colt Diesel Double', NULL, 'Super Admin Yudi', '2018-03-13 15:07:58', '2018-03-23 00:34:59'),
-(4, 'Container', NULL, 'Super Admin Yudi', '2018-03-13 15:07:58', '2018-03-23 00:35:07'),
-(5, 'Tronton Box', NULL, 'Super Admin Yudi', '2018-03-13 15:07:58', '2018-03-23 00:35:27');
+(3, 'Van / L300', NULL, 'Superadmin CMS', '2018-03-13 15:07:58', '2018-04-06 08:01:22'),
+(4, 'CDE / CD4', NULL, 'Superadmin CMS', '2018-03-13 15:07:58', '2018-04-06 08:01:31'),
+(5, 'CDD / CD6', NULL, 'Superadmin CMS', '2018-03-13 15:07:58', '2018-04-06 08:01:38'),
+(6, 'Fuso', 'Superadmin CMS', NULL, '2018-04-06 08:01:46', '2018-04-06 08:01:46'),
+(7, 'Tronton', 'Superadmin CMS', NULL, '2018-04-06 08:01:53', '2018-04-06 08:01:53'),
+(8, 'Wing-Box', 'Superadmin CMS', NULL, '2018-04-06 08:02:01', '2018-04-06 08:02:01'),
+(9, 'Container 20\'', 'Superadmin CMS', NULL, '2018-04-06 08:02:10', '2018-04-06 08:02:10'),
+(10, 'Container 40\'', 'Superadmin CMS', NULL, '2018-04-06 08:02:18', '2018-04-06 08:02:18'),
+(11, 'Big Mama / Yellow', 'Superadmin CMS', NULL, '2018-04-06 08:02:26', '2018-04-06 08:02:26');
 
 -- --------------------------------------------------------
 
@@ -348,20 +360,21 @@ CREATE TABLE `dms_transaction` (
 --
 
 INSERT INTO `dms_transaction` (`id`, `id_dms_form`, `gate_number`, `status`, `waiting_time`, `duration`, `last_scan`, `arrival_time`, `exit_time`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(94, 'dms11522614907', '1', '2', NULL, 'Apr 04, 18 9:56:43', '', '2018-04-01 16:35:07', '2018-04-02 03:21:12', '2018-04-01 09:35:07', 'S.Cib', '2018-04-04 06:43:02', 'Superadmin DMS'),
+(94, 'dms11522614907', '2', '2', NULL, 'Apr 04, 18 9:56:43', '', '2018-04-01 16:35:07', '2018-04-02 03:21:12', '2018-04-01 09:35:07', 'S.Cib', '2018-04-06 08:06:50', 'Superadmin DMS'),
 (95, 'dms11522614998', NULL, '1', NULL, 'Apr 04, 18 1:15:43', '', '2018-04-01 16:36:38', '2018-04-02 03:21:57', '2018-04-01 09:36:38', 'S.Cib', '2018-04-04 02:58:36', 'Superadmin DMS'),
-(96, 'dms21522615084', NULL, '1', NULL, 'Apr 04, 18 2:15:33', '', '2018-04-01 16:38:04', NULL, '2018-04-01 09:38:04', 'S.Cib', '2018-04-04 02:58:31', NULL),
-(97, 'dms21522615194', NULL, '1', NULL, 'Apr 04, 18 4:15:55', '', '2018-04-01 16:39:54', NULL, '2018-04-01 09:39:55', 'S.Cib', '2018-04-04 02:58:28', NULL),
+(96, 'dms21522615084', NULL, '1', NULL, 'Apr 04, 18 2:15:33', '', '2018-04-01 16:38:04', NULL, '2018-04-01 09:38:04', 'S.Cib', '2018-04-06 08:05:18', 'Superadmin DMS'),
+(97, 'dms21522615194', NULL, '1', NULL, 'Apr 04, 18 4:15:55', '', '2018-04-01 16:39:54', NULL, '2018-04-01 09:39:55', 'S.Cib', '2018-04-06 08:05:31', 'Superadmin DMS'),
 (98, 'dms11522615539', NULL, '1', NULL, 'Apr 04, 18 4:45:32', '', '2018-04-01 16:45:39', '2018-04-02 03:17:19', '2018-04-01 09:45:39', 'Sec.Sby', '2018-04-04 02:58:22', 'Superadmin DMS'),
 (99, 'dms11522615629', '1', '6', NULL, 'Apr 04, 18 13:42:03', '', '2018-04-01 16:47:09', 'Apr 04, 18 13:42:21', '2018-04-01 09:47:09', 'Sec.Sby', '2018-04-04 06:42:21', 'Superadmin DMS'),
 (100, 'dms21522615703', NULL, '1', NULL, 'Apr 04, 18 3:45:31', '', '2018-04-01 16:48:23', NULL, '2018-04-01 09:48:23', 'Sec.Sby', '2018-04-04 02:58:16', NULL),
 (101, 'dms21522615772', NULL, '1', NULL, 'Apr 04, 18 5:15:53', '', '2018-04-01 16:49:32', NULL, '2018-04-01 09:49:32', 'Sec.Sby', '2018-04-04 02:58:12', NULL),
-(102, 'dms11522659432', NULL, '1', NULL, 'Apr 04, 18 5:45:12', '', '2018-04-02 04:57:12', NULL, '2018-04-01 21:57:12', 'Superadmin DMS', '2018-04-04 02:58:04', NULL),
+(102, 'dms11522659432', NULL, '1', NULL, 'Apr 04, 18 5:45:12', '', '2018-04-02 04:57:12', NULL, '2018-04-01 21:57:12', 'Superadmin DMS', '2018-04-06 08:04:22', 'Superadmin DMS'),
 (103, 'DMS11522667446', '1', '6', NULL, 'Apr 04, 18 9:52:12', '', '2018-04-02 07:10:46', '2018-04-02 07:13:56', '2018-04-02 00:10:46', 'Superadmin DMS', '2018-04-04 02:58:57', 'Superadmin DMS'),
 (113, 'DMS11522827294', '1', '6', NULL, 'Apr 04, 18 13:57:56', '14:06', '2018-04-04 03:34:54', 'Apr 04, 18 14:06:53', '2018-04-03 20:34:55', 'Superadmin DMS', '2018-04-04 07:06:53', 'Superadmin DMS'),
-(114, 'DMS11522827966', NULL, '1', NULL, 'Apr 04, 18 03:46:06', '', '2018-04-04 03:46:06', NULL, '2018-04-03 20:46:06', 'Superadmin DMS', '2018-04-03 20:46:06', NULL),
+(114, 'DMS11522827966', NULL, '1', NULL, 'Apr 04, 18 03:46:06', '', '2018-04-04 03:46:06', NULL, '2018-04-03 20:46:06', 'Superadmin DMS', '2018-04-06 08:04:35', 'Superadmin DMS'),
 (117, 'DMS11522862406', '1', '6', NULL, 'Apr 04, 18 13:35:03', '', '2018-04-04 13:20:06', 'Apr 04, 18 13:36:12', '2018-04-04 06:20:06', 'Superadmin DMS', '2018-04-04 06:36:12', 'Superadmin DMS'),
-(119, 'DMS11522863516', '1', '3', NULL, 'Apr 04, 18 14:12:52', '14:12', 'Apr 04, 18 13:38:36', 'Apr 04, 18 13:39:18', '2018-04-04 06:38:36', 'Superadmin DMS', '2018-04-04 07:12:52', 'Superadmin DMS');
+(119, 'DMS11522863516', '1', '6', NULL, 'Apr 04, 18 14:12:52', '14:09', 'Apr 04, 18 13:38:36', 'Apr 06, 18 14:09:18', '2018-04-04 06:38:36', 'Superadmin DMS', '2018-04-06 07:09:18', 'Superadmin DMS'),
+(120, 'DMS21523027088', '12', '2', NULL, NULL, NULL, 'Apr 06, 18 11:04:48', NULL, '2018-04-06 04:04:48', 'Superadmin DMS', '2018-04-06 08:11:15', 'Superadmin DMS');
 
 -- --------------------------------------------------------
 
@@ -521,7 +534,25 @@ INSERT INTO `dms_transaction_history` (`id`, `id_dms_form`, `gate_number`, `stat
 (231, 'DMS11522827294', '1', NULL, NULL, NULL, NULL, NULL, '2018-04-04 06:57:44', 'Superadmin DMS', '2018-04-04 06:57:44', NULL),
 (232, 'DMS11522827294', '1', NULL, NULL, NULL, NULL, NULL, '2018-04-04 07:06:51', 'Superadmin DMS', '2018-04-04 07:06:51', NULL),
 (233, 'dms11522614907', '1', NULL, NULL, NULL, NULL, NULL, '2018-04-04 07:36:05', 'Superadmin DMS', '2018-04-04 07:36:05', NULL),
-(234, 'dms11522614907', '1', NULL, NULL, NULL, NULL, NULL, '2018-04-04 07:36:39', 'Superadmin DMS', '2018-04-04 07:36:39', NULL);
+(234, 'dms11522614907', '1', NULL, NULL, NULL, NULL, NULL, '2018-04-04 07:36:39', 'Superadmin DMS', '2018-04-04 07:36:39', NULL),
+(235, 'DMS21523027088', NULL, '1', NULL, NULL, 'Apr 06, 18 11:04:48', NULL, '2018-04-06 04:04:48', 'Superadmin DMS', '2018-04-06 04:04:48', NULL),
+(236, 'DMS21523027088', '1', NULL, NULL, NULL, NULL, NULL, '2018-04-06 07:09:38', 'Superadmin DMS', '2018-04-06 07:09:38', NULL),
+(237, 'dms11522614907', '1', NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:03:54', 'Superadmin DMS', '2018-04-06 08:03:54', NULL),
+(238, 'dms11522614998', NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:04:03', 'Superadmin DMS', '2018-04-06 08:04:03', NULL),
+(239, 'dms11522615539', NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:04:08', 'Superadmin DMS', '2018-04-06 08:04:08', NULL),
+(240, 'dms11522615629', '1', NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:04:15', 'Superadmin DMS', '2018-04-06 08:04:15', NULL),
+(241, 'dms11522659432', NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:04:22', 'Superadmin DMS', '2018-04-06 08:04:22', NULL),
+(242, 'DMS11522827294', '1', NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:04:28', 'Superadmin DMS', '2018-04-06 08:04:28', NULL),
+(243, 'DMS11522827966', NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:04:35', 'Superadmin DMS', '2018-04-06 08:04:35', NULL),
+(244, 'DMS11522827966', NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:04:42', 'Superadmin DMS', '2018-04-06 08:04:42', NULL),
+(245, 'DMS11522862406', '1', NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:04:55', 'Superadmin DMS', '2018-04-06 08:04:55', NULL),
+(246, 'DMS11522863516', '1', NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:05:03', 'Superadmin DMS', '2018-04-06 08:05:03', NULL),
+(247, 'dms21522615084', NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:05:18', 'Superadmin DMS', '2018-04-06 08:05:18', NULL),
+(248, 'dms21522615194', NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:05:31', 'Superadmin DMS', '2018-04-06 08:05:31', NULL),
+(249, 'dms11522614907', '2', NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:06:50', 'Superadmin DMS', '2018-04-06 08:06:50', NULL),
+(250, 'DMS21523027088', '1', NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:09:59', 'Superadmin DMS', '2018-04-06 08:09:59', NULL),
+(251, 'DMS21523027088', '1', NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:10:08', 'Superadmin DMS', '2018-04-06 08:10:08', NULL),
+(252, 'DMS21523027088', '12', NULL, NULL, NULL, NULL, NULL, '2018-04-06 08:11:15', 'Superadmin DMS', '2018-04-06 08:11:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -767,7 +798,7 @@ ALTER TABLE `cms_user`
 -- AUTO_INCREMENT for table `dms_form`
 --
 ALTER TABLE `dms_form`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- AUTO_INCREMENT for table `dms_master_location`
@@ -779,13 +810,13 @@ ALTER TABLE `dms_master_location`
 -- AUTO_INCREMENT for table `dms_master_phone`
 --
 ALTER TABLE `dms_master_phone`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `dms_master_plat`
 --
 ALTER TABLE `dms_master_plat`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `dms_master_project`
@@ -809,7 +840,7 @@ ALTER TABLE `dms_master_tc`
 -- AUTO_INCREMENT for table `dms_master_vehicle`
 --
 ALTER TABLE `dms_master_vehicle`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `dms_purpose`
@@ -821,13 +852,13 @@ ALTER TABLE `dms_purpose`
 -- AUTO_INCREMENT for table `dms_transaction`
 --
 ALTER TABLE `dms_transaction`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT for table `dms_transaction_history`
 --
 ALTER TABLE `dms_transaction_history`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=235;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=253;
 
 --
 -- AUTO_INCREMENT for table `dms_user_group`
