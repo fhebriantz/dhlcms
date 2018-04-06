@@ -122,7 +122,7 @@
     }); 
      
     function startRefresh() { 
-        setTimeout(startRefresh,10000); 
+        setTimeout(startRefresh,1000); 
        
          $.ajax({
             type : "GET",
@@ -134,8 +134,10 @@
                 var count_inbound = inbound.length;
                 var count_outbound = outbound.length;
 
+
                 for(i=0;i<count_inbound;i++)
                 {
+                  $("#tbody_inbound").removeChild("#tbody_inbound");
                   //console.log(msg[0].inbound[i].master_project_name);
                   $("#tbody_inbound").append("<tr>");
                   $("#tbody_inbound").append("<td>"+[i]+"</td>");

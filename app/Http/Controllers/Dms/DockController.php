@@ -47,6 +47,7 @@ class DockController extends Controller
                         ->where('id_location','=',session()->get('session_id_loc'));
         $no_inbound = 1;
         $no_outbound = 1;
+        Session::flash('flash_inbound', "active");
         return view('pages/dms/dashboard', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));
         }
         elseif (session()->get('session_id_group') == 1) {
@@ -55,6 +56,7 @@ class DockController extends Controller
         $dms_outbound = Transaction::getTableTransaction()->where('id_purpose','=',2);
         $no_inbound = 1;
         $no_outbound = 1;
+        Session::flash('flash_inbound', "active");
         return view('pages/dms/dashboard', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));
         }
         else{
@@ -68,6 +70,7 @@ class DockController extends Controller
                             ->where('id_location','=',session()->get('session_id_loc'));
         $no_inbound = 1;
         $no_outbound = 1;
+        Session::flash('flash_inbound', "active");
         return view('pages/dms/dashboard', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));   
         }
     } 
@@ -165,18 +168,18 @@ class DockController extends Controller
                 'transporter_company' => 'required',
                 'cust_proj_name' => 'required',
                 'id_purpose' => 'required',
-            ]);
+        ]);
 
-                $id_purpose = $request->input('id_purpose');
-                $date_str=strtotime(date('D-m-y H:i:s'));
-                $id_dms_form = 'DMS'.$id_purpose.$date_str;
-                $now = new DateTime();
-                $waktu = $now->format('M d, y H:i:s');
-                // Date("April 3, 2018 16:0:0")
+        $id_purpose = $request->input('id_purpose');
+        $date_str=strtotime(date('D-m-y H:i:s'));
+        $id_dms_form = 'DMS'.$id_purpose.$date_str;
+        $now = new DateTime();
+        $waktu = $now->format('M d, y H:i:s');
+        // Date("April 3, 2018 16:0:0")
 
                 
 
-                $dms_form = new Form;
+        $dms_form = new Form;
                     // nama = nama field di database, var_nama = var_nama di dalam form input_blade
                         $dms_form->driver_name = $request->driver_name;
                         $dms_form->driver_phone = $request->driver_phone;
@@ -191,46 +194,48 @@ class DockController extends Controller
                         $dms_form->id_purpose = $request->id_purpose; 
                         $dms_form->created_by = session()->get('session_name'); 
                         $dms_form->id_dms_form = $id_dms_form;
-                    $dms_form->save();
+        $dms_form->save();
 
-                    $dms_transaction = new Transaction;
+        $dms_transaction = new Transaction;
                         $dms_transaction->id_dms_form = $id_dms_form;
                         $dms_transaction->status = 1;
                         $dms_transaction->arrival_time = $waktu;
                         $dms_transaction->created_by = session()->get('session_name'); 
-                    $dms_transaction->save();
+        $dms_transaction->save();
 
-                    $dms_transaction_history = new Transaction_history;
+        $dms_transaction_history = new Transaction_history;
                         $dms_transaction_history->id_dms_form = $id_dms_form;
                         $dms_transaction_history->status = 1;
                         $dms_transaction_history->arrival_time = $waktu;
                         $dms_transaction_history->created_by = session()->get('session_name'); 
-                    $dms_transaction_history->save();
+        $dms_transaction_history->save();
 
-                    $result = Master_plat::where('plat_no','=',$request->plat_no)->first();
-                    $phone = Master_phone::where('driver_phone','=',$request->driver_phone)->first();
+        $result = Master_plat::where('plat_no','=',$request->plat_no)->first();
+        $phone = Master_phone::where('driver_phone','=',$request->driver_phone)->first();
                   
-                 if (sizeof($result) > 0){
-                 }
-                 else
-                 {
+            if (sizeof($result) > 0){}
+            else
+            {
                     $dms_master_plat = new Master_plat;
                         $dms_master_plat->plat_no = $request->plat_no;
                         $dms_master_plat->created_by = session()->get('session_name'); 
                     $dms_master_plat->save();
-                 } 
+            } 
 
-                 if (sizeof($phone) > 0){
-                 }
-                 else
-                 {
+            if (sizeof($phone) > 0){}
+            else
+            {
                     $dms_master_phone = new Master_phone;
                         $dms_master_phone->driver_phone = $request->driver_phone;
                         $dms_master_phone->created_by = session()->get('session_name'); 
                     $dms_master_phone->save();
-                 } 
-                return  redirect('/dms/dashboard');
-
+            } 
+        if ($request->id_purpose = 1) {
+            Session::flash('flash_inbound', "active");
+            return  redirect('/dms/dashboard');
+        }elseif($request->id_purpose = 2) {
+            Session::flash('flash_outbound', "active");
+            return  redirect('/dms/dashboard');}
     }
 
     // menampilkan fungsi edit
@@ -322,7 +327,12 @@ class DockController extends Controller
                         $dms_master_phone->created_by = session()->get('session_name'); 
                     $dms_master_phone->save();
                 }
-            return  redirect('dms/dashboard');
+        if ($request->id_purpose = 1) {
+            Session::flash('flash_inbound', "active");
+            return  redirect('/dms/dashboard');
+        }elseif($request->id_purpose = 2) {
+            Session::flash('flash_outbound', "active");
+            return  redirect('/dms/dashboard');}
     }
 
     public function delete($id){
@@ -357,6 +367,7 @@ class DockController extends Controller
     public function input_id(Request $request){
         $id = $request->dms_id; 
         $outside = 'Waiting Outside';  
+        // return confirm("$request->dms_id Apakah id sudah benar?");
         $check_dms = Transaction::getTableTransaction()->where('id_dms_form','=',$id);
         if (sizeof($check_dms) > 0){
 

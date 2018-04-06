@@ -88,7 +88,7 @@
         <p><strong>di Dock Management System</strong></p>  
       </div> 
     </div>
-    <div class="tab-pane active" id="inbond" role="tabpanel">
+    <div class="tab-pane  {{ Session::get('flash_inbound') }} " id="inbond" role="tabpanel">
       <div class="col-sm-12">
         <div class="row ujung">
           <div class="col-sm-12 paddinghead" style="background-color: #eee; font-size: 10px;">
@@ -112,7 +112,7 @@
                         <tr>
                           <td>DMS ID</td>
                           <td><input class="form-control" type="text" name="dms_id" id="dms_id" placeholder="DMS ID" style="width: 100%" autofocus=""></td>
-                          <td><input class="btn btn-info" name="submit" value="Submit" type="submit" style="width: 100%"></td>
+                          <td><input class="btn btn-info" name="submit" value="Submit" onclick="return confirm('setuju?');" type="submit" style="width: 100%"></td>
                         </tr>
                         
                     </table>
@@ -256,7 +256,7 @@
         </tbody>
       </table>
     </div>
-    <div class="tab-pane" id="outbond" role="tabpanel">
+    <div class="tab-pane {{ Session::get('flash_outbound') }} " id="outbond" role="tabpanel">
       <div class="col-sm-12">
         <div class="row ujung">
           <div class="col-sm-12 paddinghead" style="background-color: #eee; font-size: 10px;">
@@ -373,3 +373,26 @@ $(document).ready( function () {
 } );
 </script>
 @endsection
+<!--
+  <form method="POST" action="/dhlcms/public/dms/input_id">
+                {{ csrf_field() }}
+                    
+                    <table class="table table-striped fontinput">
+                      
+                        <tr>
+                          <td>DMS ID</td>
+                          <td><input class="form-control" type="text" name="dms_id" id="dms_id" placeholder="DMS ID" style="width: 100%" autofocus=""></td>
+                          <td><a data-fancybox data-src="#scan" href="javascript:;"><button class="btn btnadd" style="background-color: #999; color: white;">Submit</button></a></td>
+                        </tr>
+                        
+                    </table>
+                    <div style="display: none;" id="scan">
+                      <table class="table table-striped fontinput">
+                          <tr>
+                            <td colspan="2">Are You Sure</td>
+                            <td><input class="btn btn-info" name="submit" value="Submit" type="submit"></td>
+                          </tr>
+                      </table>
+            </div>
+              </form>
+-->
