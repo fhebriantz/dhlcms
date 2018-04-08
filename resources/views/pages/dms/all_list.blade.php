@@ -272,11 +272,14 @@
                 var outbound = msg[0].outbound;
                 var count_inbound = inbound.length;
                 var count_outbound = outbound.length;
+                var dlt = document.getElementById("tbody_inbound");
+              
 
 
                 for(i=0;i<count_inbound;i++)
                 {
-                  $("#tbody_inbound").removeChild("#tbody_inbound");
+                  dlt.parentNode.removeChild(dlt);
+                  //$("#tbody_inbound").removeChild("#tbody_inbound");
                   //console.log(msg[0].inbound[i].master_project_name);
                   $("#tbody_inbound").append("<tr>");
                   $("#tbody_inbound").append("<td>"+[i]+"</td>");
