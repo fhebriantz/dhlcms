@@ -44,7 +44,7 @@
       <li class="nav-item navbar-right" style="float: right; cursor: pointer;">
         <a>{{session()->get('session_name')}} / {{session()->get('session_name_project')}}</a>
       </li>
-      <li class="nav-item navbar-right" style="float: right; cursor: pointer;">
+      <!--<li class="nav-item navbar-right" style="float: right; cursor: pointer;">
         <a data-fancybox data-src="#scan" href="javascript:;"><button class="btn btnadd" style="background-color: #999; color: white;">Scan</button></a>
             <div style="display: none;" id="scan">
               <form method="POST" action="/dhlcms/public/dms/input_id">
@@ -63,7 +63,7 @@
                     </table>
               </form>
             </div>
-      </li>  
+      </li>  -->
       <li class="nav-item navbar-right" style="float: right; cursor: pointer;">
         <a href="/dhlcms/public/dms/all_list"  target="_blank"><button class="btn btnadd" style="background-color: #999; color: white;">Layar Dasbor</button></a>
       </li>
@@ -88,7 +88,7 @@
         <p><strong>di Dock Management System</strong></p>  
       </div> 
     </div>
-    <div class="tab-pane  {{ Session::get('flash_inbound') }} " id="inbond" role="tabpanel">
+    <div class="tab-pane active {{ Session::get('inbound') }}" id="inbond" role="tabpanel">
       <div class="col-sm-12">
         <div class="row ujung">
           <div class="col-sm-12 paddinghead" style="background-color: #eee; font-size: 10px;">
@@ -104,19 +104,32 @@
 
       </div>
 
-      <form method="POST" action="/dhlcms/public/dms/input_id">
+      
+              <form method="POST" action="/dhlcms/public/dms/input_id">
                 {{ csrf_field() }}
                     
-                    <table class="table table-striped fontinput">
-                      
+                    <table class="table table-striped fontinput">                      
                         <tr>
-                          <td>DMS ID</td>
+                          <td>SCAN DMS ID</td>
                           <td><input class="form-control" type="text" name="dms_id" id="dms_id" placeholder="DMS ID" style="width: 100%" autofocus=""></td>
-                          <td><input class="btn btn-info" name="submit" value="Submit" onclick="return confirm('setuju?');" type="submit" style="width: 100%"></td>
+                          <td><a data-fancybox data-src="#scan" href="javascript:;"><button class="btn btnadd" style="background-color: #999; color: white; width: 100%;">Submit</button></a></td>
                         </tr>
-                        
                     </table>
+
+                    <div style="display: none;" id="scan">
+                      <table class="table table-striped fontinput">
+                          <tr>
+                            <td colspan="2">ID yang dimasukan sudah benar?</td>
+                            
+                          </tr>
+                          <tr>
+                            <td><input class="btn btn-success" name="submit" value="Submit" type="submit" style="width: 100%"></td>
+                            <td><input class="btn btn-danger" name="cancel" value="Cancel" type="submit" style="width: 100%" ></td>
+                          </tr>
+                      </table>
+                    </div>
               </form>
+
       <table class="table-striped fontsizetable text-center" id="inbound_id"  width="100%" cellspacing="0">
         <thead class="thead paddingtable text-center" >
           <tr >
@@ -127,7 +140,7 @@
             <th class="width_duration phone">DURASI</th>
             <th class="width_status phone">PROGRES</th>
             <th class="width_status phone">SCAN TERAKHIR</th>
-            <th class="width_plt phone ">PLT</th>
+            <th class="width_plt phone ">PUT</th>
             <th class="width_gate phone ">GERBANG</th>
             <th class="width_vehicle ">KENDARAAN</th>
             @if (session()->get('session_id_group') == 1)
@@ -161,7 +174,7 @@
             <td class="cus ">{{$inbound->transporter_company}}</td>
             <td class="cus"><span id="{{$inbound->id_dms_form}}"></span></td>
             <td class="cus">{{$inbound->status_name}}</td>
-            <td class="cus">{{$inbound->last_scan}}</span></td>
+            <td class="cus">{{$inbound->last_scan}}</td>
             <td class="phone ">
               <?php if ($inbound->waiting_time == ''): ?>
               <?php echo "-" ?>
@@ -238,7 +251,7 @@
                   
                   // Output the result in an element with id="demo"
                   document.getElementById("{{$inbound->id_dms_form}}").innerHTML = hours + "h "
-                  + minutes + "m " + seconds + "s ";
+                  + minutes + "m " + seconds + "s";
 
                   // If the count down is over, write some text 
                   if (distance < 0) {
@@ -256,7 +269,7 @@
         </tbody>
       </table>
     </div>
-    <div class="tab-pane {{ Session::get('flash_outbound') }} " id="outbond" role="tabpanel">
+    <div class="tab-pane {{ Session::get('outbond') }} " id="outbond" role="tabpanel">
       <div class="col-sm-12">
         <div class="row ujung">
           <div class="col-sm-12 paddinghead" style="background-color: #eee; font-size: 10px;">
@@ -266,18 +279,40 @@
         <h2 class="titledashboard" style="color: #d71635">OUTBOUND</h2>
       </div>
 
+      <form method="POST" action="/dhlcms/public/dms/input_id">
+                {{ csrf_field() }}
+                    
+                    <table class="table table-striped fontinput">                      
+                        <tr>
+                          <td>SCAN DMS ID</td>
+                          <td><input class="form-control" type="text" name="dms_id" id="dms_id" placeholder="DMS ID" style="width: 100%" autofocus=""></td>
+                          <td><!--<a data-fancybox data-src="#scan" href="javascript:;">--><button class="btn btnadd" type="submit" style="background-color: #999; color: white; width: 100%;">Submit</button><!--</a>--></td>
+                        </tr>
+                    </table>
+
+                    <div style="display: none;" id="scan">
+                      <table class="table table-striped fontinput">
+                          <tr>
+                            <td colspan="2">Are You Sure</td>
+                            <td><input class="btn btn-info" name="submit" value="Submit" type="submit"></td>
+                          </tr>
+                      </table>
+                    </div>
+              </form>
+
       <table class="table-striped fontsizetable text-center"  width="100%" cellspacing="0" id="outbound_id">     
         <thead class="thead paddingtable text-center" >
           <tr >
-            <th class="width_no">No</th>
+            <th class="width_no">NO</th>
             <th class="phone width_plat">PLAT NO</th>
             <th class="width_driver">NAMA SOPIR</th>
             <th class="cus width_tc">PERUSAHAAN TRANSPORTASI</th>
-            <th class="width_duration ">DURASI</th>
-            <th class="width_status">PROGRES</th>
+            <th class="width_duration phone">DURASI</th>
+            <th class="width_status phone">PROGRES</th>
+            <th class="width_status phone">SCAN TERAKHIR</th>
             <th class="width_plt phone ">PLT</th>
             <th class="width_gate phone ">GERBANG</th>
-            <th class="width_vehicle">KENDARAAN</th>
+            <th class="width_vehicle ">KENDARAAN</th>
             @if (session()->get('session_id_group') == 1)
             <th class="cus width_cus" >NAMA PROYEK</th>
             @elseif (session()->get('session_id_group') == 2)
@@ -285,9 +320,9 @@
             <th class="cus width_cus" >NAMA PROYEK</th>
             @endif
             @if (session()->get('session_id_group') == 1)
-            <th class="width_action actiontable" >TINDAKAN</th>
+            <th class="width_action actiontable phone" >TINDAKAN</th>
             @elseif (session()->get('session_id_group') == 2)
-            <th class="width_action actiontable">TINDAKAN</th>
+            <th class="width_action actiontable phone">TINDAKAN</th>
             @else
             @endif
             @if (session()->get('session_id_group') == 1)
@@ -300,22 +335,22 @@
           </tr>
         </thead>
 
-        <tbody class="paddingtable">
-          @foreach($dms_outbound as $outbound)
+        <tbody class="paddingtable text-center">
+           @foreach($dms_outbound as $outbound)
           <tr>    
             <td class="">{{ $no_outbound++ }}</td>
-            <td class="phone ">{{$outbound->plat_no}}</td>
-            <td class="">{{$outbound->driver_name}}</td>
+            <td class=" ">{{$outbound->plat_no}}</td>
+            <td class="phone">{{$outbound->driver_name}}</td>
             <td class="cus ">{{$outbound->transporter_company}}</td>
-            <td class="">{{$outbound->duration}}</td>
-            <td class="">{{$outbound->status_name}}</td>
+            <td class="cus"><span id="{{$outbound->id_dms_form}}"></span></td>
+            <td class="cus">{{$outbound->status_name}}</td>
+            <td class="cus">{{$outbound->last_scan}}</span></td>
             <td class="phone ">
               <?php if ($outbound->waiting_time == ''): ?>
               <?php echo "-" ?>
               <?php else: ?>
               <?php echo "$outbound->waiting_time" ?>
-              <?php endif ?>
-            </td>
+              <?php endif ?></td>
             <td class="cus ">{{$outbound->gate_number}}</td>
             <td class="">{{$outbound->type_of_vehicle}}</td>
             @if (session()->get('session_id_group') == 1)
@@ -325,33 +360,81 @@
             <td class="cus ">{{$outbound->master_project_name}}</td>
             @endif
             @if (session()->get('session_id_group') == 1)
-            <td >
+            <td  class="cus ">
               <a href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/edit"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
                 <form method="POST" action="/dhlcms/public/dms/{{ $outbound->id_dms_form}}/delete" class="text-center" style="float: right; margin-left: 2px;">
                   {{ csrf_field() }}
-                  <button class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$outbound->driver_name}}?');" style="width: 20px; height: auto;"><img src="{{ asset('image/trash.png')}}" alt="" style="width: 15px; height: auto;"></button></button> 
+                  <button class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$outbound->driver_name}}?');" style="width: 20px; height: auto;"><img src="{{ asset('image/trash.png')}}" alt="" style="width: 15px; height: auto;"></button>
                   <input type="hidden" name="_method" value="DELETE">
                 </form>
             </td>
             @elseif (session()->get('session_id_group') == 2)
-            <td>
+            <td  class="cus ">
               <a href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/edit"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
                 <form method="POST" action="/dhlcms/public/dms/{{ $outbound->id_dms_form}}/delete" class="text-center" style="float: right; margin-left: 2px;">
                   {{ csrf_field() }}
-                  <button class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$outbound->driver_name}}?');" style="width: 20px; height: auto;"><img src="{{ asset('image/trash.png')}}" alt="" style="width: 15px; height: auto;"></button></button> 
+                  <button class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$outbound->driver_name}}?');" style="width: 20px; height: auto;"><img src="{{ asset('image/trash.png')}}" alt="" style="width: 15px; height: auto;"></button>
                   <input type="hidden" name="_method" value="DELETE">
                 </form>
             </td>
             @else
             @endif
-            @if (session()->get('session_id_group') == 1)            
-            <td class="cus"><a target="_blank" href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/barcode" class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
+            @if (session()->get('session_id_group') == 1)
+            <td class="cus "><a target="_blank" href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/barcode" class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
             @elseif (session()->get('session_id_group') == 2)
             @elseif (session()->get('session_id_group') == 3)
-            <td class="cus"><a target="_blank" href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/barcode" class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
+            <td class="cus "><a target="_blank" href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/barcode"  class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
             @else
             @endif
           </tr>
+
+           <!-- DURATION ======================================================== DURATION -->
+          <script>
+            // Set the date we're counting down to
+            //var countDownDate = new Date("Apr 3, 2018 16:0:0").getTime();
+             //if ({{$outbound->duration}}==0||{{$outbound->duration}}==null) {}
+               //else{
+            var countupDate{{$outbound->id_dms_form}} = new Date("{{$outbound->duration}}").getTime();
+            var exit{{$outbound->id_dms_form}} = new Date("{{$outbound->exit_time}}").getTime();
+
+            if('{{$outbound->duration}}' == ''){}
+            else
+            {
+            // Update the count down every 1 second
+              var x = setInterval(function() 
+              {
+                // Get todays date and time
+                var now = new Date().getTime();
+                  // Find the distance between now an the count down date
+                if('{{$outbound->status}}' == 6){
+                  var distance = exit{{$outbound->id_dms_form}} - countupDate{{$outbound->id_dms_form}};
+                }
+                else
+                {
+                  var distance = now - countupDate{{$outbound->id_dms_form}}; 
+                }
+                  // Time calculations for days, hours, minutes and seconds
+                  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                  
+                  // Output the result in an element with id="demo"
+                  document.getElementById("{{$outbound->id_dms_form}}").innerHTML = hours + "h "
+                  + minutes + "m " + seconds + "s";
+
+                  // If the count down is over, write some text 
+                  if (distance < 0) {
+                      clearInterval(x);
+                      document.getElementById("{{$outbound->id_dms_form}}").innerHTML = "EXPIRED";
+                  }
+
+              }, 1000);
+            }   
+            // }
+
+            </script>
+            <!-- DURATION ======================================================== DURATION -->
            @endforeach
         </tbody>
       </table>

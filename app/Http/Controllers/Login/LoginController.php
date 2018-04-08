@@ -60,6 +60,8 @@ class LoginController extends Controller
                 $request->session()->put('session_id_loc', $id_location);
                 $request->session()->put('session_location', $location);
                 $request->session()->put('session_name_project', $project_name);
+                $request->session()->put('inbound', "active");
+                $request->session()->put('outbound', "");
 
                 return  redirect('/dms/dashboard');
             }
@@ -82,6 +84,8 @@ class LoginController extends Controller
                 $request->session()->forget('session_location');
                 $request->session()->forget('session_name_project');
                 $request->session()->forget('message');
+                $request->session()->forget('inbound');
+                $request->session()->forget('outbound');
 
                 $request->session()->flush();
 
