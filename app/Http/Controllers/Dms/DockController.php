@@ -71,14 +71,9 @@ class DockController extends Controller
         return view('pages/dms/dashboard', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));   
         }
     } 
-
-
-    
-
         
         //return response($dms_form, 200)
          //         ->header('Content-Type', 'text/plain');
-
 
 
     public function all_list(){
@@ -190,7 +185,7 @@ class DockController extends Controller
                         $dms_form->tujuan = $request->tujuan;
                         $dms_form->cust_proj_name = $request->cust_proj_name; 
                         $dms_form->id_purpose = $request->id_purpose; 
-                        $dms_form->created_by = session()->get('session_name'); 
+                        $dms_form->created_by = session()->get('session_id'); 
                         $dms_form->id_dms_form = $id_dms_form;
         $dms_form->save();
 
@@ -199,7 +194,7 @@ class DockController extends Controller
                         $dms_transaction->status = 1;
                         $dms_transaction->duration = $waktu;
                         $dms_transaction->arrival_time = $waktu;
-                        $dms_transaction->created_by = session()->get('session_name'); 
+                        $dms_transaction->created_by = session()->get('session_id'); 
         $dms_transaction->save();
 
         $dms_transaction_history = new Transaction_history;
@@ -207,7 +202,7 @@ class DockController extends Controller
                         $dms_transaction_history->status = 1;
                         $dms_transaction_history->duration = $waktu;
                         $dms_transaction_history->arrival_time = $waktu;
-                        $dms_transaction_history->created_by = session()->get('session_name'); 
+                        $dms_transaction_history->created_by = session()->get('session_id'); 
         $dms_transaction_history->save();
         /*
         $result = Master_plat::where('plat_no','=',$request->plat_no)->first();
@@ -218,7 +213,7 @@ class DockController extends Controller
             {*/
                     $dms_master_plat = new Master_plat;
                         $dms_master_plat->plat_no = $request->plat_no;
-                        $dms_master_plat->created_by = session()->get('session_name'); 
+                        $dms_master_plat->created_by = session()->get('session_id'); 
                     $dms_master_plat->save();
             //} 
 
@@ -227,7 +222,7 @@ class DockController extends Controller
             {*/
                     $dms_master_phone = new Master_phone;
                         $dms_master_phone->driver_phone = $request->driver_phone;
-                        $dms_master_phone->created_by = session()->get('session_name'); 
+                        $dms_master_phone->created_by = session()->get('session_id'); 
                     $dms_master_phone->save();
             //} 
 
@@ -254,8 +249,6 @@ class DockController extends Controller
                 'id_purpose' => 'required',
             ]);
 
-            $request->session()->forget('inbound');
-            $request->session()->forget('outbound');
             $now = new DateTime();
 
                     $dms_form = Form::where('id_dms_form','=',$id)->first();
@@ -271,7 +264,7 @@ class DockController extends Controller
                         $dms_form->shipment = $request->shipment; 
                         $dms_form->cust_proj_name = $request->cust_proj_name; 
                         $dms_form->id_purpose = $request->id_purpose; 
-                        $dms_form->created_by = session()->get('session_name'); 
+                        $dms_form->created_by = session()->get('session_id'); 
                         $dms_form->id_dms_form = $request->id_dms_form;
                     // untuk mengsave
                     $dms_form->save();
@@ -290,7 +283,7 @@ class DockController extends Controller
                             $dms_transaction->status = $dms_transaction->status;
                         }
                         $dms_transaction->waiting_time = $request->waiting_time;
-                        $dms_transaction->updated_by = session()->get('session_name'); 
+                        $dms_transaction->updated_by = session()->get('session_id'); 
                     $dms_transaction->save();
 
                     $dms_transaction_history = new Transaction_history;
@@ -307,7 +300,7 @@ class DockController extends Controller
                             $dms_transaction_history->status = $dms_transaction_history->status;
                         }
                         $dms_transaction_history->waiting_time = $request->waiting_time;
-                        $dms_transaction_history->created_by = session()->get('session_name');
+                        $dms_transaction_history->created_by = session()->get('session_id');
                     $dms_transaction_history->save();
 
                 $result = Master_plat::where('plat_no','=',$request->plat_no)->first(); 
@@ -319,7 +312,7 @@ class DockController extends Controller
                 {*/
                     $dms_master_plat = new Master_plat;
                         $dms_master_plat->plat_no = $request->plat_no;
-                        $dms_master_plat->created_by = session()->get('session_name'); 
+                        $dms_master_plat->created_by = session()->get('session_id'); 
                     $dms_master_plat->save();
                 //}
 
@@ -329,16 +322,14 @@ class DockController extends Controller
                 {*/
                     $dms_master_phone = new Master_phone;
                         $dms_master_phone->driver_phone = $request->driver_phone;
-                        $dms_master_phone->created_by = session()->get('session_name'); 
+                        $dms_master_phone->created_by = session()->get('session_id'); 
                     $dms_master_phone->save();
                 //}
         if ($request->id_purpose = 1) {
-            $request->session()->put('inbound', "inbound");
-            $request->session()->put('outbound', "");
+             Session::flash('class_inbound', "active");
             return  redirect('/dms/dashboard');
-        }elseif($request->id_purpose = 2) {
-            $request->session()->put('inbound', "");
-            $request->session()->put('outbound', "outbound");
+        }else {
+             Session::flash('class_outbound', "active");
             return  redirect('/dms/dashboard');}
     }
 
@@ -372,7 +363,8 @@ class DockController extends Controller
     } 
 
     public function input_id(Request $request){
-        $id = $request->dms_id; 
+        $id = $request->dms_id_hidden; 
+        print_r($id);
         $outside = 'Waiting Outside';  
         // return confirm("$request->dms_id Apakah id sudah benar?");
         $check_dms = Transaction::getTableTransaction()->where('id_dms_form','=',$id);
@@ -422,7 +414,7 @@ class DockController extends Controller
             $dms_transaction_history->id_dms_form = $id;
             $dms_transaction_history->status = 3;
             $dms_transaction_history->last_scan = $last_scan;
-            $dms_transaction_history->created_by = session()->get('session_name');
+            $dms_transaction_history->created_by = session()->get('session_id');
             $dms_transaction_history->save();
             return redirect('/dms/dashboard');
         }
@@ -436,7 +428,7 @@ class DockController extends Controller
             $dms_transaction_history->id_dms_form = $id;
             $dms_transaction_history->status = 4;
             $dms_transaction_history->last_scan = $last_scan;
-            $dms_transaction_history->created_by = session()->get('session_name');
+            $dms_transaction_history->created_by = session()->get('session_id');
             $dms_transaction_history->save();
             return redirect('/dms/dashboard');
         }
@@ -449,7 +441,7 @@ class DockController extends Controller
             $dms_transaction_history->id_dms_form = $id;
             $dms_transaction_history->status = 5;
             $dms_transaction_history->last_scan = $last_scan;
-            $dms_transaction_history->created_by = session()->get('session_name');
+            $dms_transaction_history->created_by = session()->get('session_id');
             $dms_transaction_history->save();
             return redirect('/dms/dashboard');
         }
@@ -464,7 +456,7 @@ class DockController extends Controller
             $dms_transaction_history->exit_time = $waktu;
             $dms_transaction_history->status = 6;
             $dms_transaction_history->last_scan = $last_scan;
-            $dms_transaction_history->created_by = session()->get('session_name');
+            $dms_transaction_history->created_by = session()->get('session_id');
             $dms_transaction_history->save();
             return redirect('/dms/dashboard');
         }
@@ -492,7 +484,7 @@ class DockController extends Controller
             $dms_transaction_history->id_dms_form = $id;
             $dms_transaction_history->status = 3;
             $dms_transaction_history->last_scan = $last_scan;
-            $dms_transaction_history->created_by = session()->get('session_name');
+            $dms_transaction_history->created_by = session()->get('session_id');
             $dms_transaction_history->save();
             return redirect('/dms/dashboard');
         }
@@ -507,7 +499,7 @@ class DockController extends Controller
             $dms_transaction_history->exit_time = $waktu;
             $dms_transaction_history->status = 6;
             $dms_transaction_history->last_scan = $last_scan;
-            $dms_transaction_history->created_by = session()->get('session_name');
+            $dms_transaction_history->created_by = session()->get('session_id');
             $dms_transaction_history->save();
             return redirect('/dms/dashboard');
         }
@@ -527,7 +519,7 @@ class DockController extends Controller
             $dms_transaction_history->id_dms_form = $id;
             $dms_transaction_history->status = 4;
             $dms_transaction_history->last_scan = $last_scan;
-            $dms_transaction_history->created_by = session()->get('session_name');
+            $dms_transaction_history->created_by = session()->get('session_id');
             $dms_transaction_history->save();
             return redirect('/dms/dashboard');
         }
@@ -540,7 +532,7 @@ class DockController extends Controller
             $dms_transaction_history->id_dms_form = $id;
             $dms_transaction_history->status = 5;
             $dms_transaction_history->last_scan = $last_scan;
-            $dms_transaction_history->created_by = session()->get('session_name');
+            $dms_transaction_history->created_by = session()->get('session_id');
             $dms_transaction_history->save();
             return redirect('/dms/dashboard');
         }

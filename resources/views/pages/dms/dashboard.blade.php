@@ -88,7 +88,7 @@
         <p><strong>di Dock Management System</strong></p>  
       </div> 
     </div>
-    <div class="tab-pane active {{ Session::get('inbound') }}" id="inbond" role="tabpanel">
+    <div class="tab-pane {{session()->get('class_inbound')}}" id="inbond" role="tabpanel">
       <div class="col-sm-12">
         <div class="row ujung">
           <div class="col-sm-12 paddinghead" style="background-color: #eee; font-size: 10px;">
@@ -105,18 +105,21 @@
       </div>
 
       
-              <form method="POST" action="/dhlcms/public/dms/input_id">
-                {{ csrf_field() }}
-                    
-                    <table class="table table-striped fontinput">                      
+              <form method="POST" action="">
+                {{ csrf_field() }}   
+                    <table class="table table-striped fontinput" id="inputScan">                      
                         <tr>
                           <td>SCAN DMS ID</td>
-                          <td><input class="form-control" type="text" name="dms_id" id="dms_id" placeholder="DMS ID" style="width: 100%" autofocus=""></td>
+                          <td><input class="form-control" type="text" name="dms_id1" id="dms_id" placeholder="DMS ID" style="width: 100%" autofocus=""></td>
                           <td><a data-fancybox data-src="#scan" href="javascript:;"><button class="btn btnadd" style="background-color: #999; color: white; width: 100%;">Submit</button></a></td>
                         </tr>
                     </table>
+              </form>
 
-                    <div style="display: none;" id="scan">
+              <div style="display: none;" id="scan">
+                <form method="POST" action="/dhlcms/public/dms/input_id">
+                  <input type="hidden" name="dms_id_hidden" id="dms_id_hidden">
+                  {{ csrf_field() }}
                       <table class="table table-striped fontinput">
                           <tr>
                             <td colspan="2">ID yang dimasukan sudah benar?</td>
@@ -124,11 +127,10 @@
                           </tr>
                           <tr>
                             <td><input class="btn btn-success" name="submit" value="Submit" type="submit" style="width: 100%"></td>
-                            <td><input class="btn btn-danger" name="cancel" value="Cancel" type="submit" style="width: 100%" ></td>
                           </tr>
                       </table>
-                    </div>
-              </form>
+                    </form>
+              </div>
 
       <table class="table-striped fontsizetable text-center" id="inbound_id"  width="100%" cellspacing="0">
         <thead class="thead paddingtable text-center" >
@@ -269,7 +271,7 @@
         </tbody>
       </table>
     </div>
-    <div class="tab-pane {{ Session::get('outbond') }} " id="outbond" role="tabpanel">
+    <div class="tab-pane {{session()->get('class_outbound')}} " id="outbond" role="tabpanel">
       <div class="col-sm-12">
         <div class="row ujung">
           <div class="col-sm-12 paddinghead" style="background-color: #eee; font-size: 10px;">
@@ -448,12 +450,25 @@
 <script type="text/javascript">
 $(document).ready( function () {
     $('#inbound_id').DataTable();
+
+    var count_char = 0;
+    $('#inputScan').keyup(function(event) {
+      if(event.target.selectionEnd  == 14 ) 
+      {
+        console.log(event);
+         $("#scan").find("#dms_id_hidden").val(event.target.value);
+      }
+      
+    });
 } );
 </script>
 <script type="text/javascript">
 $(document).ready( function () {
     $('#outbound_id').DataTable();
 } );
+</script>
+<script>
+  
 </script>
 @endsection
 <!--
