@@ -23,11 +23,12 @@
       "><img class="iconrightnav" src="{{ asset('image/logout.png')}}" alt=""></a></li>
 @endsection
 @section('nav_dasboard')
+<ul class="nav nav-tabs navbottom" role="tablist" id="myTab">
       <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#inbond" role="tab">INBOND </a>
+        <a class="nav-link" data-toggle="tab" href="#inbound" role="tab">INBOND </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#outbond" role="tab">OUTBOND</a>
+        <a class="nav-link" data-toggle="tab" href="#outbound" role="tab">OUTBOND</a>
       </li>
       @if (session()->get('session_id_group') == 1)
         <li>
@@ -67,6 +68,7 @@
       <li class="nav-item navbar-right" style="float: right; cursor: pointer;">
         <a href="/dhlcms/public/dms/all_list"  target="_blank"><button class="btn btnadd" style="background-color: #999; color: white;">Layar Dasbor</button></a>
       </li>
+    </ul>
 @endsection
 @section('content')
 
@@ -88,7 +90,10 @@
         <p><strong>di Dock Management System</strong></p>  
       </div> 
     </div>
-    <div class="tab-pane {{session()->get('class_inbound')}}" id="inbond" role="tabpanel">
+
+
+
+    <div class="tab-pane {{session()->get('class_inbound')}}" id="inbound" role="tabpanel">
       <div class="col-sm-12">
         <div class="row ujung">
           <div class="col-sm-12 paddinghead" style="background-color: #eee; font-size: 10px;">
@@ -97,14 +102,10 @@
           </div>  
         </div>
         <h2 class="titledashboard" style="color: #d71635">INBOUND</h2>
-        
         @if (Session::has('id_dms'))
           <div class="alert alert-danger">{{ Session::get('id_dms') }}</div>
         @endif
-
       </div>
-
-      
               <form method="POST" action="">
                 {{ csrf_field() }}   
                     <table class="table table-striped fontinput" id="inputScan">                      
@@ -121,12 +122,13 @@
                   <input type="hidden" name="dms_id_hidden" id="dms_id_hidden">
                   {{ csrf_field() }}
                       <table class="table table-striped fontinput">
-                          <tr>
-                            <td colspan="2">ID yang dimasukan sudah benar?</td>
+                          <tr style="border-bottom: solid 1px #eee;">
+                            <td colspan="2" class="text-center" style="font-size: 16px;"><strong>Confirmation Dialog!</strong><br>Apakah anda ingin melanjutkan?</td>
                             
                           </tr>
                           <tr>
-                            <td><input class="btn btn-success" name="submit" value="Submit" type="submit" style="width: 100%"></td>
+                            <td style="border-right: solid 1px #eee; "><input class="btn btn-info" name="submit" value="Lanjut" type="submit" style="width: 100%"></td>
+                            <td><a class="btn btn-danger" style="width: 100%" onclick="$.fancybox.close()">Batal</a></td>
                           </tr>
                       </table>
                     </form>
@@ -271,7 +273,7 @@
         </tbody>
       </table>
     </div>
-    <div class="tab-pane {{session()->get('class_outbound')}} " id="outbond" role="tabpanel">
+    <div class="tab-pane {{session()->get('class_outbound')}} " id="outbound" role="tabpanel">
       <div class="col-sm-12">
         <div class="row ujung">
           <div class="col-sm-12 paddinghead" style="background-color: #eee; font-size: 10px;">
@@ -279,27 +281,20 @@
           </div>  
         </div>
         <h2 class="titledashboard" style="color: #d71635">OUTBOUND</h2>
+        @if (Session::has('id_dms'))
+          <div class="alert alert-danger">{{ Session::get('id_dms') }}</div>
+        @endif
       </div>
 
-      <form method="POST" action="/dhlcms/public/dms/input_id">
-                {{ csrf_field() }}
-                    
-                    <table class="table table-striped fontinput">                      
+      <form method="POST" action="">
+                {{ csrf_field() }}   
+                    <table class="table table-striped fontinput" id="inputScan2">                      
                         <tr>
                           <td>SCAN DMS ID</td>
-                          <td><input class="form-control" type="text" name="dms_id" id="dms_id" placeholder="DMS ID" style="width: 100%" autofocus=""></td>
-                          <td><!--<a data-fancybox data-src="#scan" href="javascript:;">--><button class="btn btnadd" type="submit" style="background-color: #999; color: white; width: 100%;">Submit</button><!--</a>--></td>
+                          <td><input class="form-control" type="text" name="dms_id1" id="dms_id" placeholder="DMS ID" style="width: 100%" autofocus=""></td>
+                          <td><a data-fancybox data-src="#scan" href="javascript:;"><button class="btn btnadd" style="background-color: #999; color: white; width: 100%;">Submit</button></a></td>
                         </tr>
                     </table>
-
-                    <div style="display: none;" id="scan">
-                      <table class="table table-striped fontinput">
-                          <tr>
-                            <td colspan="2">Are You Sure</td>
-                            <td><input class="btn btn-info" name="submit" value="Submit" type="submit"></td>
-                          </tr>
-                      </table>
-                    </div>
               </form>
 
       <table class="table-striped fontsizetable text-center"  width="100%" cellspacing="0" id="outbound_id">     
@@ -450,6 +445,7 @@
 <script type="text/javascript">
 $(document).ready( function () {
     $('#inbound_id').DataTable();
+    $('#outbound_id').DataTable();
 
     var count_char = 0;
     $('#inputScan').keyup(function(event) {
@@ -460,37 +456,45 @@ $(document).ready( function () {
       }
       
     });
+
+    $('#inputScan2').keyup(function(event) {
+      if(event.target.selectionEnd  == 14 ) 
+      {
+        console.log(event);
+         $("#scan").find("#dms_id_hidden").val(event.target.value);
+      }
+      
+    });
 } );
 </script>
+
 <script type="text/javascript">
-$(document).ready( function () {
-    $('#outbound_id').DataTable();
-} );
-</script>
-<script>
-  
+  if (location.hash) {
+    $('a[href=\'' + location.hash + '\']').tab('show');
+  }
+  var activeTab = localStorage.getItem('activeTab');
+  if (activeTab) {
+    $('a[href="' + activeTab + '"]').tab('show');
+  }
+
+  $('body').on('click', 'a[data-toggle=\'tab\']', function (e) {
+    e.preventDefault()
+    var tab_name = this.getAttribute('href')
+    if (history.pushState) {
+      history.pushState(null, null, tab_name)
+    }
+    else {
+      location.hash = tab_name
+    }
+    localStorage.setItem('activeTab', tab_name)
+
+    $(this).tab('show');
+    return false;
+  });
+  $(window).on('popstate', function () {
+    var anchor = location.hash ||
+      $('a[data-toggle=\'tab\']').first().attr('href');
+    $('a[href=\'' + anchor + '\']').tab('show');
+  });
 </script>
 @endsection
-<!--
-  <form method="POST" action="/dhlcms/public/dms/input_id">
-                {{ csrf_field() }}
-                    
-                    <table class="table table-striped fontinput">
-                      
-                        <tr>
-                          <td>DMS ID</td>
-                          <td><input class="form-control" type="text" name="dms_id" id="dms_id" placeholder="DMS ID" style="width: 100%" autofocus=""></td>
-                          <td><a data-fancybox data-src="#scan" href="javascript:;"><button class="btn btnadd" style="background-color: #999; color: white;">Submit</button></a></td>
-                        </tr>
-                        
-                    </table>
-                    <div style="display: none;" id="scan">
-                      <table class="table table-striped fontinput">
-                          <tr>
-                            <td colspan="2">Are You Sure</td>
-                            <td><input class="btn btn-info" name="submit" value="Submit" type="submit"></td>
-                          </tr>
-                      </table>
-            </div>
-              </form>
--->

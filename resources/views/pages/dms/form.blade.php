@@ -56,25 +56,25 @@
               <table class="table table-striped fontinput">
 
                   <tr>
-                    <td>Vehicle Plate</td>
+                    <td>Plat No</td>
                     <td><input class="form-control" type="text" name="plat_no" id="plat_no" placeholder="Vehicle Plate" style="width: 100%"></td>
                   </tr>
 
                   <tr>
-                    <td>Drivers Name</td>
+                    <td>Nama Sopir</td>
                     <td><input class="form-control" type="text" name="driver_name" id="driver_name " placeholder="Driver Name" style="width: 100%" autocomplete="off"></td>
                   </tr>
 
                   <tr>
-                    <td>Drivers Phone</td>
+                    <td>Nomor Handphone</td>
                     <td><input class="form-control" type="text" name="driver_phone" id="driver_phone" placeholder="Driver Phone" style="width: 100%"></td>
                   </tr>
                   
               
                   <tr>
-                    <td>Type of Vehicle</td>
+                    <td>Tipe Kendaraan</td>
                     <td><select class="form-control" name="type_of_vehicle" style="width: 100%">
-                      <option value="">-- Select Category --</option>
+                      <option value="">-- Pilih Kategori --</option>
                       @foreach ($dms_master_vehicle as $vehicle)
                       <option value="{{ $vehicle->master_vehicle_name }}">{{ $vehicle->master_vehicle_name }}</option>
                       @endforeach
@@ -83,9 +83,9 @@
 
                   
                   <tr>
-                    <td>Transporter Company</td>
+                    <td>Perusahaan Transportasi</td>
                     <td><select class="form-control" name="transporter_company" style="width: 100%">
-                      <option value="">-- Select Category --</option>
+                      <option value="">-- Pilih Kategori --</option>
                       @foreach ($dms_master_tc as $tc)
                       <option value="{{ $tc->master_tc_name }}">{{ $tc->master_tc_name }}</option>
                       @endforeach
@@ -110,10 +110,10 @@
                     <td><input class="form-control" type="text" name="tujuan" id="tujuan " placeholder="Tujuan (Outbound)" style="width: 100%"></td>
                   </tr>
                   <tr>
-                    <td>Customer/Project Name</td>                  
+                    <td>Nama Proyek</td>                  
                     <td> <!-- select class form control untuk membuat combo box -->
                         <select class="form-control" name="cust_proj_name" style="width: 100%">
-                          <option value="">-- Select Category --</option>
+                          <option value="">-- Pilih Kategori --</option>
                           @foreach ($dms_master_project as $project)
                           <option value="{{ $project->id }}">{{ $project->master_project_name }}</option>
                           @endforeach

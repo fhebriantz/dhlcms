@@ -59,12 +59,16 @@
                     <td><input class="form-control" type="text" name="id_dms_form" placeholder="ID Dms Form" value="{{ $dms_form->id_dms_form }}" style="width: 100%" readonly=""></td>
                   </tr>
                   <tr>
-                    <td>Nama Driver</td>
+                    <td>Plat Nomor</td>
+                    <td><input class="form-control" type="text" name="plat_no" value="{{ $dms_form->plat_no }}" placeholder="Plat Nomor" style="width: 100%"></td>
+                  </tr>
+                  <tr>
+                    <td>Nama Sopir</td>
                     <td><input class="form-control" type="text" name="driver_name" placeholder="Nama Driver" value="{{ $dms_form->driver_name }}" style="width: 100%" autocomplete="off"></td>
                   </tr>
                   
                   <tr>
-                    <td>Driver Phone</td>
+                    <td>Nomor Handphone</td>
                     <td><input class="form-control" type="text" name="driver_phone" placeholder="Phone Number" value="{{ $dms_form->driver_phone }}" style="width: 100%"  autocomplete="off"></td>
                   </tr>
                   
@@ -81,13 +85,10 @@
                     </select></td>
                   </tr>
 
-                  <tr>
-                    <td>Plat Nomor</td>
-                    <td><input class="form-control" type="text" name="plat_no" value="{{ $dms_form->plat_no }}" placeholder="Plat Nomor" style="width: 100%"></td>
-                  </tr>
+                  
 
                   <tr>
-                    <td>Perusahaan Jasa</td>
+                    <td>Perusahaan Transportasi</td>
                     <td><select class="form-control" name="transporter_company" style="width: 100%">
                       <option value="">-- Pilih Kategori --</option>
                       @foreach ($dms_master_tc as $tc)
@@ -119,7 +120,7 @@
                   </tr>
 
                   <tr>
-                      <td>Customer Name</td>
+                      <td>Nama Proyek</td>
                          <td> <!-- select class form control untuk membuat combo box -->
                            <select class="form-control" name="cust_proj_name" style="width: 100%">
                              <option value="">-- Pilih Kategori --</option>
@@ -158,7 +159,7 @@
 
 
                   <tr>
-                    <td>Gate Number</td>
+                    <td>Nomor Gerbang</td>
                     <td><input class="form-control" type="text" name="gate_number" placeholder="Gate Number" value="{{ $dms_form->gate_number }}" style="width: 100%"></td>
                   </tr>
                 

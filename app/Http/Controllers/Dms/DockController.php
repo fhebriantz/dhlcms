@@ -325,12 +325,10 @@ class DockController extends Controller
                         $dms_master_phone->created_by = session()->get('session_id'); 
                     $dms_master_phone->save();
                 //}
-        if ($request->id_purpose = 1) {
-             Session::flash('class_inbound', "active");
-            return  redirect('/dms/dashboard');
-        }else {
-             Session::flash('class_outbound', "active");
-            return  redirect('/dms/dashboard');}
+        if ($dms_form->id_purpose == 1) {
+            return  redirect('/dms/dashboard#inbound');}
+        elseif($dms_form->id_purpose == 2){
+            return  redirect('/dms/dashboard#outbound');}
     }
 
     public function delete($id){
