@@ -18,14 +18,14 @@
           </div>
         </ul>
       </li>
-      <li><a href="/dhlcms/public/dms/logout" onclick="
+      <li><a href="{{ url('/dms/logout')}}" onclick="
       // event.preventDefault(); document.getElementById('logout-form').submit();
       "><img class="iconrightnav" src="{{ asset('image/logout.png')}}" alt=""></a></li>
 @endsection
 @section('nav_dasboard')
 <ul class="nav nav-tabs navbottom" role="tablist" id="myTab">
       <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#inbound" role="tab">INBOND </a>
+        <a class="nav-link" data-toggle="tab" href="#inbound" role="tab">INBOND</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#outbound" role="tab">OUTBOND</a>
@@ -93,7 +93,7 @@
 
 
 
-    <div class="tab-pane {{session()->get('class_inbound')}}" id="inbound" role="tabpanel">
+    <div class="tab-pane {{ Session::get('flash_inbound') }}" id="inbound" role="tabpanel">
       <div class="col-sm-12">
         <div class="row ujung">
           <div class="col-sm-12 paddinghead" style="background-color: #eee; font-size: 10px;">
@@ -117,21 +117,20 @@
                     </table>
               </form>
 
-              <div style="display: none;" id="scan">
+              <div style="display: none; background-color: #ccc;" id="scan">
                 <form method="POST" action="/dhlcms/public/dms/input_id">
                   <input type="hidden" name="dms_id_hidden" id="dms_id_hidden">
                   {{ csrf_field() }}
-                      <table class="table table-striped fontinput">
-                          <tr style="border-bottom: solid 1px #eee;">
-                            <td colspan="2" class="text-center" style="font-size: 16px;"><strong>Confirmation Dialog!</strong><br>Apakah anda ingin melanjutkan?</td>
-                            
-                          </tr>
-                          <tr>
-                            <td style="border-right: solid 1px #eee; "><input class="btn btn-info" name="submit" value="Lanjut" type="submit" style="width: 100%"></td>
-                            <td><a class="btn btn-danger" style="width: 100%" onclick="$.fancybox.close()">Batal</a></td>
-                          </tr>
-                      </table>
-                    </form>
+                  <div style="width: 350px; padding: 10px; background-color: #eee; "  class="text-center">
+                      <img src="{{ asset('image/question.png')}}" alt="" style="width: 50px; height: auto; padding: 10px;"><span style="font-size: 16px;">Apakah anda ingin melanjutkan?</span>
+                  </div>
+                  <div style="padding: 5px 5px 0px 0px; ">
+                    <input class="btn btn-info" name="submit" value="Lanjut" type="submit" style="width: 100%;">
+                  </div>
+                  <div style="padding: 5px 5px 0px 0px;">
+                    <a class="btn btn-danger" style="width: 100%;" onclick="$.fancybox.close()">Batal</a>
+                  </div>
+                </form>
               </div>
 
       <table class="table-striped fontsizetable text-center" id="inbound_id"  width="100%" cellspacing="0">
@@ -444,24 +443,31 @@
 @section('script')
 <script type="text/javascript">
 $(document).ready( function () {
-    $('#inbound_id').DataTable();
-    $('#outbound_id').DataTable();
+    //$('#inbound_id').DataTable();
+    //$('#outbound_id').DataTable();
 
     var count_char = 0;
     $('#inputScan').keyup(function(event) {
-      if(event.target.selectionEnd  == 14 ) 
+      if(event.target.selectionStart   > 13 ) 
       {
         console.log(event);
          $("#scan").find("#dms_id_hidden").val(event.target.value);
+      }else
+      {
+        $("#scan").find("#dms_id_hidden").val("");
       }
       
     });
 
     $('#inputScan2').keyup(function(event) {
-      if(event.target.selectionEnd  == 14 ) 
+      if(event.target.selectionStart  > 13 ) 
       {
         console.log(event);
          $("#scan").find("#dms_id_hidden").val(event.target.value);
+      }
+      else
+      {
+        $("#scan").find("#dms_id_hidden").val("");
       }
       
     });

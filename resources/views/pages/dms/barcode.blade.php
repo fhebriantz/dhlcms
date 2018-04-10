@@ -39,7 +39,7 @@ hr {
             </tr>
         </table>
         <img style="margin-top: 10px" width="80%" src="data:image/png;base64,{!! DNS1D::getBarcodePNG($dms_form->id_dms_form, 'C39',1,55) !!}"/>
-        <div style="letter-spacing: 0.6em"><strong>{{$dms_form->id_dms_form}}</strong></div>
+        <div style="letter-spacing: 0.4em"><strong>{{$dms_form->id_dms_form}}</strong></div>
         </div>
         <p style="margin-top: 10px"D>TIKET JANGAN SAMPAI HILANG</p>
       </div>

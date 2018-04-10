@@ -23,11 +23,11 @@
       "><img class="iconrightnav" src="{{ asset('image/logout.png')}}" alt=""></a></li>
 @endsection
 @section('nav_dasboard')
-      
+      <ul class="nav nav-tabs navbottom" role="tablist" id="myTab">
       <li class="nav-item navbar-right" style="float: right; cursor: pointer;">
         <a>{{session()->get('session_name')}} / {{session()->get('session_name_project')}}</a>
       </li>
-      
+      </ul>
 @endsection
 @section('content')
     <div class="tab-pane active">

@@ -1,5 +1,6 @@
 @extends('layouts.dms')
 @section('navatas_dashboard')
+
       <li class="dropdown "><a class="dropdown-toggle bell" data-toggle="dropdown" href="#"><img class="iconrightnav" src="{{ asset('image/bell.png')}}" alt=""></a>
         <ul class="dropdown-menu dropdown-menu-right">
           <div class="notificationBar" style="width: 400px">
@@ -21,13 +22,14 @@
       <li><a href="/dhlcms/public/dms/logout" onclick="
       // event.preventDefault(); document.getElementById('logout-form').submit();
       "><img class="iconrightnav" src="{{ asset('image/logout.png')}}" alt=""></a></li>
+   
 @endsection
 @section('nav_dasboard')
-      
+      <ul class="nav nav-tabs navbottom" role="tablist" id="myTab">
       <li class="nav-item navbar-right" style="float: right; cursor: pointer;">
         <a>{{session()->get('session_name')}} / {{session()->get('session_name_project')}}</a>
       </li>
-      
+       </ul>
 @endsection
 @section('content')
 

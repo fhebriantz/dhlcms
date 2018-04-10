@@ -255,7 +255,7 @@
     </div>
 @endsection
 @section('script')
-<script>
+<!-- <script>
   $(document).ready(function(){   
     startRefresh(); 
     }); 
@@ -320,5 +320,5 @@
             }
         }); 
     }
-</script>
+</script> -->
 @endsection

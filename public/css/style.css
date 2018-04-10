@@ -13,7 +13,9 @@ p,a,h1,h2,h3,h4,h5{
 .title_cms{
 	margin-bottom: 30px;
 }
-
+.ion-help-circled{
+	font-size: 20px  !important;
+}
 .add_dms {
     margin-right: 2px;
     line-height: 2; 
@@ -68,7 +70,9 @@ background-color: rgba(255, 255, 255,0);
 .notificationBar li {
 	margin-top: 10px;
 }
-
+.fancybox-slide >*{
+	padding: 5px !important;
+}
 .notificationBar li div{
 	margin-left: 50px;
 	margin-top: -34px;

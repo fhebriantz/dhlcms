@@ -21,9 +21,23 @@ use Date;
 use Auth;
 use Session;
 use Carbon;
-
+use GuzzleHttp;
 class DockController extends Controller
 {
+    public function testapi(){
+        $clientA = new GuzzleHttp\Client();
+        // check the response by
+        $response = $clientA->request('GET', 'http://www.etracker.cc/bulksms/mesapi.aspx?user=AzhaDHL01&pass=y1,i3qFa&type=0&to=<+6285718841359>&from=CMK&text=<Message content>&servid=MES01',['auth' => ['AzhaDHL01', 'y1,i3qFa']]);  
+        $status =  $response->getStatusCode(); 
+        if($status == 200)
+        {
+            $buffer =  $response->getBody()->getContents();     
+            return $buffer;
+        }else {
+            return 'error_api';
+        }
+
+    }
 
     public function __construct()
     {
@@ -47,6 +61,7 @@ class DockController extends Controller
                         ->where('id_location','=',session()->get('session_id_loc'));
         $no_inbound = 1;
         $no_outbound = 1;
+        Session::flash('flash_inbound', "active");
         return view('pages/dms/dashboard', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));
         }
         elseif (session()->get('session_id_group') == 1) {
@@ -55,6 +70,7 @@ class DockController extends Controller
         $dms_outbound = Transaction::getTableTransaction()->where('id_purpose','=',2);
         $no_inbound = 1;
         $no_outbound = 1;
+        Session::flash('flash_inbound', "active");
         return view('pages/dms/dashboard', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));
         }
         else{
@@ -68,6 +84,7 @@ class DockController extends Controller
                             ->where('id_location','=',session()->get('session_id_loc'));
         $no_inbound = 1;
         $no_outbound = 1;
+        Session::flash('flash_inbound', "active");
         return view('pages/dms/dashboard', compact('dms_form','dms_inbound','dms_outbound','no_inbound','no_outbound'));   
         }
     } 
@@ -204,27 +221,27 @@ class DockController extends Controller
                         $dms_transaction_history->arrival_time = $waktu;
                         $dms_transaction_history->created_by = session()->get('session_id'); 
         $dms_transaction_history->save();
-        /*
+        
         $result = Master_plat::where('plat_no','=',$request->plat_no)->first();
         $phone = Master_phone::where('driver_phone','=',$request->driver_phone)->first();
                   
             if (sizeof($result) > 0){}
             else
-            {*/
+            {
                     $dms_master_plat = new Master_plat;
                         $dms_master_plat->plat_no = $request->plat_no;
                         $dms_master_plat->created_by = session()->get('session_id'); 
                     $dms_master_plat->save();
-            //} 
+            } 
 
-            /*if (sizeof($phone) > 0){}
+            if (sizeof($phone) > 0){}
             else
-            {*/
+            {
                     $dms_master_phone = new Master_phone;
                         $dms_master_phone->driver_phone = $request->driver_phone;
                         $dms_master_phone->created_by = session()->get('session_id'); 
                     $dms_master_phone->save();
-            //} 
+            } 
 
         if ($request->id_purpose = 1) {
             $request->session()->put('inbound', "inbound");
@@ -306,25 +323,25 @@ class DockController extends Controller
                 $result = Master_plat::where('plat_no','=',$request->plat_no)->first(); 
                 $phone = Master_phone::where('driver_phone','=',$request->driver_phone)->first();    
 
-                /*if (sizeof($result) > 0){
+                if (sizeof($result) > 0){
                 }
                 else
-                {*/
+                {
                     $dms_master_plat = new Master_plat;
                         $dms_master_plat->plat_no = $request->plat_no;
                         $dms_master_plat->created_by = session()->get('session_id'); 
                     $dms_master_plat->save();
-                //}
+                }
 
-                /*if (sizeof($phone) > 0){
+                if (sizeof($phone) > 0){
                 }
                 else
-                {*/
+                {
                     $dms_master_phone = new Master_phone;
                         $dms_master_phone->driver_phone = $request->driver_phone;
                         $dms_master_phone->created_by = session()->get('session_id'); 
                     $dms_master_phone->save();
-                //}
+                }
         if ($dms_form->id_purpose == 1) {
             return  redirect('/dms/dashboard#inbound');}
         elseif($dms_form->id_purpose == 2){
