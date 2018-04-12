@@ -29,8 +29,7 @@ class User_groupController extends Controller
     function edit($id)
     {
     	$dms_user_group=User_group::where('id','=',$id)->first();
-    	return  view('pages/cms/user_group/user_group_edit')
-    	->with('dms_user_group',$dms_user_group);
+    	return  view('pages/cms/user_group/user_group_edit', compact('dms_user_group'));
     }
 
     function view($id)

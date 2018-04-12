@@ -8,7 +8,7 @@
             </div>  
           </div>
           <h3 style="color: #d71635;" class="titledashboard"> Master Phone Data</h3>
-          <a href="/dhlcms/public/cms/master_phone/input"><button type="button" style="margin-bottom: 10px;" class="btn btnadd" >Add Data</button></a>
+          <a href="{{url('/cms/master_phone/input')}}"><button type="button" style="margin-bottom: 10px;" class="btn btnadd" >Add Data</button></a>
         </div>
         <div>
         <table class="table table-striped fontsizetable text-center"  width="100%" cellspacing="0">     
@@ -36,8 +36,8 @@
               <td class="phone">{{$phone->created_at}}</td>
               <td class="phone">{{$phone->updated_at}}</td>
               <td style="float: left;">
-                <a href="/dhlcms/public/cms/master_phone/{{ $phone->id }}/edit"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 16px; height: auto; "></button></a>
-                <form method="POST" action="/dhlcms/public/cms/master_phone/{{ $phone->id }}/delete" class="text-center" style="float: right; margin-left: 2px;">
+                <a href="{{url('/cms/master_phone/'.$phone->id.'/edit')}}"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 16px; height: auto; "></button></a>
+                <form method="POST" action="{{url('/cms/master_phone/'.$phone->id.'/delete')}}" class="text-center" style="float: right; margin-left: 2px;">
                   {{ csrf_field() }}
                   <input class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$phone->driver_phone}}?');" style="width: 20px; height: auto;"> 
                   <input type="hidden" name="_method" value="DELETE">

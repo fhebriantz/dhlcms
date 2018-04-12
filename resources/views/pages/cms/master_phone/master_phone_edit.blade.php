@@ -20,7 +20,7 @@
               </ul>
           </div>
         @endif
-        <form method="POST" action="/dhlcms/public/cms/master_phone/{{ $dms_master_phone->id }}/edit">
+        <form method="POST" action="{{url('/cms/master_phone/.'$dms_master_phone->id'./edit')}}">
             {{ csrf_field() }}
             <input type="text" class="form-text" name="driver_phone" placeholder="Driver Phone" value="{{ $dms_master_phone->driver_phone }}">
             <div class="row">
@@ -28,7 +28,7 @@
                 <input style="width: 100%" type="submit" class="btn btn-success submit" value="SUBMIT" name="submit" />
               </div>
               <div class="col-sm-3 text-center">
-                <a href="/dhlcms/public/cms/master_phone"><input style="width: 100%" type="button" class="btn btn-danger delete" value="CANCEL"/></a>
+                <a href="{{url('/cms/master_phone')}}"><input style="width: 100%" type="button" class="btn btn-danger delete" value="CANCEL"/></a>
               </div>
             </div>
             <input type="hidden" name="_method" value="PUT">

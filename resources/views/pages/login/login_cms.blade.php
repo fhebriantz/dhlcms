@@ -27,7 +27,7 @@
             <div class="right_index">
                 <div class="form-group ">
                     <h6 class="right-time mobilehide dates">WEDNESDAY 15 OCTOBER 2018 / 21:15</h6>
-                       <form class="form-horizontal" method="POST" action="/dhlcms/public/cms/login">
+                       <form class="form-horizontal" method="POST" action="{{url('/cms/login')}}">
                         {{ csrf_field() }}
 
                              

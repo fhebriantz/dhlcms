@@ -23,7 +23,7 @@ Route::delete('/dms/{id}/delete', 'Dms\DockController@delete');
 Route::get('/dms/{id}/edit','Dms\DockController@edit');
 Route::put('/dms/{id}/edit','Dms\DockController@update');
 
-Route::get('/test', 'Dms\DockController@testapi');
+Route::get('/test/{id}', 'Dms\DockController@sms_gateway');
 Route::get('/plat_no', 'Dms\DockController@plat_no');
 Route::get('/driver_phone', 'Dms\DockController@driver_phone');
 

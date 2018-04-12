@@ -32,13 +32,13 @@
       </li>
       @if (session()->get('session_id_group') == 1)
         <li>
-        <a href="/dhlcms/public/dms/input" style=""><button type="button" class="btn btnadd" style="background-color: #999; color: white;">Tambah Data</button></a>
+        <a href="{{url('/dms/input')}}" style=""><button type="button" class="btn btnadd" style="background-color: #999; color: white;">Tambah Data</button></a>
         </li>
       @elseif (session()->get('session_id_group') == 2)
         
       @elseif (session()->get('session_id_group') == 3)
         <li>
-        <a href="/dhlcms/public/dms/input" style=""><button type="button" class="btn btnadd" style="background-color: #999; color: white;">Tambah Data</button></a>
+        <a href="{{url('/dms/input')}}" style=""><button type="button" class="btn btnadd" style="background-color: #999; color: white;">Tambah Data</button></a>
         </li>
       @else
       @endif 
@@ -48,7 +48,7 @@
       <!--<li class="nav-item navbar-right" style="float: right; cursor: pointer;">
         <a data-fancybox data-src="#scan" href="javascript:;"><button class="btn btnadd" style="background-color: #999; color: white;">Scan</button></a>
             <div style="display: none;" id="scan">
-              <form method="POST" action="/dhlcms/public/dms/input_id">
+              <form method="POST" action="{{url('/dms/input_id')}}">
                 {{ csrf_field() }}
                     
                     <table class="table table-striped fontinput">
@@ -66,7 +66,7 @@
             </div>
       </li>  -->
       <li class="nav-item navbar-right" style="float: right; cursor: pointer;">
-        <a href="/dhlcms/public/dms/all_list"  target="_blank"><button class="btn btnadd" style="background-color: #999; color: white;">Layar Dasbor</button></a>
+        <a href="{{url('/dms/all_list')}}"  target="_blank"><button class="btn btnadd" style="background-color: #999; color: white;">Layar Dasbor</button></a>
       </li>
     </ul>
 @endsection
@@ -118,7 +118,7 @@
               </form>
 
               <div style="display: none; background-color: #ccc;" id="scan">
-                <form method="POST" action="/dhlcms/public/dms/input_id">
+                <form method="POST" action="{{url('/dms/input_id')}}">
                   <input type="hidden" name="dms_id_hidden" id="dms_id_hidden">
                   {{ csrf_field() }}
                   <div style="width: 350px; padding: 10px; background-color: #eee; "  class="text-center">
@@ -137,20 +137,20 @@
         <thead class="thead paddingtable text-center" >
           <tr >
             <th class="width_no">NO</th>
-            <th class="phone width_plat">PLAT NO</th>
-            <th class="width_driver">NAMA SOPIR</th>
-            <th class="cus width_tc">PERUSAHAAN TRANSPORTASI</th>
-            <th class="width_duration phone">DURASI</th>
-            <th class="width_status phone">PROGRES</th>
-            <th class="width_status phone">SCAN TERAKHIR</th>
+            <th class="phone width_plat">TRUCK NO. POL</th>
+            <th class="width_driver">PENGEMUDI</th>
+            <th class="cus width_tc">VENDOR</th>
+            <th class="width_status phone">STATUS</th>
+            <th class="width_status phone">JAM STATUS</th>
             <th class="width_plt phone ">PUT</th>
             <th class="width_gate phone ">GERBANG</th>
-            <th class="width_vehicle ">KENDARAAN</th>
+            <th class="width_vehicle ">TIPE TRUK</th>
+            <th class="width_duration phone">TOTAL DURASI</th>
             @if (session()->get('session_id_group') == 1)
-            <th class="cus width_cus" >NAMA PROYEK</th>
+            <th class="cus width_cus" >CUSTOMER</th>
             @elseif (session()->get('session_id_group') == 2)
             @else
-            <th class="cus width_cus" >NAMA PROYEK</th>
+            <th class="cus width_cus" >CUSTOMER</th>
             @endif
             @if (session()->get('session_id_group') == 1)
             <th class="width_action actiontable phone" >TINDAKAN</th>
@@ -175,7 +175,6 @@
             <td class=" ">{{$inbound->plat_no}}</td>
             <td class="phone">{{$inbound->driver_name}}</td>
             <td class="cus ">{{$inbound->transporter_company}}</td>
-            <td class="cus"><span id="{{$inbound->id_dms_form}}"></span></td>
             <td class="cus">{{$inbound->status_name}}</td>
             <td class="cus">{{$inbound->last_scan}}</td>
             <td class="phone ">
@@ -186,6 +185,7 @@
               <?php endif ?></td>
             <td class="cus ">{{$inbound->gate_number}}</td>
             <td class="">{{$inbound->type_of_vehicle}}</td>
+            <td class="cus"><span id="{{$inbound->id_dms_form}}"></span></td>
             @if (session()->get('session_id_group') == 1)
             <td class="cus ">{{$inbound->master_project_name}}</td>
             @elseif (session()->get('session_id_group') == 2)
@@ -194,8 +194,8 @@
             @endif
             @if (session()->get('session_id_group') == 1)
             <td  class="cus ">
-              <a href="/dhlcms/public/dms/{{ $inbound->id_dms_form }}/edit"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
-                <form method="POST" action="/dhlcms/public/dms/{{ $inbound->id_dms_form}}/delete" class="text-center" style="float: right; margin-left: 2px;">
+              <a href="{{url('/dms/'.$inbound->id_dms_form.'/edit')}}"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
+                <form method="POST" action="{{url('/dms/'.$inbound->id_dms_form.'/delete')}}" class="text-center" style="float: right; margin-left: 2px;">
                   {{ csrf_field() }}
                   <button class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$inbound->driver_name}}?');" style="width: 20px; height: auto;"><img src="{{ asset('image/trash.png')}}" alt="" style="width: 15px; height: auto;"></button>
                   <input type="hidden" name="_method" value="DELETE">
@@ -203,8 +203,8 @@
             </td>
             @elseif (session()->get('session_id_group') == 2)
             <td  class="cus ">
-              <a href="/dhlcms/public/dms/{{ $inbound->id_dms_form }}/edit"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
-                <form method="POST" action="/dhlcms/public/dms/{{ $inbound->id_dms_form}}/delete" class="text-center" style="float: right; margin-left: 2px;">
+              <a href="{{url('/dms/'.$inbound->id_dms_form.'/edit')}}"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
+                <form method="POST" action="{{url('/dms/'.$inbound->id_dms_form.'/delete')}}" class="text-center" style="float: right; margin-left: 2px;">
                   {{ csrf_field() }}
                   <button class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$inbound->driver_name}}?');" style="width: 20px; height: auto;"><img src="{{ asset('image/trash.png')}}" alt="" style="width: 15px; height: auto;"></button>
                   <input type="hidden" name="_method" value="DELETE">
@@ -213,12 +213,13 @@
             @else
             @endif
             @if (session()->get('session_id_group') == 1)
-            <td class="cus "><a target="_blank" href="/dhlcms/public/dms/{{ $inbound->id_dms_form }}/barcode" class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
+            <td class="cus "><a target="_blank" href="{{url('/dms/'.$inbound->id_dms_form.'/barcode')}}" class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
             @elseif (session()->get('session_id_group') == 2)
             @elseif (session()->get('session_id_group') == 3)
-            <td class="cus "><a target="_blank" href="/dhlcms/public/dms/{{ $inbound->id_dms_form }}/barcode"  class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
+            <td class="cus "><a target="_blank" href="{{url('/dms/'.$inbound->id_dms_form.'/barcode')}}"  class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
             @else
             @endif
+            <td><a href="{{url('/test/'.$inbound->id_dms_form)}}">SMS</a></td>
           </tr>
 
            <!-- DURATION ======================================================== DURATION -->
@@ -300,20 +301,20 @@
         <thead class="thead paddingtable text-center" >
           <tr >
             <th class="width_no">NO</th>
-            <th class="phone width_plat">PLAT NO</th>
-            <th class="width_driver">NAMA SOPIR</th>
-            <th class="cus width_tc">PERUSAHAAN TRANSPORTASI</th>
-            <th class="width_duration phone">DURASI</th>
-            <th class="width_status phone">PROGRES</th>
-            <th class="width_status phone">SCAN TERAKHIR</th>
-            <th class="width_plt phone ">PLT</th>
+            <th class="phone width_plat">TRUCK NO. POL</th>
+            <th class="width_driver">PENGEMUDI</th>
+            <th class="cus width_tc">VENDOR</th>
+            <th class="width_status phone">STATUS</th>
+            <th class="width_status phone">JAM STATUS</th>
+            <th class="width_plt phone ">PUT</th>
             <th class="width_gate phone ">GERBANG</th>
-            <th class="width_vehicle ">KENDARAAN</th>
+            <th class="width_vehicle ">TIPE TRUK</th>
+            <th class="width_duration phone">TOTAL DURASI</th>
             @if (session()->get('session_id_group') == 1)
-            <th class="cus width_cus" >NAMA PROYEK</th>
+            <th class="cus width_cus" >CUSTOMER</th>
             @elseif (session()->get('session_id_group') == 2)
             @else
-            <th class="cus width_cus" >NAMA PROYEK</th>
+            <th class="cus width_cus" >CUSTOMER</th>
             @endif
             @if (session()->get('session_id_group') == 1)
             <th class="width_action actiontable phone" >TINDAKAN</th>
@@ -357,8 +358,8 @@
             @endif
             @if (session()->get('session_id_group') == 1)
             <td  class="cus ">
-              <a href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/edit"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
-                <form method="POST" action="/dhlcms/public/dms/{{ $outbound->id_dms_form}}/delete" class="text-center" style="float: right; margin-left: 2px;">
+              <a href="{{url('/dms/'.$outbound->id_dms_form.'/edit')}}"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
+                <form method="POST" action="{{url('/dms/'.$outbound->id_dms_form.'/delete')}}" class="text-center" style="float: right; margin-left: 2px;">
                   {{ csrf_field() }}
                   <button class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$outbound->driver_name}}?');" style="width: 20px; height: auto;"><img src="{{ asset('image/trash.png')}}" alt="" style="width: 15px; height: auto;"></button>
                   <input type="hidden" name="_method" value="DELETE">
@@ -366,8 +367,8 @@
             </td>
             @elseif (session()->get('session_id_group') == 2)
             <td  class="cus ">
-              <a href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/edit"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
-                <form method="POST" action="/dhlcms/public/dms/{{ $outbound->id_dms_form}}/delete" class="text-center" style="float: right; margin-left: 2px;">
+              <a href="{{url('/dms/'.$outbound->id_dms_form.'/edit')}}"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
+                <form method="POST" action="{{url('/dms/'.$outbound->id_dms_form.'/delete')}}" class="text-center" style="float: right; margin-left: 2px;">
                   {{ csrf_field() }}
                   <button class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$outbound->driver_name}}?');" style="width: 20px; height: auto;"><img src="{{ asset('image/trash.png')}}" alt="" style="width: 15px; height: auto;"></button>
                   <input type="hidden" name="_method" value="DELETE">
@@ -376,12 +377,14 @@
             @else
             @endif
             @if (session()->get('session_id_group') == 1)
-            <td class="cus "><a target="_blank" href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/barcode" class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
+            <td class="cus "><a target="_blank" href="{{url('/dms/'.$outbound->id_dms_form.'/barcode')}}" class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
             @elseif (session()->get('session_id_group') == 2)
             @elseif (session()->get('session_id_group') == 3)
-            <td class="cus "><a target="_blank" href="/dhlcms/public/dms/{{ $outbound->id_dms_form }}/barcode"  class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
+            <td class="cus "><a target="_blank" href="{{url('/dms/'.$outbound->id_dms_form.'/barcode')}}"  class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
             @else
             @endif
+            
+            <td><a href="{{url('/test/'.$outbound->id_dms_form)}}">SMS</a></td>
           </tr>
 
            <!-- DURATION ======================================================== DURATION -->

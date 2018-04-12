@@ -19,15 +19,15 @@ hr {
 </head>
 <body>
   <div class="col-sm-2">
-    <div class="logobarcode">
+    <div class="logobarcode" style="margin-bottom: -10px">
         <img src="{{ asset('image/logo.png')}}" alt="" style="width: 100%">
     </div>
     <div class="text-center">
-        <h3><i style="width: 100%">Dock Management System</i></h3>
-        <hr style="size: 20px;">
+        <h3 style="font-size: 16px"><i >Dock Management System</i></h3>
+        <p>----------------------------------------------------------</p>
         {{$waktu}}
         
-        <div style="margin-top: 10px">
+        <div>
         <table width="100%" class="text-center">
             <tr>
                 <td width="50%">Plat: <br><strong>{{ $dms_form->plat_no }}</strong></td>
@@ -38,10 +38,10 @@ hr {
                 <td  width="50%">Jenis: <br><strong>{{ $dms_form->purpose }}</strong></td>
             </tr>
         </table>
-        <img style="margin-top: 10px" width="80%" src="data:image/png;base64,{!! DNS1D::getBarcodePNG($dms_form->id_dms_form, 'C39',1,55) !!}"/>
+        <img style="margin-top: 10px" width="100%" src="data:image/png;base64,{!! DNS1D::getBarcodePNG('*'.$dms_form->id_dms_form.'*', 'C39',1,55) !!}"/>
         <div style="letter-spacing: 0.4em"><strong>{{$dms_form->id_dms_form}}</strong></div>
         </div>
-        <p style="margin-top: 10px"D>TIKET JANGAN SAMPAI HILANG</p>
+        <p style="margin-top: 6px; margin-bottom: 10px; font-size: 10px;">TIKET JANGAN SAMPAI HILANG!</p>
       </div>
 </body>
 <script type="text/javascript" src="{{ asset('js/bootstrap.min.js')}}"></script>

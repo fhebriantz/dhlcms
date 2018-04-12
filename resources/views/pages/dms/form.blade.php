@@ -19,7 +19,7 @@
           </div>
         </ul>
       </li>
-      <li><a href="/dhlcms/public/dms/logout" onclick="
+      <li><a href="{{url('/dms/logout')}}" onclick="
       // event.preventDefault(); document.getElementById('logout-form').submit();
       "><img class="iconrightnav" src="{{ asset('image/logout.png')}}" alt=""></a></li>
    
@@ -53,23 +53,23 @@
               </ul>
           </div>
         @endif
-          <form method="POST" action="/dhlcms/public/dms/input">
+          <form method="POST" action="{{url('/dms/input')}}">
               {{ csrf_field() }}
               <table class="table table-striped fontinput">
 
                   <tr>
-                    <td>Plat No</td>
-                    <td><input class="form-control" type="text" name="plat_no" id="plat_no" placeholder="Vehicle Plate" style="width: 100%"></td>
+                    <td>Nomor Mobil</td>
+                    <td><input class="form-control" type="text" name="plat_no" id="plat_no" placeholder="Plat Nomor" style="width: 100%"></td>
                   </tr>
 
                   <tr>
-                    <td>Nama Sopir</td>
-                    <td><input class="form-control" type="text" name="driver_name" id="driver_name " placeholder="Driver Name" style="width: 100%" autocomplete="off"></td>
+                    <td>Nama Pengemudi</td>
+                    <td><input class="form-control" type="text" name="driver_name" id="driver_name " placeholder="Nama Pengemudi" style="width: 100%" autocomplete="off"></td>
                   </tr>
 
                   <tr>
-                    <td>Nomor Handphone</td>
-                    <td><input class="form-control" type="text" name="driver_phone" id="driver_phone" placeholder="Driver Phone" style="width: 100%"></td>
+                    <td>No. HP Pengemudi</td>
+                    <td><input class="form-control" type="text" name="driver_phone" id="driver_phone" placeholder="08xxxxxxxxx" style="width: 100%"></td>
                   </tr>
                   
               
@@ -85,7 +85,7 @@
 
                   
                   <tr>
-                    <td>Perusahaan Transportasi</td>
+                    <td>Vendor</td>
                     <td><select class="form-control" name="transporter_company" style="width: 100%">
                       <option value="">-- Pilih Kategori --</option>
                       @foreach ($dms_master_tc as $tc)
@@ -100,19 +100,29 @@
                   </tr> -->
 
                   <tr>
-                    <td>Shipment</td>
-                    <td><input class="form-control" type="text" name="shipment" id="shipment " placeholder="Shipment/PO/SO/DO" style="width: 100%"></td>
+                    <td>No PO/SO/DO/DN</td>
+                    <td><input class="form-control" type="text" name="shipment" id="shipment " placeholder="No PO/SO/DO/DN" style="width: 100%"></td>
                   </tr>
                   <tr>
-                    <td>Asal</td>
+                    <td>Inbound/Outbound</td>
+                    <td> <!-- select class form control untuk membuat combo box -->
+                        <select class="form-control" name="id_purpose" style="width: 100%">
+                            <option value="">-- Pilih Kategori --</option>
+                            <option value="1">Inbound</option>
+                            <option value="2">Outbound</option>
+                        </select>
+                    </td>
+                  </tr>    
+                  <tr>
+                    <td>Asal (Inbound)</td>
                     <td><input class="form-control" type="text" name="asal" id="asal " placeholder="Asal (Inbound)" style="width: 100%"></td>
                   </tr>
                   <tr>
-                    <td>Tujuan</td>
+                    <td>Tujuan (Outbound)</td>
                     <td><input class="form-control" type="text" name="tujuan" id="tujuan " placeholder="Tujuan (Outbound)" style="width: 100%"></td>
                   </tr>
                   <tr>
-                    <td>Nama Proyek</td>                  
+                    <td>Nama Customer</td>                  
                     <td> <!-- select class form control untuk membuat combo box -->
                         <select class="form-control" name="cust_proj_name" style="width: 100%">
                           <option value="">-- Pilih Kategori --</option>
@@ -122,16 +132,6 @@
                         </select>
                     </td>
                   </tr>
-                  <tr>
-                    <td>Purpose</td>
-                    <td> <!-- select class form control untuk membuat combo box -->
-                        <select class="form-control" name="id_purpose" style="width: 100%">
-                            <option value="">-- Select Category --</option>
-                            <option value="1">Inbound</option>
-                            <option value="2">Outbound</option>
-                        </select>
-                    </td>
-                  </tr>    
                 
                   <tr>
                     <td></td>

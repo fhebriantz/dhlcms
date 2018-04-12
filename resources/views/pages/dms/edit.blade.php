@@ -18,7 +18,7 @@
           </div>
         </ul>
       </li>
-      <li><a href="/dhlcms/public/dms/logout" onclick="
+      <li><a href="{{url('/dms/logout')}}" onclick="
       // event.preventDefault(); document.getElementById('logout-form').submit();
       "><img class="iconrightnav" src="{{ asset('image/logout.png')}}" alt=""></a></li>
 @endsection
@@ -51,7 +51,7 @@
               </ul>
           </div>
         @endif
-          <form method="POST" action="/dhlcms/public/dms/{{ $dms_form->id_dms_form }}/edit">
+          <form method="POST" action="{{url('/dms/'.$dms_form->id_dms_form.'/edit')}}">
               {{ csrf_field() }}
               <table class="table table-striped fontinput">
                   <tr>
@@ -59,17 +59,17 @@
                     <td><input class="form-control" type="text" name="id_dms_form" placeholder="ID Dms Form" value="{{ $dms_form->id_dms_form }}" style="width: 100%" readonly=""></td>
                   </tr>
                   <tr>
-                    <td>Plat Nomor</td>
-                    <td><input class="form-control" type="text" name="plat_no" value="{{ $dms_form->plat_no }}" placeholder="Plat Nomor" style="width: 100%"></td>
+                    <td>Nomor Mobil</td>
+                    <td><input class="form-control" type="text" name="plat_no" value="{{ $dms_form->plat_no }}" placeholder="Nomor Mobil" style="width: 100%"></td>
                   </tr>
                   <tr>
-                    <td>Nama Sopir</td>
-                    <td><input class="form-control" type="text" name="driver_name" placeholder="Nama Driver" value="{{ $dms_form->driver_name }}" style="width: 100%" autocomplete="off"></td>
+                    <td>Nama Pengemudi</td>
+                    <td><input class="form-control" type="text" name="driver_name" placeholder="Nama Pengemudi" value="{{ $dms_form->driver_name }}" style="width: 100%" autocomplete="off"></td>
                   </tr>
                   
                   <tr>
-                    <td>Nomor Handphone</td>
-                    <td><input class="form-control" type="text" name="driver_phone" placeholder="Phone Number" value="{{ $dms_form->driver_phone }}" style="width: 100%"  autocomplete="off"></td>
+                    <td>No. HP Pengemudi</td>
+                    <td><input class="form-control" type="text" name="driver_phone" placeholder="08xxxxxxxxxx" value="{{ $dms_form->driver_phone }}" style="width: 100%"  autocomplete="off"></td>
                   </tr>
                   
                   <tr>
@@ -88,7 +88,7 @@
                   
 
                   <tr>
-                    <td>Perusahaan Transportasi</td>
+                    <td>Vendor</td>
                     <td><select class="form-control" name="transporter_company" style="width: 100%">
                       <option value="">-- Pilih Kategori --</option>
                       @foreach ($dms_master_tc as $tc)
@@ -106,35 +106,12 @@
                   </tr> -->
 
                   <tr>
-                    <td>Shipment</td>
-                    <td><input class="form-control" type="text" name="shipment" value="{{ $dms_form->shipment }}" placeholder="Shipment" style="width: 100%"></td>
+                    <td>No PO/SO/DO/DN</td>
+                    <td><input class="form-control" type="text" name="shipment" value="{{ $dms_form->shipment }}" placeholder="No PO/SO/DO/DN" style="width: 100%"></td>
                   </tr>
 
                   <tr>
-                    <td>Asal</td>
-                    <td><input class="form-control" type="text" name="asal" id="asal " placeholder="Asal (Inbound)" value="{{ $dms_form->asal }}" style="width: 100%"></td>
-                  </tr>
-                  <tr>
-                    <td>Tujuan</td>
-                    <td><input class="form-control" type="text" name="tujuan" id="tujuan " placeholder="Tujuan (Outbound)" value="{{ $dms_form->tujuan }}" style="width: 100%"></td>
-                  </tr>
-
-                  <tr>
-                      <td>Nama Proyek</td>
-                         <td> <!-- select class form control untuk membuat combo box -->
-                           <select class="form-control" name="cust_proj_name" style="width: 100%">
-                             <option value="">-- Pilih Kategori --</option>
-                             @foreach($dms_master_project as $project)
-                             <option value="{{$project->id}}"
-                              <?php if ($project->id == $dms_form->cust_proj_name): ?>
-                              <?php echo "selected" ?>
-                              <?php endif ?>>{{$project->master_project_name}}</option>
-                        @endforeach
-                      </select>
-                    </td>
-                  </tr>
-                  <tr>
-                       <td>Purpose</td>
+                       <td>Inbound/Outbound</td>
                          <td> <!-- select class form control untuk membuat combo box -->
                            <select class="form-control" name="id_purpose" style="width: 100%">
                              <option value="">-- Pilih Kategori --</option>
@@ -149,6 +126,30 @@
                   </tr> 
 
                   <tr>
+                    <td>Asal (Inbound)</td>
+                    <td><input class="form-control" type="text" name="asal" id="asal " placeholder="Asal (Inbound)" value="{{ $dms_form->asal }}" style="width: 100%"></td>
+                  </tr>
+                  <tr>
+                    <td>Tujuan (Outbound)</td>
+                    <td><input class="form-control" type="text" name="tujuan" id="tujuan " placeholder="Tujuan (Outbound)" value="{{ $dms_form->tujuan }}" style="width: 100%"></td>
+                  </tr>
+
+                  <tr>
+                      <td>Nama Customer</td>
+                         <td> <!-- select class form control untuk membuat combo box -->
+                           <select class="form-control" name="cust_proj_name" style="width: 100%">
+                             <option value="">-- Pilih Kategori --</option>
+                             @foreach($dms_master_project as $project)
+                             <option value="{{$project->id}}"
+                              <?php if ($project->id == $dms_form->cust_proj_name): ?>
+                              <?php echo "selected" ?>
+                              <?php endif ?>>{{$project->master_project_name}}</option>
+                        @endforeach
+                      </select>
+                    </td>
+                  </tr>
+
+                  <tr>
                     <td>
                         @if ($dms_form->id_purpose == 1)<?php echo "PUT" ?>
                         @else<?php echo "PLT" ?>
@@ -159,7 +160,7 @@
 
 
                   <tr>
-                    <td>Nomor Gerbang</td>
+                    <td>Nomor Gate</td>
                     <td><input class="form-control" type="text" name="gate_number" placeholder="Gate Number" value="{{ $dms_form->gate_number }}" style="width: 100%"></td>
                   </tr>
                 

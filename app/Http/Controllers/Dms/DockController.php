@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Dms;
+// require '../vendor/autoload.php';
+// use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+// use Mike42\Escpos\Printer;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -24,10 +27,11 @@ use Carbon;
 use GuzzleHttp;
 class DockController extends Controller
 {
-    public function testapi(){
+    public function testapi($no_telp,$plat,$driver){
+
         $clientA = new GuzzleHttp\Client();
-        // check the response by
-        $response = $clientA->request('GET', 'http://www.etracker.cc/bulksms/mesapi.aspx?user=AzhaDHL01&pass=y1,i3qFa&type=0&to=<+6285718841359>&from=CMK&text=<Message content>&servid=MES01',['auth' => ['AzhaDHL01', 'y1,i3qFa']]);  
+        $str_phone = substr($no_telp, 1);
+        $response = $clientA->request('GET', 'http://www.etracker.cc/bulksms/mesapi.aspx?user=AzhaDHL01&pass=y1,i3qFa&type=0&to=62'.$str_phone.'&from=CMK&text=Kendaraan dengan plat no '.$plat.' dengan nama '.$driver.' Antrtian anda sudah dipanggil.&servid=MES01&title=test sms gateway');  
         $status =  $response->getStatusCode(); 
         if($status == 200)
         {
@@ -36,8 +40,14 @@ class DockController extends Controller
         }else {
             return 'error_api';
         }
-
     }
+
+     public function sms_gateway($id){
+        $id_dms = $id;
+        $sms_tampung = Transaction::getTableTransaction()->where('id_dms_form','=',$id_dms)->first();
+    $this->testapi($sms_tampung->driver_phone,$sms_tampung->plat_no,$sms_tampung->driver_name);
+            
+        }
 
     public function __construct()
     {
@@ -596,8 +606,8 @@ class DockController extends Controller
                     }
         //===========================================================================
         $tampung[] = array('inbound' => $tampungInbound, 'outbound' => $tampungOutbound);
-        return response()->json($tampung);
-        }
+        return response()->json($tampung);}}}
+        
         /*elseif (session()->get('session_id_group') == 1){
         $dms_form = Form::all();
         $dms_inbound = Transaction::getTableSuperInbound();
@@ -658,5 +668,3 @@ class DockController extends Controller
             }
         ]);
         }*/
-    }
-}

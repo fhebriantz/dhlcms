@@ -20,15 +20,15 @@
               </ul>
           </div>
         @endif
-        <form method="POST" action="/dhlcms/public/cms/user_group/{{ $dms_user_group->id }}/edit">
+        <form method="POST" action="{{url('/cms/user_group/'.$dms_user_group->id.'/edit')}}">
             {{ csrf_field() }}
-            <input type="text" class="form-text" name="usergroup_name" placeholder="Driver Name" value="{{ $dms_user_group->user_group_name }}">
+            <input type="text" class="form-text" name="usergroup_name" placeholder="Driver Name" value="{{ $dms_user_group->usergroup_name }}">
             <div class="row">
               <div class="col-sm-3 text-center">
                 <input style="width: 100%" type="submit" class="btn btn-success submit" value="SUBMIT" name="submit" />
               </div>
               <div class="col-sm-3 text-center">
-                <a href="/dhlcms/public/cms/user_group"><input style="width: 100%" type="button" class="btn btn-danger delete" value="CANCEL"/></a>
+                <a href="{{url('/cms/user_group')}}"><input style="width: 100%" type="button" class="btn btn-danger delete" value="CANCEL"/></a>
               </div>
             </div>
             <input type="hidden" name="_method" value="PUT">

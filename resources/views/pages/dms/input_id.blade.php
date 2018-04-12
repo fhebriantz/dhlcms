@@ -18,7 +18,7 @@
           </div>
         </ul>
       </li>
-      <li><a href="/dhlcms/public/dms/logout" onclick="
+      <li><a href="{{url('/dms/logout')}}" onclick="
       // event.preventDefault(); document.getElementById('logout-form').submit();
       "><img class="iconrightnav" src="{{ asset('image/logout.png')}}" alt=""></a></li>
 @endsection
@@ -51,7 +51,7 @@
               </ul>
           </div>
         @endif
-          <form method="POST" action="/dhlcms/public/dms/input_id">
+          <form method="POST" action="{{url('/dms/input_id')}}">
               {{ csrf_field() }}
               <table class="table table-striped fontinput">
 

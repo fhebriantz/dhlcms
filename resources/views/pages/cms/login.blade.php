@@ -33,7 +33,7 @@
 							<label class="pull-left ccx">
 			                	<input type="checkbox" class="icheck pull-left" name="checkbox1"/>Remember me
 			                </label>
-			                <a href="dhlcms/public/cms/dashboard"><input type="submit" class="btn brn-danger col-md-12 login" value="LOGIN"/></a>
+			                <a href="{{url('/cms/dashboard')}}"><input type="submit" class="btn brn-danger col-md-12 login" value="LOGIN"/></a>
 		                <!-- </form> -->
 				</div>
 			</div>

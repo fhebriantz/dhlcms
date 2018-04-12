@@ -8,7 +8,7 @@
             </div>  
           </div>
           <h3 style="color: #d71635;" class="titledashboard"> Master Plate Data</h3>
-          <a href="/dhlcms/public/cms/master_plat/input"><button type="button" style="margin-bottom: 10px;" class="btn btnadd" >Add Data</button></a>
+          <a href="{{url('/cms/master_plat/input')}}"><button type="button" style="margin-bottom: 10px;" class="btn btnadd" >Add Data</button></a>
         </div>
         <div>
         <table class="table table-striped fontsizetable text-center"  width="100%" cellspacing="0">     
@@ -36,8 +36,8 @@
               <td class="phone">{{$plat->created_at}}</td>
               <td class="phone">{{$plat->updated_at}}</td>
               <td style="float: left;">
-                <a href="/dhlcms/public/cms/master_plat/{{ $plat->id }}/edit"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 16px; height: auto; "></button></a>
-                <form method="POST" action="/dhlcms/public/cms/master_plat/{{ $plat->id }}/delete" class="text-center" style="float: right; margin-left: 2px;">
+                <a href="{{url('/cms/master_plat/'.$plat->id.'/edit')}}"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 16px; height: auto; "></button></a>
+                <form method="POST" action="{{url('/cms/master_plat/'.$plat->id.'/delete')}}" class="text-center" style="float: right; margin-left: 2px;">
                   {{ csrf_field() }}
                   <input class="btn btn-danger action" type="submit" name="delete" value="D" onclick="return confirm('Are you sure want to delete name {{$plat->plat_no}}?');" style="width: 20px; height: auto;"> 
                   <input type="hidden" name="_method" value="DELETE">

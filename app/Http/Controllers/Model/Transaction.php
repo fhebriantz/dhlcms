@@ -23,7 +23,6 @@ class Transaction extends Model
     }
 
     public static function getTableSuperInbound(){
-        
         $dms_transaction = DB::table('dms_transaction')
             ->join('dms_form', 'dms_form.id_dms_form', '=', 'dms_transaction.id_dms_form')
             ->join('dms_master_project', 'dms_master_project.id', '=', 'dms_form.cust_proj_name')

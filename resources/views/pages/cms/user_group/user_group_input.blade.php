@@ -20,7 +20,7 @@
             </ul>
           </div>
         @endif
-        <form method="POST" action="/dhlcms/public/cms/user_group/input">
+        <form method="POST" action="{{url('/cms/user_group/input')}}">
             {{ csrf_field() }}
             <input type="text" class="form-text" name="usergroup_name" placeholder="Driver Name" value="{{ old('caption') }}">
             <div class="row">
@@ -28,7 +28,7 @@
                 <input style="width: 100%" type="submit" class="btn btn-success submit" value="SUBMIT" name="submit" />
               </div>
               <div class="col-sm-3 text-center">
-                <a href="/dhlcms/public/cms/user_group"><input style="width: 100%" type="button" class="btn btn-danger delete" value="CANCEL"/></a>
+                <a href="{{url('/cms/user_group')}}"><input style="width: 100%" type="button" class="btn btn-danger delete" value="CANCEL"/></a>
               </div>
             </div>
         </form>

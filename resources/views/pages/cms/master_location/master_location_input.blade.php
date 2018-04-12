@@ -20,7 +20,7 @@
             </ul>
           </div>
         @endif
-        <form method="POST" action="/dhlcms/public/cms/master_location/input">
+        <form method="POST" action="{{url('/cms/master_location/input')}}">
             {{ csrf_field() }}
             <input type="text" class="form-text" name="location" placeholder="Location" value="{{ old('location') }}">
             <select class="form-text form-control" name="id_project" style="width: 100%">
@@ -34,7 +34,7 @@
                 <input style="width: 100%" type="submit" class="btn btn-success submit" value="SUBMIT" name="submit" />
               </div>
               <div class="col-sm-3 text-center">
-                <a href="/dhlcms/public/cms/master_location"><input style="width: 100%" type="button" class="btn btn-danger delete" value="CANCEL"/></a>
+                <a href="{{url('/cms/master_location')}}"><input style="width: 100%" type="button" class="btn btn-danger delete" value="CANCEL"/></a>
               </div>
             </div>
         </form>
