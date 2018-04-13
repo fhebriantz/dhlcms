@@ -1,4 +1,6 @@
 <?php
+
+
 Route::get('/dms/{id}/barcode', 'Dms\DockController@barcode');
  
 Route::get('/dms/login', 'Login\LoginController@show');
@@ -24,8 +26,15 @@ Route::get('/dms/{id}/edit','Dms\DockController@edit');
 Route::put('/dms/{id}/edit','Dms\DockController@update');
 
 Route::get('/test/{id}', 'Dms\DockController@sms_gateway');
+
+// ---------------------------------------------------AUTOCOMPLETE
 Route::get('/plat_no', 'Dms\DockController@plat_no');
 Route::get('/driver_phone', 'Dms\DockController@driver_phone');
+Route::get('/asal', 'Dms\DockController@asal');
+Route::get('/tujuan', 'Dms\DockController@tujuan');
+Route::get('/driver_name', 'Dms\DockController@driver_name');
+Route::get('/transporter_company', 'Dms\DockController@transporter_company');
+// ---------------------------------------------------END
 
 Route::delete('cms/master_plat/{id}/delete','Cms\Master_platController@delete');
 
@@ -59,6 +68,33 @@ Route::get('cms/master_location/{id}/edit','Cms\Master_locationController@edit')
 Route::post('/cms/master_location/input','Cms\Master_locationController@insert'); 
 Route::put('/cms/master_location/{id}/edit','Cms\Master_locationController@update'); 
 Route::delete('cms/master_location/{id}/delete','Cms\Master_locationController@delete');
+
+// asal ==============================================================
+Route::get('/cms/master_asal', 'Cms\Master_asalController@showcms');
+Route::get('/cms/master_asal/input', 'Cms\Master_asalController@input');
+Route::get('cms/master_asal/{id}/edit','Cms\Master_asalController@edit');
+// call
+Route::post('/cms/master_asal/input','Cms\Master_asalController@insert'); 
+Route::put('/cms/master_asal/{id}/edit','Cms\Master_asalController@update'); 
+Route::delete('cms/master_asal/{id}/delete','Cms\Master_asalController@delete');
+
+// tujuan ==============================================================
+Route::get('/cms/master_tujuan', 'Cms\Master_tujuanController@showcms');
+Route::get('/cms/master_tujuan/input', 'Cms\Master_tujuanController@input');
+Route::get('cms/master_tujuan/{id}/edit','Cms\Master_tujuanController@edit');
+// call
+Route::post('/cms/master_tujuan/input','Cms\Master_tujuanController@insert'); 
+Route::put('/cms/master_tujuan/{id}/edit','Cms\Master_tujuanController@update'); 
+Route::delete('cms/master_tujuan/{id}/delete','Cms\Master_tujuanController@delete');
+
+// nama ==============================================================
+Route::get('/cms/master_nama', 'Cms\Master_namaController@showcms');
+Route::get('/cms/master_nama/input', 'Cms\Master_namaController@input');
+Route::get('cms/master_nama/{id}/edit','Cms\Master_namaController@edit');
+// call
+Route::post('/cms/master_nama/input','Cms\Master_namaController@insert'); 
+Route::put('/cms/master_nama/{id}/edit','Cms\Master_namaController@update'); 
+Route::delete('cms/master_nama/{id}/delete','Cms\Master_namaController@delete');
 
 
 // phone ==============================================================

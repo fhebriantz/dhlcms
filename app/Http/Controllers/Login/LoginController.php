@@ -82,7 +82,7 @@ class LoginController extends Controller
                 $request->session()->forget('session_name_project');
                 $request->session()->forget('message');
 
-                $request->session()->flush();
+                // $request->session()->flush();
 
                 return  redirect('/dms/login');
     }
@@ -129,7 +129,7 @@ class LoginController extends Controller
                 $request->session()->forget('session_username_cms');
                 $request->session()->forget('message_cms');
 
-                $request->session()->flush();
+                // $request->session()->flush();
 
                 return  redirect('/cms/login');
     }

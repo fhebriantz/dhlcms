@@ -165,6 +165,7 @@
             <th class="cus width_print">PRINT</th>
             @else
             @endif
+            <th>TEST</th>
           </tr>
         </thead>
 
@@ -306,7 +307,7 @@
             <th class="cus width_tc">VENDOR</th>
             <th class="width_status phone">STATUS</th>
             <th class="width_status phone">JAM STATUS</th>
-            <th class="width_plt phone ">PUT</th>
+            <th class="width_plt phone ">PLT</th>
             <th class="width_gate phone ">GERBANG</th>
             <th class="width_vehicle ">TIPE TRUK</th>
             <th class="width_duration phone">TOTAL DURASI</th>
@@ -329,6 +330,7 @@
             <th class="cus width_print">PRINT</th>
             @else
             @endif
+            <th>TEST</th>
           </tr>
         </thead>
 
@@ -339,9 +341,8 @@
             <td class=" ">{{$outbound->plat_no}}</td>
             <td class="phone">{{$outbound->driver_name}}</td>
             <td class="cus ">{{$outbound->transporter_company}}</td>
-            <td class="cus"><span id="{{$outbound->id_dms_form}}"></span></td>
             <td class="cus">{{$outbound->status_name}}</td>
-            <td class="cus">{{$outbound->last_scan}}</span></td>
+            <td class="cus">{{$outbound->last_scan}}</td>
             <td class="phone ">
               <?php if ($outbound->waiting_time == ''): ?>
               <?php echo "-" ?>
@@ -350,6 +351,7 @@
               <?php endif ?></td>
             <td class="cus ">{{$outbound->gate_number}}</td>
             <td class="">{{$outbound->type_of_vehicle}}</td>
+            <td class="cus"><span id="{{$outbound->id_dms_form}}"></span></td>
             @if (session()->get('session_id_group') == 1)
             <td class="cus ">{{$outbound->master_project_name}}</td>
             @elseif (session()->get('session_id_group') == 2)
@@ -383,7 +385,6 @@
             <td class="cus "><a target="_blank" href="{{url('/dms/'.$outbound->id_dms_form.'/barcode')}}"  class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
             @else
             @endif
-            
             <td><a href="{{url('/test/'.$outbound->id_dms_form)}}">SMS</a></td>
           </tr>
 
@@ -446,8 +447,8 @@
 @section('script')
 <script type="text/javascript">
 $(document).ready( function () {
-    //$('#inbound_id').DataTable();
-    //$('#outbound_id').DataTable();
+    $('#inbound_id').DataTable();
+    $('#outbound_id').DataTable();
 
     var count_char = 0;
     $('#inputScan').keyup(function(event) {

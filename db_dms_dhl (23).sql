@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2018 at 12:52 PM
+-- Generation Time: Apr 13, 2018 at 11:48 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -78,15 +78,41 @@ CREATE TABLE `dms_form` (
 --
 
 INSERT INTO `dms_form` (`id`, `id_dms_form`, `plat_no`, `driver_name`, `id_location`, `id_purpose`, `asal`, `tujuan`, `driver_phone`, `type_of_vehicle`, `transporter_company`, `shipment`, `cust_proj_name`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(115, 'DMS11522614907', 'B 1234 CIB', 'Andi', 1, 2, 'Bogor', NULL, '089634848272', 'Container 20\'', 'DHL', 'A1234', '7', '2018-04-01 09:35:07', '1', '2018-04-10 02:42:04', NULL),
-(116, 'DMS11522614998', 'F 3322 CIB', 'Iman', 1, 2, 'Malaysia', NULL, '085455765762', 'Van / L300', 'SiCepat', 'A1444', '8', '2018-04-01 09:36:38', '1', '2018-04-10 02:42:01', NULL),
-(117, 'DMS21522615084', 'F 1123 CIB', 'Rina', 1, 2, NULL, 'Bandung', '080987773323', 'Fuso', 'TIKI', 'A1455', '7', '2018-04-01 09:38:04', '1', '2018-04-10 02:41:59', NULL),
-(119, 'DMS11522667446', 'F 1123 RE', 'Riyan', 1, 1, 'Aceh', NULL, '086667676654', 'Tronton', 'JNE', 'A0987', '7', '2018-04-01 09:45:39', '1', '2018-04-10 02:39:28', NULL),
-(120, 'DMS11522615629', 'F 1123 DB', 'Fakih', 1, 1, 'Medan', NULL, '087778878211', 'Container 20\'', 'DHL', 'A0988', '8', '2018-04-01 09:47:09', '1', '2018-04-10 02:42:10', NULL),
-(123, 'DMS11522659432', 'F 6543 TR', 'Anditio', 1, 1, 'Jakarta', NULL, '089767867821', 'Big Mama / Yellow', 'TIKI', 'A98KK', '7', '2018-04-01 21:57:12', '1', '2018-04-10 02:42:07', NULL),
-(143, 'DMS11523368679', 'F 3361 BKD', 'Roni', 1, 1, 'Bogor', NULL, '0877788987898', 'Wing-Box', 'DHL', 'A5122', '7', '2018-04-10 02:57:59', '1', '2018-04-10 02:57:59', NULL),
-(144, 'DMS21523370851', 'F 6543 TR', 'Oman', 1, 2, NULL, 'Bogor', '085718888888', 'CDE / CD4', 'JNE', NULL, '7', '2018-04-10 03:34:11', '1', '2018-04-10 03:34:11', NULL),
-(145, 'DMS21523370887', 'F 6543 TR', 'Komara', 1, 2, NULL, 'Gondangdia', '089634848272', 'CDE / CD4', 'J&T', NULL, '7', '2018-04-10 03:34:47', '1', '2018-04-10 03:34:47', NULL);
+(115, 'DMS11522614907', 'B 1234 CIB', 'Felicia', 1, 2, 'Bogor', NULL, '085718841359', 'Container 20\'', 'DHL', 'A1234', '7', '2018-04-01 09:35:07', '1', '2018-04-13 06:57:13', NULL),
+(116, 'DMS11522614998', 'F 3322 CIB', 'Yudhi Prabowo', 1, 2, 'Malaysia', NULL, '085716423138', 'Van / L300', 'SiCepat', 'A1444', '8', '2018-04-01 09:36:38', '1', '2018-04-11 06:41:00', NULL),
+(117, 'DMS21522615084', 'F 1123 CIB', 'Rina', 1, 2, NULL, 'Bandung', '085718841359', 'Fuso', 'TIKI', 'A1455', '7', '2018-04-01 09:38:04', '1', '2018-04-11 06:13:35', NULL),
+(119, 'DMS11522667446', 'F 1123 RE', 'Riyan', 1, 1, '.', NULL, '085716423138', 'Tronton', 'JNE', 'A098+', '7', '2018-04-01 09:45:39', '1', '2018-04-13 08:07:00', NULL),
+(120, 'DMS11522615629', 'F 1123 DB', 'Fakih', 1, 1, 'Medan', NULL, '085718841359', 'Container 20\'', 'DHL', 'A098+', '8', '2018-04-01 09:47:09', '1', '2018-04-13 08:06:52', NULL),
+(123, 'DMS11522659432', 'F 6543 TR', 'Anditio', 1, 1, 'Jakarta', NULL, '085716423138', 'Big Mama / Yellow', 'TIKI', 'A98KK', '7', '2018-04-01 21:57:12', '1', '2018-04-11 06:13:52', NULL),
+(143, 'DMS11523368679', 'F 3361 BKD', 'Roni', 1, 1, 'Bogor', NULL, '085718841359', 'Wing-Box', 'DHL', 'A5122', '7', '2018-04-10 02:57:59', '1', '2018-04-11 06:13:39', NULL),
+(144, 'DMS21523370851', 'F 6543 TR', 'Oman', 1, 2, NULL, 'Bogor', '085716423138', 'CDE / CD4', 'JNE', NULL, '7', '2018-04-10 03:34:11', '1', '2018-04-11 06:13:55', NULL),
+(145, 'DMS21523370887', 'F 6543 TR', 'Komara', 1, 2, NULL, 'Gondangdia', '085718841359', 'CDE / CD4', 'J&T', NULL, '7', '2018-04-10 03:34:47', '1', '2018-04-11 06:13:42', NULL),
+(146, 'DMS11523640635', 'g', 'lutfi', 1, 1, 'Bogor', 'Jakarta', 'g', 'CDE / CD4', 'TIKI', 'g', '7', '2018-04-13 06:30:35', '1', '2018-04-13 06:30:35', NULL),
+(147, 'DMS11523645650', 'F1123Ra', 'Felicia', 1, 1, 'Bogor', 'Jakarta', '089634848272', 'Van / L300', 'SiCepat', 'A134EE', '7', '2018-04-13 07:54:10', '1', '2018-04-13 07:54:10', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dms_master_asal`
+--
+
+CREATE TABLE `dms_master_asal` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `asal` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `dms_master_asal`
+--
+
+INSERT INTO `dms_master_asal` (`id`, `asal`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'Bogor', '1', NULL, '2018-04-13 06:20:43', '2018-04-13 06:20:49'),
+(3, 'Medan', '1', NULL, '2018-04-13 08:06:52', '2018-04-13 08:06:52'),
+(4, '.', '1', NULL, '2018-04-13 08:07:00', '2018-04-13 08:07:00');
 
 -- --------------------------------------------------------
 
@@ -117,6 +143,31 @@ INSERT INTO `dms_master_location` (`id`, `location`, `id_project`, `created_by`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dms_master_name`
+--
+
+CREATE TABLE `dms_master_name` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `driver_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `dms_master_name`
+--
+
+INSERT INTO `dms_master_name` (`id`, `driver_name`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'lutfi', '1', '', NULL, NULL),
+(2, 'Felicia', '1', NULL, '2018-04-13 06:58:43', '2018-04-13 06:58:43'),
+(3, 'Riyan', '1', NULL, '2018-04-13 07:12:58', '2018-04-13 07:12:58'),
+(4, 'Fakih', '1', NULL, '2018-04-13 08:06:52', '2018-04-13 08:06:52');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `dms_master_phone`
 --
 
@@ -138,7 +189,9 @@ INSERT INTO `dms_master_phone` (`id`, `driver_phone`, `created_by`, `updated_by`
 (23, '089634848272', '1', NULL, '2018-04-01 09:56:02', '2018-04-09 06:44:00'),
 (24, '085718888888', '2', NULL, '2018-04-01 19:52:51', '2018-04-09 06:43:57'),
 (26, '089635675676', '1', NULL, '2018-04-01 20:10:55', '2018-04-09 06:44:04'),
-(55, '0877788987898', '1', NULL, '2018-04-10 02:58:00', '2018-04-10 02:58:00');
+(55, '0877788987898', '1', NULL, '2018-04-10 02:58:00', '2018-04-10 02:58:00'),
+(56, '085716423138', '1', NULL, '2018-04-12 11:21:36', '2018-04-12 11:21:36'),
+(57, 'g', '1', NULL, '2018-04-13 06:30:35', '2018-04-13 06:30:35');
 
 -- --------------------------------------------------------
 
@@ -160,13 +213,17 @@ CREATE TABLE `dms_master_plat` (
 --
 
 INSERT INTO `dms_master_plat` (`id`, `plat_no`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(55, 'F 1123 RE', '3', NULL, '2018-04-01 09:45:39', '2018-04-09 06:42:17'),
+(55, 'F 1123 Ra', '3', 'Superadmin CMS', '2018-04-01 09:45:39', '2018-04-11 03:45:08'),
 (56, 'F 9923 DB', '3', NULL, '2018-04-01 09:47:09', '2018-04-09 06:42:21'),
 (57, 'F 6543 TR', '3', NULL, '2018-04-01 09:48:24', '2018-04-09 06:42:24'),
 (58, 'F 8823 TT', '3', NULL, '2018-04-01 09:49:32', '2018-04-09 06:42:26'),
 (61, 'F 1233 RT', '2', NULL, '2018-04-01 19:52:51', '2018-04-09 06:42:29'),
 (67, 'B 1234 CIB', '1', NULL, '2018-04-09 17:27:02', '2018-04-09 17:27:02'),
-(90, 'F 3361 BKD', '1', NULL, '2018-04-10 02:58:00', '2018-04-10 02:58:00');
+(90, 'F 3361 BKD', '1', NULL, '2018-04-10 02:58:00', '2018-04-10 02:58:00'),
+(91, 'F 1123 RE', '1', NULL, '2018-04-12 11:21:36', '2018-04-12 11:21:36'),
+(92, 'g', '1', NULL, '2018-04-13 06:30:35', '2018-04-13 06:30:35'),
+(93, 'F1123Ra', '1', NULL, '2018-04-13 07:54:10', '2018-04-13 07:54:10'),
+(94, 'F 1123 DB', '1', NULL, '2018-04-13 08:06:52', '2018-04-13 08:06:52');
 
 -- --------------------------------------------------------
 
@@ -249,6 +306,29 @@ INSERT INTO `dms_master_tc` (`id`, `master_tc_name`, `created_by`, `updated_by`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dms_master_tujuan`
+--
+
+CREATE TABLE `dms_master_tujuan` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `tujuan` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `dms_master_tujuan`
+--
+
+INSERT INTO `dms_master_tujuan` (`id`, `tujuan`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'Jakarta', '1', '', NULL, '2018-04-13 06:22:49'),
+(2, NULL, '1', NULL, '2018-04-13 06:58:43', '2018-04-13 06:58:43');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `dms_master_vehicle`
 --
 
@@ -327,15 +407,17 @@ CREATE TABLE `dms_transaction` (
 --
 
 INSERT INTO `dms_transaction` (`id`, `id_dms_form`, `gate_number`, `status`, `waiting_time`, `duration`, `last_scan`, `arrival_time`, `exit_time`, `updated_by_checker`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(94, 'DMS11522614907', '2', '2', NULL, 'Apr 08, 18 21:55:15', '', '2018-04-01 16:35:07', 'Apr 10, 18 01:00:20', 0, '2018-04-01 09:35:07', '1', '2018-04-10 02:42:57', '1'),
+(94, 'DMS11522614907', '2', '3', NULL, 'Apr 08, 18 21:55:15', '13:52', '2018-04-01 16:35:07', 'Apr 10, 18 01:00:20', 0, '2018-04-01 09:35:07', '1', '2018-04-13 06:52:02', '1'),
 (95, 'DMS11522614998', '2', '2', '15:21:00', 'Apr 04, 18 1:15:43', '', '2018-04-01 16:36:38', '2018-04-02 03:21:57', 0, '2018-04-01 09:36:38', '1', '2018-04-10 02:40:17', '1'),
 (96, 'DMS21522615084', '2', '2', NULL, 'Apr 04, 18 2:15:33', '', '2018-04-01 16:38:04', NULL, 0, '2018-04-01 09:38:04', '1', '2018-04-10 02:40:15', '1'),
-(98, 'DMS11522667446', '2', '4', '13:00:00', 'Apr 04, 18 4:45:32', '13:20', '2018-04-01 16:45:39', 'Apr 09, 18 23:28:29', 0, '2018-04-01 09:45:39', '1', '2018-04-10 06:20:58', '1'),
-(99, 'DMS11522615629', '1', '2', NULL, 'Apr 04, 18 13:42:03', '', '2018-04-01 16:47:09', 'Apr 04, 18 13:42:21', 0, '2018-04-01 09:47:09', '1', '2018-04-10 02:40:40', '1'),
+(98, 'DMS11522667446', '3', '6', '13:00:00', 'Apr 04, 18 4:45:32', '11:31', '2018-04-01 16:45:39', 'Apr 11, 18 11:31:07', 0, '2018-04-01 09:45:39', '1', '2018-04-12 11:21:36', '1'),
+(99, 'DMS11522615629', '1', '6', NULL, 'Apr 04, 18 13:42:03', '16:13:30 13/Apr/2018', '2018-04-01 16:47:09', 'Apr 13, 18 16:13:30', 0, '2018-04-01 09:47:09', '1', '2018-04-13 09:13:30', '1'),
 (102, 'DMS11522659432', '1', '6', NULL, 'Apr 04, 18 5:45:12', '09:43', '2018-04-02 04:57:12', 'Apr 10, 18 09:43:57', 0, '2018-04-01 21:57:12', '1', '2018-04-10 02:43:57', '1'),
 (119, 'DMS11523368679', NULL, '1', NULL, 'Apr 10, 18 09:57:59', NULL, 'Apr 10, 18 09:57:59', NULL, NULL, '2018-04-10 02:58:00', '1', '2018-04-10 02:58:00', NULL),
 (120, 'DMS21523370851', NULL, '1', NULL, 'Apr 10, 18 10:34:11', NULL, 'Apr 10, 18 10:34:11', NULL, NULL, '2018-04-10 03:34:11', '1', '2018-04-10 03:34:11', NULL),
-(121, 'DMS21523370887', NULL, '1', NULL, 'Apr 10, 18 10:34:47', NULL, 'Apr 10, 18 10:34:47', NULL, NULL, '2018-04-10 03:34:47', '1', '2018-04-10 03:34:47', NULL);
+(121, 'DMS21523370887', NULL, '1', NULL, 'Apr 10, 18 10:34:47', NULL, 'Apr 10, 18 10:34:47', NULL, NULL, '2018-04-10 03:34:47', '1', '2018-04-10 03:34:47', NULL),
+(122, 'DMS11523640635', NULL, '1', NULL, 'Apr 13, 18 13:30:35', NULL, 'Apr 13, 18 13:30:35', NULL, NULL, '2018-04-13 06:30:35', '1', '2018-04-13 06:30:35', NULL),
+(123, 'DMS11523645650', NULL, '1', NULL, 'Apr 13, 18 14:54:10', NULL, 'Apr 13, 18 14:54:10', NULL, NULL, '2018-04-13 07:54:10', '1', '2018-04-13 07:54:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -373,7 +455,28 @@ INSERT INTO `dms_transaction_history` (`id`, `id_dms_form`, `gate_number`, `stat
 (321, 'DMS21523370851', NULL, '1', NULL, 'Apr 10, 18 10:34:11', NULL, 'Apr 10, 18 10:34:11', NULL, NULL, '2018-04-10 03:34:11', '1', '2018-04-10 03:34:11', NULL),
 (322, 'DMS21523370887', NULL, '1', NULL, 'Apr 10, 18 10:34:47', NULL, 'Apr 10, 18 10:34:47', NULL, NULL, '2018-04-10 03:34:47', '1', '2018-04-10 03:34:47', NULL),
 (323, 'DMS11522667446', NULL, '3', NULL, NULL, '12:48', NULL, NULL, NULL, '2018-04-10 05:48:12', '1', '2018-04-10 05:48:12', NULL),
-(324, 'DMS11522667446', NULL, '4', NULL, NULL, '13:20', NULL, NULL, NULL, '2018-04-10 06:20:58', '1', '2018-04-10 06:20:58', NULL);
+(324, 'DMS11522667446', NULL, '4', NULL, NULL, '13:20', NULL, NULL, NULL, '2018-04-10 06:20:58', '1', '2018-04-10 06:20:58', NULL),
+(325, 'DMS11522667446', NULL, '5', NULL, NULL, '11:30', NULL, NULL, NULL, '2018-04-11 04:30:53', '1', '2018-04-11 04:30:53', NULL),
+(326, 'DMS11522667446', NULL, '6', NULL, NULL, '11:31', NULL, 'Apr 11, 18 11:31:07', NULL, '2018-04-11 04:31:07', '1', '2018-04-11 04:31:07', NULL),
+(327, 'DMS11522667446', '3', NULL, '13:00:00', NULL, NULL, NULL, NULL, NULL, '2018-04-12 11:21:36', '1', '2018-04-12 11:21:36', NULL),
+(328, 'DMS11523640635', NULL, '1', NULL, 'Apr 13, 18 13:30:35', NULL, 'Apr 13, 18 13:30:35', NULL, NULL, '2018-04-13 06:30:35', '1', '2018-04-13 06:30:35', NULL),
+(329, 'DMS11522614907', NULL, '3', NULL, NULL, '13:52', NULL, NULL, NULL, '2018-04-13 06:52:02', '1', '2018-04-13 06:52:02', NULL),
+(330, 'DMS11522614907', '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-13 06:57:13', '1', '2018-04-13 06:57:13', NULL),
+(331, 'DMS11522614907', '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-13 06:57:40', '1', '2018-04-13 06:57:40', NULL),
+(332, 'DMS11522614907', '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-13 06:58:43', '1', '2018-04-13 06:58:43', NULL),
+(333, 'DMS11522667446', '3', NULL, '13:00:00', NULL, NULL, NULL, NULL, NULL, '2018-04-13 07:07:39', '1', '2018-04-13 07:07:39', NULL),
+(334, 'DMS11522667446', '3', NULL, '13:00:00', NULL, NULL, NULL, NULL, NULL, '2018-04-13 07:12:58', '1', '2018-04-13 07:12:58', NULL),
+(335, 'DMS11522667446', '3', NULL, '13:00:00', NULL, NULL, NULL, NULL, NULL, '2018-04-13 07:13:11', '1', '2018-04-13 07:13:11', NULL),
+(336, 'DMS11522667446', '3', NULL, '13:00:00', NULL, NULL, NULL, NULL, NULL, '2018-04-13 07:13:29', '1', '2018-04-13 07:13:29', NULL),
+(337, 'DMS11522667446', '3', NULL, '13:00:00', NULL, NULL, NULL, NULL, NULL, '2018-04-13 07:13:47', '1', '2018-04-13 07:13:47', NULL),
+(338, 'DMS11522667446', '3', NULL, '13:00:00', NULL, NULL, NULL, NULL, NULL, '2018-04-13 07:13:55', '1', '2018-04-13 07:13:55', NULL),
+(339, 'DMS11523645650', NULL, '1', NULL, 'Apr 13, 18 14:54:10', NULL, 'Apr 13, 18 14:54:10', NULL, NULL, '2018-04-13 07:54:10', '1', '2018-04-13 07:54:10', NULL),
+(340, 'DMS11522615629', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-13 08:06:52', '1', '2018-04-13 08:06:52', NULL),
+(341, 'DMS11522667446', '3', NULL, '13:00:00', NULL, NULL, NULL, NULL, NULL, '2018-04-13 08:07:00', '1', '2018-04-13 08:07:00', NULL),
+(342, 'DMS11522615629', NULL, '3', NULL, NULL, '16:11 13 Apr 18', NULL, NULL, NULL, '2018-04-13 09:11:09', '1', '2018-04-13 09:11:09', NULL),
+(343, 'DMS11522615629', NULL, '4', NULL, NULL, '16:11 13 Apr 2018', NULL, NULL, NULL, '2018-04-13 09:11:59', '1', '2018-04-13 09:11:59', NULL),
+(344, 'DMS11522615629', NULL, '5', NULL, NULL, '16:13:03 13/Apr/2018', NULL, NULL, NULL, '2018-04-13 09:13:03', '1', '2018-04-13 09:13:03', NULL),
+(345, 'DMS11522615629', NULL, '6', NULL, NULL, '16:13:30 13/Apr/2018', NULL, 'Apr 13, 18 16:13:30', NULL, '2018-04-13 09:13:30', '1', '2018-04-13 09:13:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -467,7 +570,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (22, '2018_03_12_083901_create_purpose_table', 3),
 (23, '2018_03_26_035845_create_master_phone_table', 4),
 (24, '2018_03_28_033755_create_master_status_table', 5),
-(25, '2018_03_28_095350_create_master_location_table', 6);
+(25, '2018_03_28_095350_create_master_location_table', 6),
+(26, '2018_04_26_035844_create_master_asal_table', 7),
+(27, '2018_04_26_035845_create_master_tujuan_table', 7),
+(28, '2018_04_26_035846_create_master_name_table', 7);
 
 -- --------------------------------------------------------
 
@@ -522,9 +628,21 @@ ALTER TABLE `dms_form`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `dms_master_asal`
+--
+ALTER TABLE `dms_master_asal`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `dms_master_location`
 --
 ALTER TABLE `dms_master_location`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dms_master_name`
+--
+ALTER TABLE `dms_master_name`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -555,6 +673,12 @@ ALTER TABLE `dms_master_status`
 -- Indexes for table `dms_master_tc`
 --
 ALTER TABLE `dms_master_tc`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dms_master_tujuan`
+--
+ALTER TABLE `dms_master_tujuan`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -619,7 +743,13 @@ ALTER TABLE `cms_user`
 -- AUTO_INCREMENT for table `dms_form`
 --
 ALTER TABLE `dms_form`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
+
+--
+-- AUTO_INCREMENT for table `dms_master_asal`
+--
+ALTER TABLE `dms_master_asal`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `dms_master_location`
@@ -628,16 +758,22 @@ ALTER TABLE `dms_master_location`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `dms_master_name`
+--
+ALTER TABLE `dms_master_name`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `dms_master_phone`
 --
 ALTER TABLE `dms_master_phone`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `dms_master_plat`
 --
 ALTER TABLE `dms_master_plat`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `dms_master_project`
@@ -658,6 +794,12 @@ ALTER TABLE `dms_master_tc`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `dms_master_tujuan`
+--
+ALTER TABLE `dms_master_tujuan`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `dms_master_vehicle`
 --
 ALTER TABLE `dms_master_vehicle`
@@ -673,13 +815,13 @@ ALTER TABLE `dms_purpose`
 -- AUTO_INCREMENT for table `dms_transaction`
 --
 ALTER TABLE `dms_transaction`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
 -- AUTO_INCREMENT for table `dms_transaction_history`
 --
 ALTER TABLE `dms_transaction_history`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=346;
 
 --
 -- AUTO_INCREMENT for table `dms_user_group`
@@ -697,7 +839,7 @@ ALTER TABLE `dms_user_management`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `users`

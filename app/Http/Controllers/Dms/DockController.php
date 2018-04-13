@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Dms;
-// require '../vendor/autoload.php';
+ //require __DIR__'/vendor/autoload.php';
 // use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+// use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 // use Mike42\Escpos\Printer;
 
 use Illuminate\Http\Request;
@@ -13,6 +14,9 @@ use App\Http\Controllers\Model\Transaction_history;
 use App\Http\Controllers\Model\Master_vehicle;
 use App\Http\Controllers\Model\Master_plat;
 use App\Http\Controllers\Model\Master_phone;
+use App\Http\Controllers\Model\Master_name;
+use App\Http\Controllers\Model\Master_asal;
+use App\Http\Controllers\Model\Master_tujuan;
 use App\Http\Controllers\Model\Master_project;
 use App\Http\Controllers\Model\Master_tc;
 use App\Http\Controllers\Model\Purpose;
@@ -234,6 +238,7 @@ class DockController extends Controller
         
         $result = Master_plat::where('plat_no','=',$request->plat_no)->first();
         $phone = Master_phone::where('driver_phone','=',$request->driver_phone)->first();
+        $name = Master_name::where('driver_name','=',$request->driver_name)->first();
                   
             if (sizeof($result) > 0){}
             else
@@ -253,6 +258,44 @@ class DockController extends Controller
                     $dms_master_phone->save();
             } 
 
+
+            if (sizeof($name) > 0){}
+            else
+            {
+                    $dms_master_name = new Master_name;
+                        $dms_master_name->driver_name = $request->driver_name;
+                        $dms_master_name->created_by = session()->get('session_id'); 
+                    $dms_master_name->save();
+            }
+
+            if ($request->asal==''||$request->asal== null) {}
+            else{
+
+                    $asal = Master_asal::where('asal','=',$request->asal)->first();
+                    if (sizeof($asal) > 0){}
+                    else
+                    {
+                            $dms_master_asal = new Master_asal;
+                                $dms_master_asal->asal = $request->asal;
+                                $dms_master_asal->created_by = session()->get('session_id'); 
+                            $dms_master_asal->save();
+                    }
+            }
+
+            if ($request->tujuan==''||$request->tujuan== null) {}
+            else{
+
+                    $tujuan = Master_tujuan::where('tujuan','=',$request->tujuan)->first();
+                    if (sizeof($tujuan) > 0){}
+                    else
+                    {
+                            $dms_master_tujuan = new Master_tujuan;
+                                $dms_master_tujuan->tujuan = $request->tujuan;
+                                $dms_master_tujuan->created_by = session()->get('session_id'); 
+                            $dms_master_tujuan->save();
+                    }
+            }
+                
         if ($request->id_purpose = 1) {
             $request->session()->put('inbound', "inbound");
             $request->session()->put('outbound', "");
@@ -330,28 +373,65 @@ class DockController extends Controller
                         $dms_transaction_history->created_by = session()->get('session_id');
                     $dms_transaction_history->save();
 
-                $result = Master_plat::where('plat_no','=',$request->plat_no)->first(); 
-                $phone = Master_phone::where('driver_phone','=',$request->driver_phone)->first();    
-
-                if (sizeof($result) > 0){
-                }
-                else
-                {
+        $result = Master_plat::where('plat_no','=',$request->plat_no)->first();
+        $phone = Master_phone::where('driver_phone','=',$request->driver_phone)->first();
+        $name = Master_name::where('driver_name','=',$request->driver_name)->first();
+                  
+            if (sizeof($result) > 0){}
+            else
+            {
                     $dms_master_plat = new Master_plat;
                         $dms_master_plat->plat_no = $request->plat_no;
                         $dms_master_plat->created_by = session()->get('session_id'); 
                     $dms_master_plat->save();
-                }
+            } 
 
-                if (sizeof($phone) > 0){
-                }
-                else
-                {
+            if (sizeof($phone) > 0){}
+            else
+            {
                     $dms_master_phone = new Master_phone;
                         $dms_master_phone->driver_phone = $request->driver_phone;
                         $dms_master_phone->created_by = session()->get('session_id'); 
                     $dms_master_phone->save();
-                }
+            } 
+
+            if (sizeof($name) > 0){}
+            else
+            {
+                    $dms_master_name = new Master_name;
+                        $dms_master_name->driver_name = $request->driver_name;
+                        $dms_master_name->created_by = session()->get('session_id'); 
+                    $dms_master_name->save();
+            }
+
+             if ($request->asal==''||$request->asal== null) {}
+            else{
+
+                    $asal = Master_asal::where('asal','=',$request->asal)->first();
+                    if (sizeof($asal) > 0){}
+                    else
+                    {
+                            $dms_master_asal = new Master_asal;
+                                $dms_master_asal->asal = $request->asal;
+                                $dms_master_asal->created_by = session()->get('session_id'); 
+                            $dms_master_asal->save();
+                    }
+            }
+
+            if ($request->tujuan==''||$request->tujuan== null) {}
+            else{
+
+                    $tujuan = Master_tujuan::where('tujuan','=',$request->tujuan)->first();
+                    if (sizeof($tujuan) > 0){}
+                    else
+                    {
+                            $dms_master_tujuan = new Master_tujuan;
+                                $dms_master_tujuan->tujuan = $request->tujuan;
+                                $dms_master_tujuan->created_by = session()->get('session_id'); 
+                            $dms_master_tujuan->save();
+                    }
+            }
+
         if ($dms_form->id_purpose == 1) {
             return  redirect('/dms/dashboard#inbound');}
         elseif($dms_form->id_purpose == 2){
@@ -368,12 +448,30 @@ class DockController extends Controller
         return  redirect('dms/dashboard');
     } 
 
-    //========================================================
+    //========================================================AUTOCOMPLETE
     public function plat_no(Request $request){
          $term = $request->term;
          $item = Master_plat::where('plat_no','LIKE','%'.$term.'%')->get();
          foreach ($item as $key => $value) {
              $searchResult[] = $value->plat_no;
+         }
+         return $searchResult;
+     } 
+
+     public function asal(Request $request){
+         $term = $request->term;
+         $item = Master_asal::where('asal','LIKE','%'.$term.'%')->get();
+         foreach ($item as $key => $value) {
+             $searchResult[] = $value->asal;
+         }
+         return $searchResult;
+     } 
+
+     public function tujuan(Request $request){
+         $term = $request->term;
+         $item = Master_tujuan::where('tujuan','LIKE','%'.$term.'%')->get();
+         foreach ($item as $key => $value) {
+             $searchResult[] = $value->tujuan;
          }
          return $searchResult;
      } 
@@ -386,6 +484,25 @@ class DockController extends Controller
         }
         return $searchResult;
     } 
+
+    public function transporter_company(Request $request){
+        $term = $request->term;
+        $item = Master_tc::where('master_tc_name','LIKE','%'.$term.'%')->get();
+        foreach ($item as $key => $value) {
+            $searchResult[] = $value->master_tc_name;
+        }
+        return $searchResult;
+    } 
+
+     public function driver_name(Request $request){
+         $term = $request->term;
+         $item = Master_name::where('driver_name','LIKE','%'.$term.'%')->get();
+         foreach ($item as $key => $value) {
+             $searchResult[] = $value->driver_name;
+         }
+         return $searchResult;
+     } 
+    //========================================================AUTOCOMPLETE
 
     public function input_id(Request $request){
         $id = $request->dms_id_hidden; 
@@ -424,7 +541,7 @@ class DockController extends Controller
     {
         $now = new DateTime();
         $waktu = $now->format('M d, y H:i:s');
-        $last_scan = $now->format('H:i');
+        $last_scan = $now->format('H:i:s d/M/Y');
 
         if ($dms_transaction->status == 1) {
             echo "*Print Struk* status masih 'waiting outside'";
@@ -494,7 +611,7 @@ class DockController extends Controller
     {
         $now = new DateTime();
         $waktu = $now->format('M d, y H:i:s');
-        $last_scan = $now->format('H:i');
+        $last_scan = $now->format('H:i:s d/M/Y');
 
         if ($dms_transaction->status == 1) {
             echo "*Print Struk* status masih 'waiting outside'";

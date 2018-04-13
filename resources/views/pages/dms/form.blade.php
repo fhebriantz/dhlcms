@@ -59,17 +59,17 @@
 
                   <tr>
                     <td>Nomor Mobil</td>
-                    <td><input class="form-control" type="text" name="plat_no" id="plat_no" placeholder="Plat Nomor" style="width: 100%"></td>
+                    <td><input class="form-control" type="text" name="plat_no" id="plat_no" placeholder="Plat Nomor" style="width: 100%; text-transform: uppercase;" maxlength="9"></td>
                   </tr>
 
                   <tr>
                     <td>Nama Pengemudi</td>
-                    <td><input class="form-control" type="text" name="driver_name" id="driver_name " placeholder="Nama Pengemudi" style="width: 100%" autocomplete="off"></td>
+                    <td><input class="form-control" type="text" name="driver_name" id="driver_name" placeholder="Nama Pengemudi" style="width: 100%" maxlength="13"></td>
                   </tr>
 
                   <tr>
                     <td>No. HP Pengemudi</td>
-                    <td><input class="form-control" type="text" name="driver_phone" id="driver_phone" placeholder="08xxxxxxxxx" style="width: 100%"></td>
+                    <td><input class="form-control" type="number" name="driver_phone" id="driver_phone" placeholder="08xxxxxxxxx" style="width: 100%" value="0"></td>
                   </tr>
                   
               
@@ -83,16 +83,11 @@
                     </select></td>
                   </tr>
 
-                  
                   <tr>
                     <td>Vendor</td>
-                    <td><select class="form-control" name="transporter_company" style="width: 100%">
-                      <option value="">-- Pilih Kategori --</option>
-                      @foreach ($dms_master_tc as $tc)
-                      <option value="{{ $tc->master_tc_name }}">{{ $tc->master_tc_name }}</option>
-                      @endforeach
-                    </select></td>
+                    <td><input class="form-control" type="text" name="transporter_company" id="transporter_company" placeholder="Perusahaan Transportasi" style="width: 100%"></td>
                   </tr>
+
 
                   <!-- <tr>
                     <td>Duration</td>
@@ -101,7 +96,7 @@
 
                   <tr>
                     <td>No PO/SO/DO/DN</td>
-                    <td><input class="form-control" type="text" name="shipment" id="shipment " placeholder="No PO/SO/DO/DN" style="width: 100%"></td>
+                    <td><input class="form-control" type="text" name="shipment" id="shipment" placeholder="No PO/SO/DO/DN" style="width: 100%"></td>
                   </tr>
                   <tr>
                     <td>Inbound/Outbound</td>
@@ -115,11 +110,11 @@
                   </tr>    
                   <tr>
                     <td>Asal (Inbound)</td>
-                    <td><input class="form-control" type="text" name="asal" id="asal " placeholder="Asal (Inbound)" style="width: 100%"></td>
+                    <td><input class="form-control" type="text" name="asal" id="asal" placeholder="Asal (Inbound)" style="width: 100%"></td>
                   </tr>
                   <tr>
                     <td>Tujuan (Outbound)</td>
-                    <td><input class="form-control" type="text" name="tujuan" id="tujuan " placeholder="Tujuan (Outbound)" style="width: 100%"></td>
+                    <td><input class="form-control" type="text" name="tujuan" id="tujuan" placeholder="Tujuan (Outbound)" style="width: 100%"></td>
                   </tr>
                   <tr>
                     <td>Nama Customer</td>                  
@@ -145,21 +140,76 @@
 @endsection
 
 @section('script')
-
+<!-- Autocomplete =============================== -->
   <script>
   $( function() {
     $( "#plat_no" ).autocomplete({
-      source: '{{ asset('plat_no') }}'
+      source: '{{ url('plat_no') }}'
+    });
+  } );
+
+  $( function() {
+    $( "#driver_phone" ).autocomplete({
+      source: '{{ url('driver_phone') }}'
+    });
+  } );
+
+  $( function() {
+    $( "#asal" ).autocomplete({
+      source: '{{ url('asal') }}'
+    });
+  } );
+
+  $( function() {
+    $( "#tujuan" ).autocomplete({
+      source: '{{ url('tujuan') }}'
+    });
+  } );
+
+  $( function() {
+    $( "#driver_name" ).autocomplete({
+      source: '{{ url('driver_name') }}'
+    });
+  } );
+
+  $( function() {
+    $( "#transporter_company" ).autocomplete({
+      source: '{{ url('transporter_company') }}'
     });
   } );
   </script>
-  
+
+<!-- No SPACE=============================== -->
   <script>
-  $( function() {
-    $( "#driver_phone" ).autocomplete({
-      source: '{{ asset('driver_phone') }}'
+    $("input#plat_no").on({
+      keydown: function(e) {
+        if (e.which === 32)
+          return false;
+      },
+      change: function() {
+        this.value = this.value.replace(/\s/g, "");
+      }
     });
-  } );
+
+    $("input#transporter_company").on({
+      keydown: function(e) {
+        if (e.which === 32)
+          return false;
+      },
+      change: function() {
+        this.value = this.value.replace(/\s/g, "");
+      }
+    });
+
+    $("input#shipment").on({
+      keydown: function(e) {
+        if (e.which === 32)
+          return false;
+      },
+      change: function() {
+        this.value = this.value.replace(/\s/g, "");
+      }
+    });
   </script>
 
 @endsection
