@@ -67,13 +67,13 @@
                   
                   <tr>
                     <td>Nama Pengemudi</td>
-                    <td><input class="form-control" type="text" name="driver_name" id="driver_name" placeholder="Nama Pengemudi" value="{{ $dms_form->driver_name }}"  style="width: 100%" maxlength="13"></td>
+                    <td><input class="form-control" type="text" name="driver_name" id="driver_name" placeholder="Nama Pengemudi" value="{{ $dms_form->driver_name }}"  style="width: 100%"></td>
                   </tr>
 
                   
                   <tr>
                     <td>No. HP Pengemudi</td>
-                    <td><input class="form-control" type="number" name="driver_phone" id="driver_phone" placeholder="08xxxxxxxxxx" value="{{ $dms_form->driver_phone }}" style="width: 100%"  autocomplete="off"></td>
+                    <td><input class="form-control" type="number" name="driver_phone" id="driver_phone" placeholder="08xxxxxxxxxx" value="{{ $dms_form->driver_phone }}" style="width: 100%"  maxlength="13"></td>
                   </tr>
 
                   <tr>

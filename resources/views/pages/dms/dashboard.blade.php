@@ -43,7 +43,16 @@
       @else
       @endif 
       <li class="nav-item navbar-right" style="float: right; cursor: pointer;">
+        @if (session()->get('session_id_group') == 1)
+        <a>{{session()->get('session_name')}} / {{session()->get('session_group')}}</a>
+        @elseif (session()->get('session_id_group') == 2)
         <a>{{session()->get('session_name')}} / {{session()->get('session_name_project')}}</a>
+        @elseif (session()->get('session_id_group') == 3)
+        <a>{{session()->get('session_name')}} / {{session()->get('session_group')}}</a>
+        @else
+        <a>{{session()->get('session_name')}} / {{session()->get('session_name_project')}}</a>
+        @endif 
+        
       </li>
       <!--<li class="nav-item navbar-right" style="float: right; cursor: pointer;">
         <a data-fancybox data-src="#scan" href="javascript:;"><button class="btn btnadd" style="background-color: #999; color: white;">Scan</button></a>
