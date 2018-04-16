@@ -33,23 +33,17 @@
           <tr >
             <th class="" style="display:none;">ID DMS</th>
             <th class="" style="width: 1%">NO</th>
-            <th class="phone " style="width: 12%">PLAT NO</th>
-            <th class="" style="width: 13%">NAMA SOPIR</th>
-            <th class="cus " style="width: 12%">PERUSAHAAN TRANSPORTASI</th>
-            <th class=" " style="width: 5%">DURASI</th>
-            <th class=" " style="width: 5%">STATUS</th>
-            <th class="width_status phone">SCAN TERAKHIR</th>
-            <th class="phone "  style="width: 8%">PUT</th>
+            <th class="phone " style="width: 12%">TRUCK NO. POL</th>
+            <th class="" style="width: 13%">PENGEMUDI</th>
+            <th class="cus " style="width: 12%">VENDOR</th>
             <th class="cus " style="width: 10%" >ASAL</th>
+            <th class=" " style="width: 5%">STATUS</th>
+            <th class="width_status phone">JAM STATUS</th>
+            <th class="phone "  style="width: 8%">PUT</th>
             <th class="phone " style="width: 1%">GERBANG</th>
-            <th class="" style="width: 10%">KENDARAAN</th>
-            @if (session()->get('session_id_group') == 1)
-            <th class="cus " style="width: 14%" >NAMA PROYEK</th>
-            @elseif (session()->get('session_id_group') == 2)            
-            @elseif (session()->get('session_id_group') == 3)
-            <th class="cus " style="width: 14%" >NAMA PROYEK</th>
-            @else
-            @endif
+            <th class="" style="width: 10%">TIPE TRUK</th>
+            <th class=" " style="width: 5%">TOTAL DURASI</th>
+            <th class="cus " style="width: 14%" >CUSTOMER</th>
           </tr>
         </thead>
 
@@ -61,7 +55,7 @@
             <td class="phone plateCell">{{$inbound->plat_no}}</td>
             <td class="driverCell">{{$inbound->driver_name}}</td>
             <td class="cus transporterCell">{{$inbound->transporter_company}}</td>
-            <td class="durationCell"><span id="{{$inbound->id_dms_form}}"></td>
+            <td class="cus asalCell">{{$inbound->asal}}</td>
             <td class="statusCell">{{$inbound->status_name}}</td>
             <td class="scanCell">{{$inbound->last_scan}}</td>
             <td class="phone putCell">
@@ -70,16 +64,10 @@
               <?php else: ?>
               <?php echo "$inbound->waiting_time" ?>
               <?php endif ?></td>
-            <td class="cus asalCell">{{$inbound->asal}}</td>
             <td class="cus gateCell">{{$inbound->gate_number}}</td>
             <td class="vehicleCell">{{$inbound->type_of_vehicle}}</td>
-            @if (session()->get('session_id_group') == 1)
+            <td class="durationCell"><span id="{{$inbound->id_dms_form}}"></td>
             <td class="cus projectCell">{{$inbound->master_project_name}}</td>
-            @elseif (session()->get('session_id_group') == 2)            
-            @elseif (session()->get('session_id_group') == 3)
-            <td class="cus projectCell">{{$inbound->master_project_name}}</td>
-            @else
-            @endif
           </tr>
 
           <!-- DURATION ======================================================== DURATION -->
@@ -155,23 +143,17 @@
           <tr >
             <th class="" style="display:none;">ID DMS</th>
             <th class="" style="width: 1%">NO</th>
-            <th class="phone " style="width: 12%">PLAT NO</th>
-            <th class="" style="width: 13%">NAMA SOPIR</th>
-            <th class="cus " style="width: 12%">PERUSAHAAN TRANSPORTASI</th>
-            <th class=" " style="width: 5%">DURASI</th>
-            <th class=" " style="width: 5%">STATUS</th>
-            <th class="width_status phone">SCAN TERAKHIR</th>
-            <th class="phone "  style="width: 8%">PLT</th>
+            <th class="phone " style="width: 12%">TRUCK NO. POL</th>
+            <th class="" style="width: 13%">PENGEMUDI</th>
+            <th class="cus " style="width: 12%">VENDOR</th>
             <th class="cus " style="width: 10%" >TUJUAN</th>
+            <th class=" " style="width: 5%">STATUS</th>
+            <th class="width_status phone">JAM STATUS</th>
+            <th class="phone "  style="width: 8%">PLT</th>
             <th class="phone " style="width: 1%">GERBANG</th>
-            <th class="" style="width: 10%">KENDARAAN</th>
-            @if (session()->get('session_id_group') == 1)
-            <th class="cus " style="width: 14%" >NAMA PROYEK</th>
-            @elseif (session()->get('session_id_group') == 2)            
-            @elseif (session()->get('session_id_group') == 3)
-            <th class="cus " style="width: 14%" >NAMA PROYEK</th>
-            @else
-            @endif 
+            <th class="" style="width: 10%">TIPE TRUK</th>
+            <th class=" " style="width: 5%">TOTAL DURASI</th>
+            <th class="cus " style="width: 14%" >CUSTOMER</th>
           </tr>
         </thead>
 
@@ -183,7 +165,7 @@
             <td class="phone plateCellO">{{$outbound->plat_no}}</td>
             <td class="driverCellO">{{$outbound->driver_name}}</td>
             <td class="cus transporterCellO">{{$outbound->transporter_company}}</td>
-            <td class="durationCellO"><span id="{{$outbound->id_dms_form}}"></td>
+            <td class="cus tujuanCellO">{{$outbound->tujuan}}</td>
             <td class="statusCellO">{{$outbound->status_name}}</td>
             <td class="scanCellO">{{$outbound->last_scan}}</td>
             <td class="phone pltCellO">
@@ -193,16 +175,10 @@
               <?php echo "$outbound->waiting_time" ?>
               <?php endif ?>
             </td>
-            <td class="cus tujuanCellO">{{$outbound->tujuan}}</td>
             <td class="cus gateCellO">{{$outbound->gate_number}}</td>
             <td class="vehicleCellO">{{$outbound->type_of_vehicle}}</td>
-            @if (session()->get('session_id_group') == 1)
+            <td class="durationCellO"><span id="{{$outbound->id_dms_form}}"></td>
             <td class="cus projectCellO">{{$outbound->master_project_name}}</td>
-            @elseif (session()->get('session_id_group') == 2)            
-            @elseif (session()->get('session_id_group') == 3)
-            <td class="cus projectCellO">{{$outbound->master_project_name}}</td>
-            @else
-            @endif 
           </tr>
 
           <!-- DURATION ======================================================== DURATION -->
@@ -441,7 +417,7 @@
                         $(this).find("td.statusCellO").html(msg[0].outbound[i].status_name);
                         $(this).find("td.scanCellO").html(msg[0].outbound[i].last_scan);
                         $(this).find("td.pltCellO").html(in_waitingO);
-                        $(this).find("td.tujuanCellO").html(msg[0].outbound[i].asal);
+                        $(this).find("td.tujuanCellO").html(msg[0].outbound[i].tujuan);
                         $(this).find("td.vehicleCellO").html(msg[0].outbound[i].type_of_vehicle);
                         $(this).find("td.projectCellO").html(msg[0].outbound[i].master_project_name);
                       }  

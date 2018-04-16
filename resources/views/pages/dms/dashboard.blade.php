@@ -155,12 +155,7 @@
             <th class="width_gate phone ">GERBANG</th>
             <th class="width_vehicle ">TIPE TRUK</th>
             <th class="width_duration phone">TOTAL DURASI</th>
-            @if (session()->get('session_id_group') == 1)
             <th class="cus width_cus" >CUSTOMER</th>
-            @elseif (session()->get('session_id_group') == 2)
-            @else
-            <th class="cus width_cus" >CUSTOMER</th>
-            @endif
             @if (session()->get('session_id_group') == 1)
             <th class="width_action actiontable phone" >TINDAKAN</th>
             @elseif (session()->get('session_id_group') == 2)
@@ -174,7 +169,7 @@
             <th class="cus width_print">PRINT</th>
             @else
             @endif
-            <th>TEST</th>
+            <!-- <th>TEST</th> -->
           </tr>
         </thead>
 
@@ -196,12 +191,7 @@
             <td class="cus ">{{$inbound->gate_number}}</td>
             <td class="">{{$inbound->type_of_vehicle}}</td>
             <td class="cus"><span id="{{$inbound->id_dms_form}}"></span></td>
-            @if (session()->get('session_id_group') == 1)
             <td class="cus ">{{$inbound->master_project_name}}</td>
-            @elseif (session()->get('session_id_group') == 2)
-            @else
-            <td class="cus ">{{$inbound->master_project_name}}</td>
-            @endif
             @if (session()->get('session_id_group') == 1)
             <td  class="cus ">
               <a href="{{url('/dms/'.$inbound->id_dms_form.'/edit')}}"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
@@ -229,7 +219,7 @@
             <td class="cus "><a target="_blank" href="{{url('/dms/'.$inbound->id_dms_form.'/barcode')}}"  class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
             @else
             @endif
-            <td><a href="{{url('/test/'.$inbound->id_dms_form)}}">SMS</a></td>
+            <!-- <td><a href="{{url('/test/'.$inbound->id_dms_form)}}">SMS</a></td> -->
           </tr>
 
            <!-- DURATION ======================================================== DURATION -->
@@ -320,12 +310,7 @@
             <th class="width_gate phone ">GERBANG</th>
             <th class="width_vehicle ">TIPE TRUK</th>
             <th class="width_duration phone">TOTAL DURASI</th>
-            @if (session()->get('session_id_group') == 1)
             <th class="cus width_cus" >CUSTOMER</th>
-            @elseif (session()->get('session_id_group') == 2)
-            @else
-            <th class="cus width_cus" >CUSTOMER</th>
-            @endif
             @if (session()->get('session_id_group') == 1)
             <th class="width_action actiontable phone" >TINDAKAN</th>
             @elseif (session()->get('session_id_group') == 2)
@@ -339,7 +324,7 @@
             <th class="cus width_print">PRINT</th>
             @else
             @endif
-            <th>TEST</th>
+            <!-- <th>TEST</th> -->
           </tr>
         </thead>
 
@@ -361,12 +346,7 @@
             <td class="cus ">{{$outbound->gate_number}}</td>
             <td class="">{{$outbound->type_of_vehicle}}</td>
             <td class="cus"><span id="{{$outbound->id_dms_form}}"></span></td>
-            @if (session()->get('session_id_group') == 1)
             <td class="cus ">{{$outbound->master_project_name}}</td>
-            @elseif (session()->get('session_id_group') == 2)
-            @else
-            <td class="cus ">{{$outbound->master_project_name}}</td>
-            @endif
             @if (session()->get('session_id_group') == 1)
             <td  class="cus ">
               <a href="{{url('/dms/'.$outbound->id_dms_form.'/edit')}}"><button type="button" class="action btn btn-danger"><img src="{{ asset('image/pencil.png')}}" alt="" style="width: 15px; height: auto;"></button></a>
@@ -394,7 +374,7 @@
             <td class="cus "><a target="_blank" href="{{url('/dms/'.$outbound->id_dms_form.'/barcode')}}"  class="btn btn-primary" style="padding: 0px 5px">Print</a></td>
             @else
             @endif
-            <td><a href="{{url('/test/'.$outbound->id_dms_form)}}">SMS</a></td>
+            <!-- <td><a href="{{url('/test/'.$outbound->id_dms_form)}}">SMS</a></td> -->
           </tr>
 
            <!-- DURATION ======================================================== DURATION -->

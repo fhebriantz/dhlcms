@@ -32,6 +32,7 @@ use GuzzleHttp;
  /* Call this file 'hello-world.php' */
 use vendor\autoload;
 
+use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\Printer;
 
@@ -43,11 +44,9 @@ class DockController extends Controller
     {
        
         try {
-            $connector = new WindowsPrintConnector("smb://azhaclient-3/receipt");
-            
-            
+            $connector = new WindowsPrintConnector("smb://FHEBRIANTZ/receipt");            
             $printer = new Printer($connector);
-            $printer -> text("Hello World!\n");
+            $printer -> text("Selamat tidur sayangnya aa felicia edwina! ({})\n");
             $printer -> cut();
             
             $printer -> close();
@@ -261,64 +260,64 @@ class DockController extends Controller
                         $dms_transaction_history->created_by = session()->get('session_id'); 
         $dms_transaction_history->save();
         
-        $result = Master_plat::where('plat_no','=',$request->plat_no)->first();
+        /*$result = Master_plat::where('plat_no','=',$request->plat_no)->first();
         $phone = Master_phone::where('driver_phone','=',$request->driver_phone)->first();
         $name = Master_name::where('driver_name','=',$request->driver_name)->first();
                   
             if (sizeof($result) > 0){}
             else
-            {
+            {*/
                     $dms_master_plat = new Master_plat;
                         $dms_master_plat->plat_no = strtoupper($request->plat_no);
                         $dms_master_plat->created_by = session()->get('session_id'); 
                     $dms_master_plat->save();
-            } 
+            /*} 
 
             if (sizeof($phone) > 0){}
             else
-            {
+            {*/
                     $dms_master_phone = new Master_phone;
                         $dms_master_phone->driver_phone = $request->driver_phone;
                         $dms_master_phone->created_by = session()->get('session_id'); 
                     $dms_master_phone->save();
-            } 
+            /*} 
 
 
             if (sizeof($name) > 0){}
             else
-            {
+            {*/
                     $dms_master_name = new Master_name;
                         $dms_master_name->driver_name = $request->driver_name;
                         $dms_master_name->created_by = session()->get('session_id'); 
                     $dms_master_name->save();
-            }
+            //}
 
             if ($request->asal==''||$request->asal== null) {}
             else{
 
-                    $asal = Master_asal::where('asal','=',$request->asal)->first();
+                    /*$asal = Master_asal::where('asal','=',$request->asal)->first();
                     if (sizeof($asal) > 0){}
                     else
-                    {
+                    {*/
                             $dms_master_asal = new Master_asal;
                                 $dms_master_asal->asal = $request->asal;
                                 $dms_master_asal->created_by = session()->get('session_id'); 
                             $dms_master_asal->save();
-                    }
+                   // }
             }
 
             if ($request->tujuan==''||$request->tujuan== null) {}
             else{
 
-                    $tujuan = Master_tujuan::where('tujuan','=',$request->tujuan)->first();
+                    /*$tujuan = Master_tujuan::where('tujuan','=',$request->tujuan)->first();
                     if (sizeof($tujuan) > 0){}
                     else
-                    {
+                    {*/
                             $dms_master_tujuan = new Master_tujuan;
                                 $dms_master_tujuan->tujuan = $request->tujuan;
                                 $dms_master_tujuan->created_by = session()->get('session_id'); 
                             $dms_master_tujuan->save();
-                    }
+                    //}
             }
                 
         if ($request->id_purpose = 1) {
@@ -399,63 +398,63 @@ class DockController extends Controller
                         $dms_transaction_history->created_by = session()->get('session_id');
                     $dms_transaction_history->save();
 
-        $result = Master_plat::where('plat_no','=',$request->plat_no)->first();
+        /*$result = Master_plat::where('plat_no','=',$request->plat_no)->first();
         $phone = Master_phone::where('driver_phone','=',$request->driver_phone)->first();
         $name = Master_name::where('driver_name','=',$request->driver_name)->first();
                   
             if (sizeof($result) > 0){}
             else
-            {
+            {*/
                     $dms_master_plat = new Master_plat;
                         $dms_master_plat->plat_no = strtoupper($request->plat_no);
                         $dms_master_plat->created_by = session()->get('session_id'); 
                     $dms_master_plat->save();
-            } 
+            /*} 
 
             if (sizeof($phone) > 0){}
             else
-            {
+            {*/
                     $dms_master_phone = new Master_phone;
                         $dms_master_phone->driver_phone = $request->driver_phone;
                         $dms_master_phone->created_by = session()->get('session_id'); 
                     $dms_master_phone->save();
-            } 
+            /*} 
 
             if (sizeof($name) > 0){}
             else
-            {
+            {*/
                     $dms_master_name = new Master_name;
                         $dms_master_name->driver_name = $request->driver_name;
                         $dms_master_name->created_by = session()->get('session_id'); 
                     $dms_master_name->save();
-            }
+            //}
 
              if ($request->asal==''||$request->asal== null) {}
             else{
 
-                    $asal = Master_asal::where('asal','=',$request->asal)->first();
+                    /*$asal = Master_asal::where('asal','=',$request->asal)->first();
                     if (sizeof($asal) > 0){}
                     else
-                    {
+                    {*/
                             $dms_master_asal = new Master_asal;
                                 $dms_master_asal->asal = $request->asal;
                                 $dms_master_asal->created_by = session()->get('session_id'); 
                             $dms_master_asal->save();
-                    }
+                    //}
             }
 
             if ($request->tujuan==''||$request->tujuan== null) {}
             else{
 
-                    $tujuan = Master_tujuan::where('tujuan','=',$request->tujuan)->first();
+                    /*$tujuan = Master_tujuan::where('tujuan','=',$request->tujuan)->first();
                     if (sizeof($tujuan) > 0){}
                     else
-                    {
+                    {*/
                             $dms_master_tujuan = new Master_tujuan;
                                 $dms_master_tujuan->tujuan = $request->tujuan;
                                 $dms_master_tujuan->created_by = session()->get('session_id'); 
                             $dms_master_tujuan->save();
-                    }
+                    //}
             }
 
         if ($dms_form->id_purpose == 1) {
@@ -737,7 +736,7 @@ class DockController extends Controller
                             'transporter_company' => $outbound->transporter_company,
                             'duration' => $outbound->duration,
                             'status_name' => $outbound->status_name,
-                            'asal' => $outbound->asal,
+                            'tujuan' => $outbound->tujuan,
                             'gate_number' => $outbound->gate_number,
                             'type_of_vehicle' => $outbound->type_of_vehicle,
                             'master_project_name' => $outbound->master_project_name,
@@ -775,7 +774,7 @@ class DockController extends Controller
                             'transporter_company' => $outbound->transporter_company,
                             'duration' => $outbound->duration,
                             'status_name' => $outbound->status_name,
-                            'asal' => $outbound->asal,
+                            'tujuan' => $outbound->tujuan,
                             'gate_number' => $outbound->gate_number,
                             'type_of_vehicle' => $outbound->type_of_vehicle,
                             'master_project_name' => $outbound->master_project_name,
@@ -813,7 +812,7 @@ class DockController extends Controller
                             'transporter_company' => $outbound->transporter_company,
                             'duration' => $outbound->duration,
                             'status_name' => $outbound->status_name,
-                            'asal' => $outbound->asal,
+                            'tujuan' => $outbound->tujuan,
                             'gate_number' => $outbound->gate_number,
                             'type_of_vehicle' => $outbound->type_of_vehicle,
                             'master_project_name' => $outbound->master_project_name,
@@ -851,7 +850,7 @@ class DockController extends Controller
                             'transporter_company' => $outbound->transporter_company,
                             'duration' => $outbound->duration,
                             'status_name' => $outbound->status_name,
-                            'asal' => $outbound->asal,
+                            'tujuan' => $outbound->tujuan,
                             'gate_number' => $outbound->gate_number,
                             'type_of_vehicle' => $outbound->type_of_vehicle,
                             'master_project_name' => $outbound->master_project_name,
