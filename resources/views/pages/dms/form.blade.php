@@ -96,7 +96,7 @@
 
                   <tr>
                     <td>No PO/SO/DO/DN</td>
-                    <td><input class="form-control" type="text" name="shipment" id="shipment" placeholder="No PO/SO/DO/DN" style="width: 100%"></td>
+                    <td><input class="form-control" type="text" name="shipment" id="shipment" placeholder="No PO/SO/DO/DN" style="width: 100%;  text-transform: uppercase;"></td>
                   </tr>
                   <tr>
                     <td>Inbound/Outbound</td>

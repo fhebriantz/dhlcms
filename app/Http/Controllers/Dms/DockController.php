@@ -29,8 +29,33 @@ use Auth;
 use Session;
 use Carbon;
 use GuzzleHttp;
+ /* Call this file 'hello-world.php' */
+use vendor\autoload;
+
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\Printer;
+
 class DockController extends Controller
+
+
 {
+    function test_print()
+    {
+       
+        try {
+            $connector = new WindowsPrintConnector("smb://azhaclient-3/receipt");
+            
+            
+            $printer = new Printer($connector);
+            $printer -> text("Hello World!\n");
+            $printer -> cut();
+            
+            $printer -> close();
+        } catch (Exception $e) {
+            echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
+        }
+    }
+
     public function testapi($no_telp,$plat,$driver){
 
         $clientA = new GuzzleHttp\Client();
@@ -208,9 +233,9 @@ class DockController extends Controller
                         $dms_form->driver_name = $request->driver_name;
                         $dms_form->driver_phone = $request->driver_phone;
                         $dms_form->type_of_vehicle = $request->type_of_vehicle; 
-                        $dms_form->plat_no = $request->plat_no; 
+                        $dms_form->plat_no = strtoupper($request->plat_no); 
                         $dms_form->transporter_company = $request->transporter_company; 
-                        $dms_form->shipment = $request->shipment;
+                        $dms_form->shipment = strtoupper($request->shipment);
                         $dms_form->id_location = session()->get('session_id_loc');
                         $dms_form->asal = $request->asal;
                         $dms_form->tujuan = $request->tujuan;
@@ -244,7 +269,7 @@ class DockController extends Controller
             else
             {
                     $dms_master_plat = new Master_plat;
-                        $dms_master_plat->plat_no = $request->plat_no;
+                        $dms_master_plat->plat_no = strtoupper($request->plat_no);
                         $dms_master_plat->created_by = session()->get('session_id'); 
                     $dms_master_plat->save();
             } 
@@ -299,12 +324,13 @@ class DockController extends Controller
         if ($request->id_purpose = 1) {
             $request->session()->put('inbound', "inbound");
             $request->session()->put('outbound', "");
-            return  redirect('/dms/dashboard');
+            return  redirect('/dms/input');
         }elseif($request->id_purpose = 2) {
             $request->session()->put('inbound', "");
             $request->session()->put('outbound', "outbound");
-            return  redirect('/dms/dashboard');}
+            return  redirect('/dms/input');}
     }
+
 
     // menampilkan fungsi edit
     function update (Request $request, $id)  
@@ -324,9 +350,9 @@ class DockController extends Controller
                     $dms_form = Form::where('id_dms_form','=',$id)->first();
                         $dms_form->driver_name = $request->driver_name;
                         $dms_form->type_of_vehicle = $request->type_of_vehicle; 
-                        $dms_form->plat_no = $request->plat_no; 
+                        $dms_form->plat_no = strtoupper($request->plat_no); 
                         $dms_form->driver_phone = $request->driver_phone;
-                        $dms_form->shipment = $request->shipment;
+                        $dms_form->shipment = strtoupper($request->shipment);
                         $dms_form->asal = $request->asal;
                         $dms_form->tujuan = $request->tujuan;
                         $dms_form->id_location = session()->get('session_id_loc');
@@ -381,7 +407,7 @@ class DockController extends Controller
             else
             {
                     $dms_master_plat = new Master_plat;
-                        $dms_master_plat->plat_no = $request->plat_no;
+                        $dms_master_plat->plat_no = strtoupper($request->plat_no);
                         $dms_master_plat->created_by = session()->get('session_id'); 
                     $dms_master_plat->save();
             } 
@@ -685,103 +711,155 @@ class DockController extends Controller
 
     public function all_list_json(){
         if (session()->get('session_id_group') == 3){
-        $dms_form = Form::all();
-        $dms_inbound = Transaction::getTableInbound();
-        $dms_outbound = Transaction::getTableOutbound();
-        
-
-        //======================================================================
-        foreach($dms_inbound as $inbounds => $inbound){
-
-                    $tampungInbound[] = array(
-                        'plat_no' => $inbound->plat_no,
-                        'driver_name' => $inbound->driver_name,
-                        'transporter_company' => $inbound->transporter_company,
-                        'duration' => $inbound->duration,
-                        'status_name' => $inbound->status_name,
-                        'asal' => $inbound->asal,
-                        'gate_number' => $inbound->gate_number,
-                        'type_of_vehicle' => $inbound->type_of_vehicle,
-                        'master_project_name' => $inbound->master_project_name
-                        );
-
-                    }
-        foreach($dms_outbound as $outbounds => $outbound){
-
-                    $tampungOutbound[] = array(
-                        'plat_no' => $outbound->plat_no,
-                        'driver_name' => $outbound->driver_name,
-                        'transporter_company' => $outbound->transporter_company,
-                        'duration' => $outbound->duration,
-                        'status_name' => $outbound->status_name,
-                        'asal' => $outbound->asal,
-                        'gate_number' => $outbound->gate_number,
-                        'type_of_vehicle' => $outbound->type_of_vehicle,
-                        'master_project_name' => $outbound->master_project_name,
-                        );
-
-                    }
-        //===========================================================================
-        $tampung[] = array('inbound' => $tampungInbound, 'outbound' => $tampungOutbound);
-        return response()->json($tampung);}}}
-        
-        /*elseif (session()->get('session_id_group') == 1){
-        $dms_form = Form::all();
-        $dms_inbound = Transaction::getTableSuperInbound();
-        $dms_outbound = Transaction::getTableSuperOutbound();
-        $tampung[] = array();
-        return response()->json([
+            $dms_form = Form::all();
+            $dms_inbound = Transaction::getTableInbound();
+            $dms_outbound = Transaction::getTableOutbound();
+            //======================================================================
             foreach($dms_inbound as $inbounds => $inbound){
-            'plat_no' => $inbound->plat_no,
-            'driver_name' => $inbound->driver_name,
-            'transporter_company' => $inbound->transporter_company,
-            'duration' => $inbound->duration,
-            'status_name' => $inbound->status_name,
-            'asal' => $inbound->asal,
-            'gate_number' => $inbound->gate_number,
-            'type_of_vehicle' => $inbound->type_of_vehicle,
-            'master_project_name' => $inbound->master_project_name,
-            }
-            foreach($dms_outbound['outbounds'] as $outbounds => $outbound){
-            'plat_no' => $outbound->plat_no,
-            'driver_name' => $outbound->driver_name,
-            'transporter_company' => $outbound->transporter_company,
-            'duration' => $outbound->duration,
-            'status_name' => $outbound->status_name,
-            'asal' => $outbound->asal,
-            'gate_number' => $outbound->gate_number,
-            'type_of_vehicle' => $outbound->type_of_vehicle,
-            'master_project_name' => $outbound->master_project_name,
-            }
-        ]);
+                        $tampungInbound[] = array(
+                            'id_dms_form' => $inbound->id_dms_form,
+                            'plat_no' => $inbound->plat_no,
+                            'driver_name' => $inbound->driver_name,
+                            'transporter_company' => $inbound->transporter_company,
+                            'duration' => $inbound->duration,
+                            'status_name' => $inbound->status_name,
+                            'asal' => $inbound->asal,
+                            'gate_number' => $inbound->gate_number,
+                            'type_of_vehicle' => $inbound->type_of_vehicle,
+                            'master_project_name' => $inbound->master_project_name
+                            );
+                        }
+            foreach($dms_outbound as $outbounds => $outbound){
+                        $tampungOutbound[] = array(
+                            'id_dms_form' => $outbound->id_dms_form,
+                            'plat_no' => $outbound->plat_no,
+                            'driver_name' => $outbound->driver_name,
+                            'transporter_company' => $outbound->transporter_company,
+                            'duration' => $outbound->duration,
+                            'status_name' => $outbound->status_name,
+                            'asal' => $outbound->asal,
+                            'gate_number' => $outbound->gate_number,
+                            'type_of_vehicle' => $outbound->type_of_vehicle,
+                            'master_project_name' => $outbound->master_project_name,
+                            );
+                        }
+            //===========================================================================
+            $tampung[] = array('inbound' => $tampungInbound, 'outbound' => $tampungOutbound);
+            return response()->json($tampung);
         }
-        else{
-        $dms_form = Form::all();
-        $dms_inbound = Transaction::getTableInboundAdmin();
-        $dms_outbound = Transaction::getTableOutboundAdmin();
-        $tampung[] = array();
-        return response()->json([
+
+        elseif (session()->get('session_id_group') == 1){
+            $dms_form = Form::all();
+            $dms_inbound = Transaction::getTableSuperInbound();
+            $dms_outbound = Transaction::getTableSuperOutbound();
+            //======================================================================
             foreach($dms_inbound as $inbounds => $inbound){
-            'plat_no' => $inbound->plat_no,
-            'driver_name' => $inbound->driver_name,
-            'transporter_company' => $inbound->transporter_company,
-            'duration' => $inbound->duration,
-            'status_name' => $inbound->status_name,
-            'asal' => $inbound->asal,
-            'gate_number' => $inbound->gate_number,
-            'type_of_vehicle' => $inbound->type_of_vehicle,
-            'master_project_name' => $inbound->master_project_name,
-            }
-            foreach($dms_outbound['outbounds'] as $outbounds => $outbound){
-            'plat_no' => $outbound->plat_no,
-            'driver_name' => $outbound->driver_name,
-            'transporter_company' => $outbound->transporter_company,
-            'duration' => $outbound->duration,
-            'status_name' => $outbound->status_name,
-            'asal' => $outbound->asal,
-            'gate_number' => $outbound->gate_number,
-            'type_of_vehicle' => $outbound->type_of_vehicle,
-            'master_project_name' => $outbound->master_project_name,
-            }
-        ]);
-        }*/
+                        $tampungInbound[] = array(
+                            'id_dms_form' => $inbound->id_dms_form,
+                            'plat_no' => $inbound->plat_no,
+                            'driver_name' => $inbound->driver_name,
+                            'transporter_company' => $inbound->transporter_company,
+                            'duration' => $inbound->duration,
+                            'status_name' => $inbound->status_name,
+                            'asal' => $inbound->asal,
+                            'gate_number' => $inbound->gate_number,
+                            'type_of_vehicle' => $inbound->type_of_vehicle,
+                            'master_project_name' => $inbound->master_project_name
+                            );
+                        }
+            foreach($dms_outbound as $outbounds => $outbound){
+                        $tampungOutbound[] = array(
+                            'id_dms_form' => $outbound->id_dms_form,
+                            'plat_no' => $outbound->plat_no,
+                            'driver_name' => $outbound->driver_name,
+                            'transporter_company' => $outbound->transporter_company,
+                            'duration' => $outbound->duration,
+                            'status_name' => $outbound->status_name,
+                            'asal' => $outbound->asal,
+                            'gate_number' => $outbound->gate_number,
+                            'type_of_vehicle' => $outbound->type_of_vehicle,
+                            'master_project_name' => $outbound->master_project_name,
+                            );
+                        }
+            //===========================================================================
+            $tampung[] = array('inbound' => $tampungInbound, 'outbound' => $tampungOutbound);
+            return response()->json($tampung);
+        }
+
+        elseif (session()->get('session_id_group') == 2){
+            $dms_form = Form::all();
+            $dms_inbound = Transaction::getTableInboundAdmin();
+            $dms_outbound = Transaction::getTableOutboundAdmin();
+            //======================================================================
+            foreach($dms_inbound as $inbounds => $inbound){
+                        $tampungInbound[] = array(
+                            'id_dms_form' => $inbound->id_dms_form,
+                            'plat_no' => $inbound->plat_no,
+                            'driver_name' => $inbound->driver_name,
+                            'transporter_company' => $inbound->transporter_company,
+                            'duration' => $inbound->duration,
+                            'status_name' => $inbound->status_name,
+                            'asal' => $inbound->asal,
+                            'gate_number' => $inbound->gate_number,
+                            'type_of_vehicle' => $inbound->type_of_vehicle,
+                            'master_project_name' => $inbound->master_project_name
+                            );
+                        }
+            foreach($dms_outbound as $outbounds => $outbound){
+                        $tampungOutbound[] = array(
+                            'id_dms_form' => $outbound->id_dms_form,
+                            'plat_no' => $outbound->plat_no,
+                            'driver_name' => $outbound->driver_name,
+                            'transporter_company' => $outbound->transporter_company,
+                            'duration' => $outbound->duration,
+                            'status_name' => $outbound->status_name,
+                            'asal' => $outbound->asal,
+                            'gate_number' => $outbound->gate_number,
+                            'type_of_vehicle' => $outbound->type_of_vehicle,
+                            'master_project_name' => $outbound->master_project_name,
+                            );
+                        }
+            //===========================================================================
+            $tampung[] = array('inbound' => $tampungInbound, 'outbound' => $tampungOutbound);
+            return response()->json($tampung);
+        }
+
+        else{
+            $dms_form = Form::all();
+            $dms_inbound = Transaction::getTableInboundAdmin();
+            $dms_outbound = Transaction::getTableOutboundAdmin();
+            //======================================================================
+            foreach($dms_inbound as $inbounds => $inbound){
+                        $tampungInbound[] = array(
+                            'id_dms_form' => $inbound->id_dms_form,
+                            'plat_no' => $inbound->plat_no,
+                            'driver_name' => $inbound->driver_name,
+                            'transporter_company' => $inbound->transporter_company,
+                            'duration' => $inbound->duration,
+                            'status_name' => $inbound->status_name,
+                            'asal' => $inbound->asal,
+                            'gate_number' => $inbound->gate_number,
+                            'type_of_vehicle' => $inbound->type_of_vehicle,
+                            'master_project_name' => $inbound->master_project_name
+                            );
+                        }
+            foreach($dms_outbound as $outbounds => $outbound){
+                        $tampungOutbound[] = array(
+                            'id_dms_form' => $outbound->id_dms_form,
+                            'plat_no' => $outbound->plat_no,
+                            'driver_name' => $outbound->driver_name,
+                            'transporter_company' => $outbound->transporter_company,
+                            'duration' => $outbound->duration,
+                            'status_name' => $outbound->status_name,
+                            'asal' => $outbound->asal,
+                            'gate_number' => $outbound->gate_number,
+                            'type_of_vehicle' => $outbound->type_of_vehicle,
+                            'master_project_name' => $outbound->master_project_name,
+                            );
+                        }
+            //===========================================================================
+            $tampung[] = array('inbound' => $tampungInbound, 'outbound' => $tampungOutbound);
+            return response()->json($tampung);
+        }
+    }
+}

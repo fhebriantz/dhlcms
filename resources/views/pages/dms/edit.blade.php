@@ -90,13 +90,13 @@
                   </tr>
 
                    <tr>
-                    <td>Vendor</td>
+                    <td>Vendorr</td>
                     <td><input class="form-control" type="text" name="transporter_company" id="transporter_company" value="{{ $dms_form->transporter_company }}" placeholder="Perusahaan Transportasi" style="width: 100%"></td>
                   </tr>
 
                   <tr>
                     <td>No PO/SO/DO/DN</td>
-                    <td><input class="form-control" type="text" name="shipment" value="{{ $dms_form->shipment }}" id="shipment" placeholder="No PO/SO/DO/DN" style="width: 100%"></td>
+                    <td><input class="form-control" type="text" name="shipment" value="{{ $dms_form->shipment }}" id="shipment" placeholder="No PO/SO/DO/DN" style="width: 100%;  text-transform: uppercase;"></td>
                   </tr>
 
                   <tr>

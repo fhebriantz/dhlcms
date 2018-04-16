@@ -182,7 +182,7 @@
            @foreach($dms_inbound as $inbound)
           <tr>    
             <td class="">{{ $no_inbound++ }}</td>
-            <td class=" ">{{$inbound->plat_no}}</td>
+            <td class=" " style="text-transform: uppercase;">{{$inbound->plat_no}}</td>
             <td class="phone">{{$inbound->driver_name}}</td>
             <td class="cus ">{{$inbound->transporter_company}}</td>
             <td class="cus">{{$inbound->status_name}}</td>
@@ -311,7 +311,7 @@
         <thead class="thead paddingtable text-center" >
           <tr >
             <th class="width_no">NO</th>
-            <th class="phone width_plat">TRUCK NO. POL</th>
+            <th class="phone width_plat" style="text-transform: uppercase;">TRUCK NO. POL</th>
             <th class="width_driver">PENGEMUDI</th>
             <th class="cus width_tc">VENDOR</th>
             <th class="width_status phone">STATUS</th>
