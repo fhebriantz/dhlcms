@@ -152,7 +152,7 @@
             <th class="width_status phone">STATUS</th>
             <th class="width_status phone">JAM STATUS</th>
             <th class="width_plt phone ">PUT</th>
-            <th class="width_gate phone ">GERBANG</th>
+            <th class="width_gate phone ">GATE</th>
             <th class="width_vehicle ">TIPE TRUK</th>
             <th class="width_duration phone">TOTAL DURASI</th>
             <th class="cus width_cus" >CUSTOMER</th>
@@ -307,7 +307,7 @@
             <th class="width_status phone">STATUS</th>
             <th class="width_status phone">JAM STATUS</th>
             <th class="width_plt phone ">PLT</th>
-            <th class="width_gate phone ">GERBANG</th>
+            <th class="width_gate phone ">GATE</th>
             <th class="width_vehicle ">TIPE TRUK</th>
             <th class="width_duration phone">TOTAL DURASI</th>
             <th class="cus width_cus" >CUSTOMER</th>

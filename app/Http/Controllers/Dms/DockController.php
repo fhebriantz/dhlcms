@@ -34,19 +34,124 @@ use vendor\autoload;
 
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 use Mike42\Escpos\Printer;
 
 class DockController extends Controller
 
 
 {
-    function test_print()
+    function test_print($id_dms_form,$darike,$tab)
     {
+        $tgl_cetak=date("Y-m-d");
+        $mytime = Carbon\Carbon::now();
+        $waktu = $mytime->toDateTimeString();
+        $cek=Transaction::getTableTransaction()->where('id_dms_form','=',$id_dms_form)->first();
+        $plat = $cek->plat_no;
+        $customer = $cek->master_project_name;
+        $purpose = $cek->purpose;
        
         try {
-            $connector = new WindowsPrintConnector("smb://FHEBRIANTZ/receipt");            
+            $connector = new WindowsPrintConnector("receipt");            
             $printer = new Printer($connector);
-            $printer -> text("Selamat tidur sayangnya aa felicia edwina! ({})\n");
+            // ===============================Connect Printer
+
+            // Header Start
+            $printer -> initialize();
+            $printer -> selectPrintMode(Printer::MODE_DOUBLE_HEIGHT | Printer::MODE_DOUBLE_WIDTH);
+            $printer -> setJustification(Printer::JUSTIFY_CENTER);
+            $printer -> setTextSize(3,3);
+            $printer -> setEmphasis(true);
+            $printer -> text("DHL\n");
+            $printer -> setEmphasis(false);
+            $printer -> selectPrintMode();
+            $printer -> setTextSize(1,1);
+            $printer -> setEmphasis(true);
+            $printer -> text("Dock Management System\n");
+            $printer -> setEmphasis(false);
+            $printer -> selectPrintMode();
+            $printer -> text($waktu."\n");
+            $printer -> feed();
+            $printer -> text("------------------------------------------------\n");
+            $printer -> feed(); 
+            // Header End
+
+            // Body sTART
+            $printer -> setJustification(Printer::JUSTIFY_LEFT);
+        //  $printer -> text("------------------------.-----------------------\n");
+            $printer -> text("          Plat:              Asal/Tujuan:       \n");
+            $printer -> setEmphasis(true);
+            $printer -> text("        ".$plat."              ".$darike."\n");
+            $printer -> setEmphasis(false);
+            $printer -> feed();
+            $printer -> text("         Project:              Jenis:           \n");
+            $printer -> setEmphasis(true);
+            $printer -> text("        ".$customer."              ".$purpose."\n");
+        //  $printer -> text("------------------------.-----------------------\n");
+            $printer -> setEmphasis(false);
+            // Body eND
+
+            // ======================================================================Barcode
+
+            $printer -> setJustification(Printer::JUSTIFY_CENTER);
+            $printer->setBarcodeHeight(150);
+            $printer->setBarcodeWidth(2);
+            $standards = array (
+                Printer::BARCODE_CODE39 => array (
+                        "title" => "Code39",
+                        "caption" => "Variable length alphanumeric w/ some special chars.",
+                        "example" => array (
+                                array (
+                                        "caption" => "Text, numbers, spaces",
+                                        "content" => $id_dms_form
+                                )
+                        )
+                )
+            );
+            $printer->setBarcodeTextPosition(Printer::BARCODE_TEXT_BELOW);
+            foreach ($standards as $type => $standard) {
+                $printer->selectPrintMode(Printer::MODE_DOUBLE_HEIGHT | Printer::MODE_DOUBLE_WIDTH);
+                //$printer->text($standard ["title"] . "\n");
+                $printer->selectPrintMode();
+                //$printer->text($standard ["caption"] . "\n\n");
+                foreach ($standard ["example"] as $id => $barcode) {
+                    // $printer->setEmphasis(true);
+                    //$printer->text($barcode ["caption"] . "\n");
+                    // $printer->setEmphasis(false);
+                    // $printer->text("Content: " . $barcode ["content"] . "\n");
+                    $printer->barcode($barcode ["content"], $type);
+                    //$printer->feed();
+                }
+            }
+            // =====================================================================END Barcode
+
+
+            // Footer
+            $printer -> feed(); 
+            $printer -> text("           TIKET JANGAN SAMPAI HILANG           \n");
+            $printer -> feed(); 
+            // Footer
+
+            $printer -> cut();
+            $printer -> close();
+        } catch (Exception $e) {
+            echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
+        }
+
+                
+        if ($tab = 1) {
+            return  redirect('/dms/dashboard#inbound');
+        }elseif($tab = 2) {
+            return  redirect('/dms/dashboard#outbound');}
+    }
+
+    function test_printer()
+    {
+       
+         try {
+            $connector = new WindowsPrintConnector("receipt");            
+            $printer = new Printer($connector);
+            $printer -> text("Helloword\n");
             $printer -> cut();
             
             $printer -> close();
@@ -260,74 +365,73 @@ class DockController extends Controller
                         $dms_transaction_history->created_by = session()->get('session_id'); 
         $dms_transaction_history->save();
         
-        /*$result = Master_plat::where('plat_no','=',$request->plat_no)->first();
+        $result = Master_plat::where('plat_no','=',$request->plat_no)->first();
         $phone = Master_phone::where('driver_phone','=',$request->driver_phone)->first();
         $name = Master_name::where('driver_name','=',$request->driver_name)->first();
                   
             if (sizeof($result) > 0){}
             else
-            {*/
+            {
                     $dms_master_plat = new Master_plat;
                         $dms_master_plat->plat_no = strtoupper($request->plat_no);
                         $dms_master_plat->created_by = session()->get('session_id'); 
                     $dms_master_plat->save();
-            /*} 
+            } 
 
             if (sizeof($phone) > 0){}
             else
-            {*/
+            {
                     $dms_master_phone = new Master_phone;
                         $dms_master_phone->driver_phone = $request->driver_phone;
                         $dms_master_phone->created_by = session()->get('session_id'); 
                     $dms_master_phone->save();
-            /*} 
+            } 
 
 
             if (sizeof($name) > 0){}
             else
-            {*/
+            {
                     $dms_master_name = new Master_name;
                         $dms_master_name->driver_name = $request->driver_name;
                         $dms_master_name->created_by = session()->get('session_id'); 
                     $dms_master_name->save();
-            //}
+            }
 
             if ($request->asal==''||$request->asal== null) {}
             else{
 
-                    /*$asal = Master_asal::where('asal','=',$request->asal)->first();
+                    $asal = Master_asal::where('asal','=',$request->asal)->first();
                     if (sizeof($asal) > 0){}
                     else
-                    {*/
+                    {
                             $dms_master_asal = new Master_asal;
                                 $dms_master_asal->asal = $request->asal;
                                 $dms_master_asal->created_by = session()->get('session_id'); 
                             $dms_master_asal->save();
-                   // }
+                    }
             }
 
             if ($request->tujuan==''||$request->tujuan== null) {}
             else{
 
-                    /*$tujuan = Master_tujuan::where('tujuan','=',$request->tujuan)->first();
+                    $tujuan = Master_tujuan::where('tujuan','=',$request->tujuan)->first();
                     if (sizeof($tujuan) > 0){}
                     else
-                    {*/
+                    {
                             $dms_master_tujuan = new Master_tujuan;
                                 $dms_master_tujuan->tujuan = $request->tujuan;
                                 $dms_master_tujuan->created_by = session()->get('session_id'); 
                             $dms_master_tujuan->save();
-                    //}
+                    }
             }
-                
+
         if ($request->id_purpose = 1) {
-            $request->session()->put('inbound', "inbound");
-            $request->session()->put('outbound', "");
-            return  redirect('/dms/input');
+            $darike = $request->asal;
         }elseif($request->id_purpose = 2) {
-            $request->session()->put('inbound', "");
-            $request->session()->put('outbound', "outbound");
-            return  redirect('/dms/input');}
+            $darike = $request->tujuan;
+        }
+        $tab = $request->id_purpose;
+        return $this->test_print($id_dms_form,$darike,$tab);
     }
 
 
@@ -398,63 +502,63 @@ class DockController extends Controller
                         $dms_transaction_history->created_by = session()->get('session_id');
                     $dms_transaction_history->save();
 
-        /*$result = Master_plat::where('plat_no','=',$request->plat_no)->first();
+        $result = Master_plat::where('plat_no','=',$request->plat_no)->first();
         $phone = Master_phone::where('driver_phone','=',$request->driver_phone)->first();
         $name = Master_name::where('driver_name','=',$request->driver_name)->first();
                   
             if (sizeof($result) > 0){}
             else
-            {*/
+            {
                     $dms_master_plat = new Master_plat;
                         $dms_master_plat->plat_no = strtoupper($request->plat_no);
                         $dms_master_plat->created_by = session()->get('session_id'); 
                     $dms_master_plat->save();
-            /*} 
+            } 
 
             if (sizeof($phone) > 0){}
             else
-            {*/
+            {
                     $dms_master_phone = new Master_phone;
                         $dms_master_phone->driver_phone = $request->driver_phone;
                         $dms_master_phone->created_by = session()->get('session_id'); 
                     $dms_master_phone->save();
-            /*} 
+            } 
 
             if (sizeof($name) > 0){}
             else
-            {*/
+            {
                     $dms_master_name = new Master_name;
                         $dms_master_name->driver_name = $request->driver_name;
                         $dms_master_name->created_by = session()->get('session_id'); 
                     $dms_master_name->save();
-            //}
+            }
 
              if ($request->asal==''||$request->asal== null) {}
             else{
 
-                    /*$asal = Master_asal::where('asal','=',$request->asal)->first();
+                    $asal = Master_asal::where('asal','=',$request->asal)->first();
                     if (sizeof($asal) > 0){}
                     else
-                    {*/
+                    {
                             $dms_master_asal = new Master_asal;
                                 $dms_master_asal->asal = $request->asal;
                                 $dms_master_asal->created_by = session()->get('session_id'); 
                             $dms_master_asal->save();
-                    //}
+                    }
             }
 
             if ($request->tujuan==''||$request->tujuan== null) {}
             else{
 
-                    /*$tujuan = Master_tujuan::where('tujuan','=',$request->tujuan)->first();
+                    $tujuan = Master_tujuan::where('tujuan','=',$request->tujuan)->first();
                     if (sizeof($tujuan) > 0){}
                     else
-                    {*/
+                    {
                             $dms_master_tujuan = new Master_tujuan;
                                 $dms_master_tujuan->tujuan = $request->tujuan;
                                 $dms_master_tujuan->created_by = session()->get('session_id'); 
                             $dms_master_tujuan->save();
-                    //}
+                    }
             }
 
         if ($dms_form->id_purpose == 1) {

@@ -40,7 +40,7 @@
             <th class=" " style="width: 5%">STATUS</th>
             <th class="width_status phone">JAM STATUS</th>
             <th class="phone "  style="width: 8%">PUT</th>
-            <th class="phone " style="width: 1%">GERBANG</th>
+            <th class="phone " style="width: 1%">GATE</th>
             <th class="" style="width: 10%">TIPE TRUK</th>
             <th class=" " style="width: 5%">TOTAL DURASI</th>
             <th class="cus " style="width: 14%" >CUSTOMER</th>
@@ -150,7 +150,7 @@
             <th class=" " style="width: 5%">STATUS</th>
             <th class="width_status phone">JAM STATUS</th>
             <th class="phone "  style="width: 8%">PLT</th>
-            <th class="phone " style="width: 1%">GERBANG</th>
+            <th class="phone " style="width: 1%">GATE</th>
             <th class="" style="width: 10%">TIPE TRUK</th>
             <th class=" " style="width: 5%">TOTAL DURASI</th>
             <th class="cus " style="width: 14%" >CUSTOMER</th>
@@ -262,21 +262,21 @@
                   var count_inbound = inbound.length;
                   var count_outbound = outbound.length;
 
-                  var page = Math.floor(count_inbound/limit); 
-
-                  if($('#content-inbound a.selected-page').data('page')==page) $('#content-inbound a[data-page=0]').click(); //Click button page=1
+                  var page = Math.ceil(count_inbound/limit);//Math.floor(count_inbound/limit); 
+                  //if($('#content-inbound a.selected-page').data('page')==page) $('#content-inbound a[data-page=0]').click(); //Click button page=1
+                  if($('#content-inbound a.selected-page').html()==page) $('#content-inbound a[data-page=0]').click();
                   else $('#content-inbound a[data-direction=1]').click(); //Click button 'next page'
 
-                  var pageO = Math.floor(count_outbound/limit); 
-
-                  if($('#content-outbound a.selected-page').data('page')==page) $('#content-outbound a[data-page=0]').click(); //Click button page=1
+                  var pageO = Math.ceil(count_outbound/limit); //Math.floor(count_outbound/limit); 
+                  //if($('#content-outbound a.selected-page').data('page')==page) $('#content-outbound a[data-page=0]').click(); //Click button page=1
+                  if($('#content-outbound a.selected-page').html()==pageO) $('#content-outbound a[data-page=0]').click(); //Click button page=1
                   else $('#content-outbound a[data-direction=1]').click(); //Click button 'next page'
               },
               error:function(msg){
                   console.log("failed"); 
               }
             });
-        }, 5000);
+        }, 10000);
     }); 
       
     
