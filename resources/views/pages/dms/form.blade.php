@@ -53,6 +53,15 @@
               </ul>
           </div>
         @endif
+        <!-- test -->
+        <div class="col-sm-12">
+          <label>panggil data terakhir</label>
+          <form  method="POST" action="{{url('/autofill')}}">
+            <input class="form-control" type="text" name="plat_no" id="plat_no" placeholder="Plat Nomor" style="width: 100%; text-transform: uppercase;" maxlength="9">
+            <input class="btn btn-info" name="submit" value="autofill" type="submit">
+          </form>
+        </div>
+        <!-- test -->
           <form method="POST" action="{{url('/dms/input')}}">
               {{ csrf_field() }}
               <table class="table table-striped fontinput">

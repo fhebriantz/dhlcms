@@ -27,6 +27,7 @@ Route::put('/dms/{id}/edit','Dms\DockController@update');
 
 Route::get('/test/{id}', 'Dms\DockController@sms_gateway');
 Route::get('/test', 'Dms\DockController@all_list_json');
+Route::get('/dms/autofill', 'Dms\DockController@autofill');
 
 Route::get('/tprint', 'Dms\DockController@test_print');
 // ---------------------------------------------------AUTOCOMPLETE

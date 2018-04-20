@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Transaction_history extends Model
 {

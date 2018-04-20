@@ -40,7 +40,15 @@ use Mike42\Escpos\Printer;
 class DockController extends Controller
 
 
+
+
 {
+    public function autofill(){
+        $dms_form=Transaction_history::getTableHistory()
+        ->where('plat_no','=','B 1234 CIB')->first();
+        return view('pages/dms/last_data', compact('dms_form'));
+    }
+
     function test_print($id_dms_form,$darike,$tab)
     {
         $tgl_cetak=date("Y-m-d");
