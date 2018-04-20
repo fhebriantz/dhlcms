@@ -89,7 +89,7 @@
                   // Get todays date and time
                   var now = new Date().getTime();
                     // Find the distance between now an the count down date
-                  if('{{$inbound->status}}' == 6){
+                  if('{{$inbound->status}}' == 7){
                     var distance = exit{{$inbound->id_dms_form}} - countupDate{{$inbound->id_dms_form}};
                   }
                   else
@@ -200,12 +200,13 @@
                   // Get todays date and time
                   var now = new Date().getTime();
                     // Find the distance between now an the count down date
-                  if('{{$outbound->status}}' == 6){
+                  if('{{$outbound->status}}' == 7){
                     var distance = exit{{$outbound->id_dms_form}} - countupDate{{$outbound->id_dms_form}};
                   }
                   else
                   {
                     var distance = now - countupDate{{$outbound->id_dms_form}}; 
+                    console log(distance);
                   }
                     // Time calculations for days, hours, minutes and seconds
                     var days = Math.floor(distance / (1000 * 60 * 60 * 24));

@@ -49,6 +49,118 @@ class DockController extends Controller
         return view('pages/dms/last_data', compact('dms_form'));
     }
 
+    public function barcode($id){
+        $tgl_cetak=date("Y-m-d");
+        $mytime = Carbon\Carbon::now();
+        $waktu = $mytime->toDateTimeString();
+        $cek=Transaction::getTableTransaction()->where('id_dms_form','=',$id)->first();
+        $plat = $cek->plat_no;
+        $customer = $cek->master_project_name;
+        $purpose = $cek->purpose;
+
+        if ($cek->id_purpose = 1) {
+            $darike = $cek->asal;
+        }elseif($cek->id_purpose = 2) {
+            $darike = $cek->tujuan;
+        }
+        $tab = $cek->id_purpose;
+
+        try {
+            $logo = EscposImage::load("public/image/logoDHL.png", false);
+            $connector = new WindowsPrintConnector("receipt");            
+            $printer = new Printer($connector);
+            // ===============================Connect Printer
+
+            // Header Start
+            $printer -> initialize();
+            $printer -> selectPrintMode(Printer::MODE_DOUBLE_HEIGHT | Printer::MODE_DOUBLE_WIDTH);
+            $printer -> setJustification(Printer::JUSTIFY_CENTER);
+            $printer -> setTextSize(3,3);
+            $printer -> setEmphasis(true);
+            $printer -> graphics($logo);
+            $printer -> setEmphasis(false);
+            $printer -> selectPrintMode();
+            $printer -> setTextSize(1,1);
+            $printer -> setEmphasis(true);
+            $printer -> text("#Cetakan Ulangan\n");
+            $printer -> text("Dock Management System\n");
+            $printer -> setEmphasis(false);
+            $printer -> selectPrintMode();
+            $printer -> text($waktu."\n");
+            $printer -> feed();
+            $printer -> text("------------------------------------------------\n");
+            $printer -> feed(); 
+            // Header End
+
+            // Body sTART
+            $printer -> setJustification(Printer::JUSTIFY_LEFT);
+        //  $printer -> text("------------------------.-----------------------\n");
+            $printer -> text("          Plat:              Asal/Tujuan:       \n");
+            $printer -> setEmphasis(true);
+            $printer -> text("        ".$plat."              ".$darike."\n");
+            $printer -> setEmphasis(false);
+            $printer -> feed();
+            $printer -> text("         Project:              Jenis:           \n");
+            $printer -> setEmphasis(true);
+            $printer -> text("        ".$customer."              ".$purpose."\n");
+        //  $printer -> text("------------------------.-----------------------\n");
+            $printer -> setEmphasis(false);
+            // Body eND
+
+            // ======================================================================Barcode
+
+            $printer -> setJustification(Printer::JUSTIFY_CENTER);
+            $printer->setBarcodeHeight(150);
+            $printer->setBarcodeWidth(2);
+            $standards = array (
+                Printer::BARCODE_CODE39 => array (
+                        "title" => "Code39",
+                        "caption" => "Variable length alphanumeric w/ some special chars.",
+                        "example" => array (
+                                array (
+                                        "caption" => "Text, numbers, spaces",
+                                        "content" => $id
+                                )
+                        )
+                )
+            );
+            $printer->setBarcodeTextPosition(Printer::BARCODE_TEXT_BELOW);
+            foreach ($standards as $type => $standard) {
+                $printer->selectPrintMode(Printer::MODE_DOUBLE_HEIGHT | Printer::MODE_DOUBLE_WIDTH);
+                //$printer->text($standard ["title"] . "\n");
+                $printer->selectPrintMode();
+                //$printer->text($standard ["caption"] . "\n\n");
+                foreach ($standard ["example"] as $id => $barcode) {
+                    // $printer->setEmphasis(true);
+                    //$printer->text($barcode ["caption"] . "\n");
+                    // $printer->setEmphasis(false);
+                    // $printer->text("Content: " . $barcode ["content"] . "\n");
+                    $printer->barcode($barcode ["content"], $type);
+                    //$printer->feed();
+                }
+            }
+            // =====================================================================END Barcode
+
+
+            // Footer
+            $printer -> feed(); 
+            $printer -> text("           TIKET JANGAN SAMPAI HILANG           \n");
+            $printer -> feed(); 
+            // Footer
+
+            $printer -> cut();
+            $printer -> close();
+        } catch (Exception $e) {
+            echo "Couldn't print to this printer: " . $e -> getMessage() . "\n";
+        }
+
+                
+        if ($tab = 1) {
+            return  redirect('/dms/dashboard#inbound');
+        }elseif($tab = 2) {
+            return  redirect('/dms/dashboard#outbound');}
+    }
+
     function test_print($id_dms_form,$darike,$tab)
     {
         $tgl_cetak=date("Y-m-d");
@@ -60,6 +172,7 @@ class DockController extends Controller
         $purpose = $cek->purpose;
        
         try {
+            $logo = EscposImage::load("public/image/logoDHL.png", false);
             $connector = new WindowsPrintConnector("receipt");            
             $printer = new Printer($connector);
             // ===============================Connect Printer
@@ -70,7 +183,8 @@ class DockController extends Controller
             $printer -> setJustification(Printer::JUSTIFY_CENTER);
             $printer -> setTextSize(3,3);
             $printer -> setEmphasis(true);
-            $printer -> text("DHL\n");
+            $printer -> graphics($logo);
+            //$printer -> text("DHL\n");
             $printer -> setEmphasis(false);
             $printer -> selectPrintMode();
             $printer -> setTextSize(1,1);
@@ -195,13 +309,7 @@ class DockController extends Controller
         $this->middleware('logincheck');
     }
 
-    public function barcode($id){
-        $tgl_cetak=date("Y-m-d");
-        $mytime = Carbon\Carbon::now();
-        $waktu = $mytime->toDateTimeString();
-        $dms_form=Transaction::getTableTransaction()->where('id_dms_form','=',$id)->first();
-        return view('pages/dms/barcode', compact('dms_form','tgl_cetak','waktu'));
-    }
+    
 
     public function show(){
         if (session()->get('session_id_group') == 3){
@@ -654,13 +762,13 @@ class DockController extends Controller
                 return $this->validation_superadmin($dms_transaction,$id);
             }
             elseif (session()->get('session_id_group') == 3){
-                return $this->validation_scurity($$dms_transaction,$id);
+                return $this->validation_scurity($dms_transaction,$id);
             }
             elseif (session()->get('session_id_group') == 4) {
-                return $this->validation_checker($$dms_transaction,$id);
+                return $this->validation_checker($dms_transaction,$id);
             }
             elseif (session()->get('session_id_group') == 2) {
-                return $this->validation_checker($$dms_transaction,$id);
+                return $this->validation_admin($dms_transaction,$id);
             }
             else{
                 Session::flash('id_dms', "Tidak memiliki akses scan");
@@ -726,6 +834,19 @@ class DockController extends Controller
         }
         elseif ($dms_transaction->status == 5) {
             $dms_transaction->status = 6;
+            $dms_transaction->last_scan = $last_scan;
+            $dms_transaction->save();
+
+            $dms_transaction_history = new Transaction_history;
+            $dms_transaction_history->id_dms_form = $id;
+            $dms_transaction_history->status = 6;
+            $dms_transaction_history->last_scan = $last_scan;
+            $dms_transaction_history->created_by = session()->get('session_id');
+            $dms_transaction_history->save();
+            return redirect('/dms/dashboard');
+        }
+        elseif ($dms_transaction->status == 6) {
+            $dms_transaction->status = 7;
             $dms_transaction->exit_time = $waktu;
             $dms_transaction->last_scan = $last_scan;
             $dms_transaction->save();
@@ -733,7 +854,7 @@ class DockController extends Controller
             $dms_transaction_history = new Transaction_history;
             $dms_transaction_history->id_dms_form = $id;
             $dms_transaction_history->exit_time = $waktu;
-            $dms_transaction_history->status = 6;
+            $dms_transaction_history->status = 7;
             $dms_transaction_history->last_scan = $last_scan;
             $dms_transaction_history->created_by = session()->get('session_id');
             $dms_transaction_history->save();
@@ -767,8 +888,8 @@ class DockController extends Controller
             $dms_transaction_history->save();
             return redirect('/dms/dashboard');
         }
-        elseif ($dms_transaction->status == 5) {
-            $dms_transaction->status = 6;
+        elseif ($dms_transaction->status == 6) {
+            $dms_transaction->status = 7;
             $dms_transaction->exit_time = $waktu;
             $dms_transaction->last_scan = $last_scan;
             $dms_transaction->save();
@@ -776,7 +897,7 @@ class DockController extends Controller
             $dms_transaction_history = new Transaction_history;
             $dms_transaction_history->id_dms_form = $id;
             $dms_transaction_history->exit_time = $waktu;
-            $dms_transaction_history->status = 6;
+            $dms_transaction_history->status = 7;
             $dms_transaction_history->last_scan = $last_scan;
             $dms_transaction_history->created_by = session()->get('session_id');
             $dms_transaction_history->save();
@@ -789,6 +910,10 @@ class DockController extends Controller
 
     public function validation_checker($dms_transaction,$id)
     {
+        $now = new DateTime();
+        $waktu = $now->format('M d, y H:i:s');
+        $last_scan = $now->format('H:i:s d/M/Y');
+
         if ($dms_transaction->status == 3) {
             $dms_transaction->status = 4;
             $dms_transaction->last_scan = $last_scan;
@@ -810,6 +935,30 @@ class DockController extends Controller
             $dms_transaction_history = new Transaction_history;
             $dms_transaction_history->id_dms_form = $id;
             $dms_transaction_history->status = 5;
+            $dms_transaction_history->last_scan = $last_scan;
+            $dms_transaction_history->created_by = session()->get('session_id');
+            $dms_transaction_history->save();
+            return redirect('/dms/dashboard');
+        }
+        else{
+            return redirect('/dms/dashboard');
+        }
+    }
+
+    public function validation_admin($dms_transaction,$id)
+    {
+        $now = new DateTime();
+        $waktu = $now->format('M d, y H:i:s');
+        $last_scan = $now->format('H:i:s d/M/Y');
+        
+        if ($dms_transaction->status == 5) {
+            $dms_transaction->status = 6;
+            $dms_transaction->last_scan = $last_scan;
+            $dms_transaction->save();
+
+            $dms_transaction_history = new Transaction_history;
+            $dms_transaction_history->id_dms_form = $id;
+            $dms_transaction_history->status = 6;
             $dms_transaction_history->last_scan = $last_scan;
             $dms_transaction_history->created_by = session()->get('session_id');
             $dms_transaction_history->save();

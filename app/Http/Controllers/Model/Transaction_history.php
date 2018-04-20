@@ -16,7 +16,7 @@ class Transaction_history extends Model
             ->join('dms_master_project', 'dms_master_project.id', '=', 'dms_form.cust_proj_name')
             ->join('dms_master_status', 'dms_master_status.id', '=', 'dms_transaction_history.status')
             ->join('dms_purpose', 'dms_purpose.id', '=', 'dms_form.id_purpose')
-            ->select('dms_transaction_history.*', 'dms_form.driver_name', 'dms_form.type_of_vehicle', 'dms_form.plat_no', 'dms_form.transporter_company', 'dms_form.shipment', 'dms_form.cust_proj_name', 'dms_form.id_purpose','dms_form.asal','dms_form.tujuan', 'dms_form.driver_phone', 'dms_form.id_location', 'dms_master_project.master_project_name','dms_master_status.status_name','dms_purpose.purpose')
+            ->select('dms_transaction_history.*','max(dms_transaction_history.update_at) as update_at', 'dms_form.driver_name', 'dms_form.type_of_vehicle', 'dms_form.plat_no', 'dms_form.transporter_company', 'dms_form.shipment', 'dms_form.cust_proj_name', 'dms_form.id_purpose','dms_form.asal','dms_form.tujuan', 'dms_form.driver_phone', 'dms_form.id_location', 'dms_master_project.master_project_name','dms_master_status.status_name','dms_purpose.purpose')
             ->get();
 
      return $dms_transaction_history;

@@ -19,8 +19,8 @@ hr {
 </head>
 <body>
   <div class="col-sm-2">
-    <div class="logobarcode" style="margin-bottom: -10px">
-        <img src="{{ asset('image/logo.png')}}" alt="" style="width: 100%">
+    <div class="logobarcode text-center" style="margin-bottom: -10px">
+        <img src="{{ asset('image/logo.png')}}" alt="" style="width: 70%">
     </div>
     <div class="text-center">
         <h3 style="font-size: 16px"><i >Dock Management System</i></h3>
